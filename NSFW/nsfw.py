@@ -386,7 +386,7 @@ class NSFW(commands.Cog):
         random_post_number = random.randint(1, 50)
         for i, post in enumerate(posts):
             if i == random_post_number:
-                emb = discord.Embed(title=post.title, footer=post.url)
+                emb = discord.Embed(title=post.title)
                 oldurl = post.url
                 if oldurl.startswith('https://gfycat'):
                     newurl1, newurl2 = post.url.split('//')
@@ -409,4 +409,5 @@ class NSFW(commands.Cog):
                     print(oldurl)
                 elif oldurl.startswith('https://i.'):
                     emb.set_image(url=oldurl)
+                emb.set_footer(text=oldurl)
                 await ctx.send(embed=emb)
