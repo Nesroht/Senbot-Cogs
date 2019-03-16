@@ -389,11 +389,16 @@ class NSFW(commands.Cog):
                 emb = discord.Embed(title=post.title)
                 if post.url.startswith("https://gfycat"):
                     newurl1, newurl2 = post.url.split('//')
-                    newurl = newurl1 + "//giant."+newurl2+".webm"
+                    newurl = newurl1 + "//giant."+newurl2+".gif"
                     emb.set_image(url=newurl)
                 if post.url.startswith("https://imgur") | post.url.startswith("https://m.imgur"):
                     newurl1, newurl2 = post.url.split('//')
                     newurl = newurl1 + "//i."+newurl2+".gif"
+                    emb.set_image(url=newurl)
+                if post.url.startswith("https://i.imgur") & post.url.endswith("v"):
+                    newurl1, newurl2 = post.url.split('//')
+                    newurl3 = newurl2.split('.gifv')
+                    newurl = newurl1 + "//"+newurl3+".gif"
                     emb.set_image(url=newurl)
                 if post.url.startswith("https://youtube"):
                     newurl = post.url
