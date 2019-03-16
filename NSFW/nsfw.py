@@ -5,6 +5,8 @@ import asyncio
 import aiohttp
 import time
 import random
+
+import credentials
 from bs4 import BeautifulSoup
 import praw
 import os
@@ -48,7 +50,7 @@ class NSFW(commands.Cog):
         self.settings.register_guild(**default_guild)
         self.settings.register_global(**default_global)
         self._session = aiohttp.ClientSession(loop=self.bot.loop)
-        reddit = praw.Reddit(client_id='CLIENT ID', client_secret='CLIENT SECRET', user_agent='USER AGENT')
+        self.reddit = praw.Reddit(client_id=credentials.CLIENT_ID, client_secret=credentials.CLIENT_SECRET, user_agent=credentials.USER_AGENT)
 
     async def get(self, url):
         async with self._session.get(url) as response:
@@ -378,8 +380,8 @@ class NSFW(commands.Cog):
             await ctx.send(f":x: **Error:** `{e}`")
 
     @commands.command()
-    async def reddit(self, ctx, *, args):
-        posts = reddit.subreddit(args[0]).hot(limit=100)
+    async def r(self, ctx, *, args):
+        posts = self.reddit.subreddit(args[0]).hot(limit=100)
         random_post_number = secrets.randbelow(100)
         for i, post in enumerate(posts):
             if i == random_post_number:
