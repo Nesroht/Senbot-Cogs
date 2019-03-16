@@ -397,7 +397,7 @@ class NSFW(commands.Cog):
                 if oldurl.startswith('https://gfycat'):
                     newurl1, newurl2 = post.url.split('/gfycat.com/')
                     if "-" in newurl2:
-                        newurl2 = newurl2.split('-')
+                        newurl2 = newurl2.split('-')[0]
                     print(newurl2)
                     urlList = self.gfyclient.query_gfy(newurl2)
                     gifUrl = urlList["gfyItem"]
