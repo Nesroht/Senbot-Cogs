@@ -6,6 +6,7 @@ import aiohttp
 import time
 import random
 from bs4 import BeautifulSoup
+import praw
 import os
 import sys
 
@@ -47,6 +48,7 @@ class NSFW(commands.Cog):
         self.settings.register_guild(**default_guild)
         self.settings.register_global(**default_global)
         self._session = aiohttp.ClientSession(loop=self.bot.loop)
+        reddit = praw.Reddit(client_id='CLIENT ID', client_secret='CLIENT SECRET', user_agent='USER AGENT')
 
     async def get(self, url):
         async with self._session.get(url) as response:
@@ -374,3 +376,13 @@ class NSFW(commands.Cog):
             await ctx.send(embed=emb)
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
+
+    @commands.command()
+    async def reddit(self, ctx, *args):
+        posts = reddit.subreddit(args[0]).hot(limit=100)
+        random_post_number = secrets.randbelow(100)
+        for i, post in enumerate(posts):
+            if i == random_post_number:
+                emb = discord.Embed(title=post.title)
+                emb.set_image(url=post.url)
+                await ctx.send(embed=emb)
