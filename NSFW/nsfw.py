@@ -54,8 +54,7 @@ class NSFW(commands.Cog):
     async def boobs(self, ctx):
         """Shows some boobs."""
         try:
-            rdm = random.randint(0, await
-            self.settings.ama_boobs())
+            rdm = random.randint(0, await self.settings.ama_boobs())
             search = ("http://api.oboobs.ru/boobs/{}".format(rdm))
             result = await self.get(search)
             tmp = random.choice(result)
@@ -199,7 +198,7 @@ class NSFW(commands.Cog):
             await self.settings.ama_ass.set(5500)
         print("Total amount of ass:", await self.settings.ama_ass())
 
-    @_nsfw.command()
+    @commands.command()
     @commands.is_nsfw()
     async def yandere(self, ctx):
         """Random Image From Yandere"""
@@ -212,7 +211,7 @@ class NSFW(commands.Cog):
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
-    @_nsfw.command()
+    @commands.command()
     @commands.is_nsfw()
     async def konachan(self, ctx):
         """Random Image From Konachan"""
@@ -225,7 +224,7 @@ class NSFW(commands.Cog):
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
-    @_nsfw.command()
+    @commands.command()
     @commands.is_nsfw()
     async def e621(self, ctx):
         """Random Image From e621"""
@@ -238,7 +237,7 @@ class NSFW(commands.Cog):
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
-    @_nsfw.command()
+    @commands.command()
     @commands.is_nsfw()
     async def rule34(self, ctx):
         """Random Image From rule34"""
@@ -251,7 +250,7 @@ class NSFW(commands.Cog):
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
-    @_nsfw.command()
+    @commands.command()
     @commands.is_nsfw()
     async def danbooru(self, ctx):
         """Random Image From Danbooru"""
@@ -264,7 +263,7 @@ class NSFW(commands.Cog):
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
-    @_nsfw.command()
+    @commands.command()
     @commands.is_nsfw()
     async def gelbooru(self, ctx):
         """Random Image From Gelbooru"""
@@ -277,7 +276,7 @@ class NSFW(commands.Cog):
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
-    @_nsfw.command()
+    @commands.command()
     @commands.is_nsfw()
     async def tbib(self, ctx):
         """Random Image From TBIB"""
@@ -290,7 +289,7 @@ class NSFW(commands.Cog):
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
-    @_nsfw.command()
+    @commands.command()
     @commands.is_nsfw()
     async def xbooru(self, ctx):
         """Random Image From Xbooru"""
@@ -303,7 +302,7 @@ class NSFW(commands.Cog):
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
-    @_nsfw.command()
+    @commands.command()
     @commands.is_nsfw()
     async def furrybooru(self, ctx):
         """Random Image From Furrybooru"""
@@ -316,7 +315,7 @@ class NSFW(commands.Cog):
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
-    @_nsfw.command()
+    @commands.command()
     @commands.is_nsfw()
     async def drunkenpumken(self, ctx):
         """Random Image From DrunkenPumken"""
@@ -329,7 +328,7 @@ class NSFW(commands.Cog):
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
-    @_nsfw.command()
+    @commands.command()
     @commands.is_nsfw()
     async def ysearch(self, ctx, *tags: str):
         """Search Yandere With A Tag"""
