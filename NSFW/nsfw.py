@@ -8,7 +8,7 @@ import random
 
 from NSFW import credentials
 from bs4 import BeautifulSoup
-from gfycat.clien import GfycatClient
+from gfycat.client import GfycatClient
 
 import praw
 import os
