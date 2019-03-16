@@ -1,7 +1,44 @@
-from redbot.core import commands
+import discord
+from redbot.core import checks, Config, commands
+# Sys
+import asyncio
+import aiohttp
+import time
+import random
+import os
+import sys
+
+DEFAULT = {"nsfw_channels": ["133251234164375552"], "invert" : False, "nsfw_msg": True, "last_update": 0,  "ama_boobs": 10548, "ama_ass": 4542}# Red's testing chan. nsfw content off by default.
+
 
 class NSFW(commands.Cog):
     """NSFW cog for Senbot"""
+
+    def __init__(self, bot):
+        self.bot = bot
+        self.settings = Config.get_conf(self, identifier=69)
+        default_global = {
+            "ama_ass": 0,
+            "ama_boobs": 0,
+            "last_update": 0
+        }
+        default_guild = {
+            "invert": False,
+            "nsfw_channels": [],
+            "nsfw_msg": True
+        }
+        self.settings.register_guild(**default_guild)
+        self.settings.register_global(**default_global)
+        self._session = aiohttp.ClientSession()
+
+    async def get(self, url):
+        async with self._session.get(url) as response:
+            rep = await
+            response.json()
+            return rep
+
+    def __unload(self):
+        asyncio.get_event_loop().create_task(self._session.close())
 
     @commands.group(name="nsfw")
     async def _nsfw(self, ctx):
