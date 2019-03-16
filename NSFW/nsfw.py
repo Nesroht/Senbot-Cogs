@@ -5,6 +5,7 @@ import asyncio
 import aiohttp
 import time
 import random
+import json
 
 from NSFW import credentials
 from bs4 import BeautifulSoup
@@ -395,7 +396,9 @@ class NSFW(commands.Cog):
                 oldurl = post.url
                 if oldurl.startswith('https://gfycat'):
                     newurl1, newurl2 = post.url.split('/gfycat.com/')
-                    print(self.gfyclient.query_gfy(newurl2).get(gifUrl))
+                    urlList = self.gfyclient.query_gfy(newurl2)
+                    gifurl = json.loads(urlList)
+                    emb.set_image(url=gifurl["gifUrl"])
                 elif oldurl.startswith('https://imgur') | post.url.startswith('https://m.imgur'):
                     newurl1, newurl2 = post.url.split('//')
                     print(newurl1 + newurl2)
