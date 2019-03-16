@@ -396,6 +396,8 @@ class NSFW(commands.Cog):
                 oldurl = post.url
                 if oldurl.startswith('https://gfycat'):
                     newurl1, newurl2 = post.url.split('/gfycat.com/')
+                    if "-" in newurl2:
+                        newurl2 = newurl2.split('-')
                     print(newurl2)
                     urlList = self.gfyclient.query_gfy(newurl2)
                     gifUrl = urlList["gfyItem"]
@@ -414,6 +416,7 @@ class NSFW(commands.Cog):
                 elif oldurl.startswith('https://youtube') | post.url.startswith('https://www.pornhub') | post.url.startswith('https://pornhub'):
                     #newurl = post.url
                     random_post_number += 1
+                    continue
                 elif oldurl.startswith('https://i.'):
                     emb.set_image(url=oldurl)
                 await ctx.send(embed=emb)
