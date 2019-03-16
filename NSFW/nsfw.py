@@ -406,6 +406,8 @@ class NSFW(commands.Cog):
                 elif post.url.startswith('https://youtube') | post.url.startswith('https://www.pornhub') | post.url.startswith('https://pornhub'):
                     newurl = post.url
                     emb.set_description(url=newurl)
-                else:
+                elif post.url.startswith('https://i.'):
                     emb.set_image(url=post.url)
+                else:
+                    embed.set_description(post.description)
                 await ctx.send(embed=emb)
