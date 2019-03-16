@@ -391,8 +391,6 @@ class NSFW(commands.Cog):
                 if oldurl.startswith('https://gfycat'):
                     newurl1, newurl2 = post.url.split('//')
                     print(newurl1+newurl2)
-                    if newurl2.contains('-'):
-                        newurl2.split('-')
                     newurl = newurl1 + "//giant."+newurl2+".mp4"
                     emb.set_image(url=newurl)
                 elif oldurl.startswith('https://imgur') | post.url.startswith('https://m.imgur'):
