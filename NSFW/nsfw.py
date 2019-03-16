@@ -413,7 +413,7 @@ class NSFW(commands.Cog):
                     newurl3 = newurl2.split('.gifv')
                     newurl = newurl1 + "//" + newurl3 + ".gif"
                     emb.set_image(url=newurl)
-                elif oldurl.startswith('https://youtube') | oldurl.startswith('https://www.pornhub') | oldurl.startswith('https://pornhub') | oldurl.startswith('https://reddit'):
+                elif oldurl.startswith('https://youtube') | oldurl.startswith('https://www.pornhub') | oldurl.startswith('https://pornhub') | oldurl.startswith('https://www.reddit'):
                     #newurl = post.url
                     random_post_number += 1
                     continue
