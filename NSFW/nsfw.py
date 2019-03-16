@@ -406,6 +406,7 @@ class NSFW(commands.Cog):
                     emb.set_image(url=newurl)
                 elif oldurl.startswith('https://youtube') | post.url.startswith('https://www.pornhub') | post.url.startswith('https://pornhub'):
                     #newurl = post.url
+                    print(oldurl)
                 elif oldurl.startswith('https://i.'):
                     emb.set_image(url=oldurl)
                 emb.set_footer(oldurl)
