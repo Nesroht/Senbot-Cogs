@@ -366,7 +366,6 @@ class NSFW(commands.Cog):
             await ctx.send(f":x: **Error:** `{e}`")
 
     @commands.command()
-    @commands.is_nsfw()
     async def randomtest(self, ctx):
         """Random Gif"""
         try:
