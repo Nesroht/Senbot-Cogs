@@ -33,8 +33,7 @@ class NSFW(commands.Cog):
 
     async def get(self, url):
         async with self._session.get(url) as response:
-            rep = await
-            response.json()
+            rep = await response.json()
             return rep
 
     def __unload(self):
