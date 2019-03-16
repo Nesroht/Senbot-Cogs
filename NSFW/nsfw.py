@@ -6,7 +6,7 @@ import aiohttp
 import time
 import random
 
-import credentials
+from NSFW import credentials
 from bs4 import BeautifulSoup
 import praw
 import os
@@ -37,6 +37,7 @@ class NSFW(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.settings = Config.get_conf(self, identifier=69)
+        self.credentials = credentials
         default_global = {
             "ama_ass": 0,
             "ama_boobs": 0,
@@ -50,7 +51,7 @@ class NSFW(commands.Cog):
         self.settings.register_guild(**default_guild)
         self.settings.register_global(**default_global)
         self._session = aiohttp.ClientSession(loop=self.bot.loop)
-        self.reddit = praw.Reddit(client_id=credentials.CLIENT_ID, client_secret=credentials.CLIENT_SECRET, user_agent=credentials.USER_AGENT)
+        self.reddit = praw.Reddit(client_id=self.credentials.CLIENT_ID, client_secret=self.credentials.CLIENT_SECRET, user_agent=self.credentials.USER_AGENT)
 
     async def get(self, url):
         async with self._session.get(url) as response:
