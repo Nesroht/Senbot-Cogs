@@ -103,7 +103,7 @@ class NSFW(commands.Cog):
 
     @checks.admin_or_permissions(administrator=True)
     @_nsfw.command(no_pm=True)
-    async def nsfw(self, ctx):
+    async def settings(self, ctx):
         """Toggle oboobs nswf for this channel on/off.
         Admin/owner restricted."""
         nsfwChan = False
@@ -124,7 +124,7 @@ class NSFW(commands.Cog):
                 await ctx.send("nsfw OFF")
 
     @checks.admin_or_permissions(administrator=True)
-    @_nsfw.command(no_pm=True)
+    @settings.command(no_pm=True)
     async def invert(self, ctx):
         """Invert nsfw blacklist to whitelist
         Admin/owner restricted."""
@@ -136,7 +136,7 @@ class NSFW(commands.Cog):
             await ctx.send("The nsfw list for this server is now: default(blacklist)")
 
     @checks.is_owner()
-    @_nsfw.command(hidden=True)
+    @settings.command(hidden=True)
     async def update(self, ctx):
         await ctx.send("Starting update ...")
         await self.boob_knowlegde()
@@ -223,7 +223,9 @@ class NSFW(commands.Cog):
             page = await (await self.session.get(query)).text()
             soup = BeautifulSoup(page, 'html.parser')
             image = soup.find(id="highres").get("href")
-            await ctx.send(image)
+            emb = discord.Embed(title="Yandere")
+            emb.set_image(url=image)
+            await ctx.send(embed=emb)
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
@@ -236,7 +238,9 @@ class NSFW(commands.Cog):
             page = await (await self.session.get(query)).text()
             soup = BeautifulSoup(page, 'html.parser')
             image = soup.find(id="highres").get("href")
-            await ctx.send(image)
+            emb = discord.Embed(title="Konachan")
+            emb.set_image(url=image)
+            await ctx.send(embed=emb)
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
@@ -249,7 +253,9 @@ class NSFW(commands.Cog):
             page = await (await self.session.get(query)).text()
             soup = BeautifulSoup(page, 'html.parser')
             image = soup.find(id="highres").get("href")
-            await ctx.send(image)
+            emb = discord.Embed(title="e621")
+            emb.set_image(url=image)
+            await ctx.send(embed=emb)
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
@@ -262,7 +268,9 @@ class NSFW(commands.Cog):
             page = await (await self.session.get(query)).text()
             soup = BeautifulSoup(page, 'html.parser')
             image = soup.find(id="image").get("src")
-            await ctx.send(image)
+            emb = discord.Embed(title="Rule34")
+            emb.set_image(url=image)
+            await ctx.send(embed=emb)
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
@@ -275,7 +283,9 @@ class NSFW(commands.Cog):
             page = await (await self.session.get(query)).text()
             soup = BeautifulSoup(page, 'html.parser')
             image = soup.find(id="image").get("src")
-            await ctx.send(image)
+            emb = discord.Embed(title="Danbooru")
+            emb.set_image(url=image)
+            await ctx.send(embed=emb)
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
@@ -288,7 +298,9 @@ class NSFW(commands.Cog):
             page = await (await self.session.get(query)).text()
             soup = BeautifulSoup(page, 'html.parser')
             image = soup.find(id="image").get("src")
-            await ctx.send(image)
+            emb = discord.Embed(title="Gelbooru")
+            emb.set_image(url=image)
+            await ctx.send(embed=emb)
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
@@ -301,7 +313,9 @@ class NSFW(commands.Cog):
             page = await (await self.session.get(query)).text()
             soup = BeautifulSoup(page, 'html.parser')
             image = soup.find(id="image").get("src")
-            await ctx.send("http:" + image)
+            emb = discord.Embed(title="Tbib")
+            emb.set_image(url="http:" + image)
+            await ctx.send(embed=emb)
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
@@ -314,7 +328,9 @@ class NSFW(commands.Cog):
             page = await (await self.session.get(query)).text()
             soup = BeautifulSoup(page, 'html.parser')
             image = soup.find(id="image").get("src")
-            await ctx.send(image)
+            emb = discord.Embed(title="xBooru")
+            emb.set_image(url=image)
+            await ctx.send(embed=emb)
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
@@ -327,7 +343,9 @@ class NSFW(commands.Cog):
             page = await (await self.session.get(query)).text()
             soup = BeautifulSoup(page, 'html.parser')
             image = soup.find(id="image").get("src")
-            await ctx.send(image)
+            emb = discord.Embed(title="FurryBooru")
+            emb.set_image(url=image)
+            await ctx.send(embed=emb)
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
@@ -340,24 +358,8 @@ class NSFW(commands.Cog):
             page = await (await self.session.get(query)).text()
             soup = BeautifulSoup(page, 'html.parser')
             image = soup.find(id="image").get("src")
-            await ctx.send(image)
+            emb = discord.Embed(title="DrunkenPumken")
+            emb.set_image(url=image)
+            await ctx.send(embed=emb)
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
-
-    @commands.command()
-    @commands.is_nsfw()
-    async def ysearch(self, ctx, *tags: str):
-        """Search Yandere With A Tag"""
-        if tags == ():
-            await ctx.send(":warning: Tags are missing.")
-        else:
-            try:
-                tags = ("+").join(tags)
-                query = ("https://yande.re/post.json?limit=42&tags=" + tags)
-                json = await (await self.session.get(query)).json()
-                if json != []:
-                    await ctx.send(random.choice(json)['jpeg_url'])
-                else:
-                    await ctx.send(":warning: Yande.re has no images for requested tags.")
-            except Exception as e:
-                await ctx.send(f":x: **Error:** `{e}`")
