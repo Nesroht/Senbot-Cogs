@@ -40,7 +40,6 @@ class NSFW(commands.Cog):
         self.bot = bot
         self.settings = Config.get_conf(self, identifier=69)
         self.credentials = credentials
-        self.client = GfycatClient(self.credentials.GFYCAT_ID, self.credentials.GFYCAT_SECRET)
         default_global = {
             "ama_ass": 0,
             "ama_boobs": 0,
@@ -55,6 +54,7 @@ class NSFW(commands.Cog):
         self.settings.register_global(**default_global)
         self._session = aiohttp.ClientSession(loop=self.bot.loop)
         self.reddit = praw.Reddit(client_id=self.credentials.CLIENT_ID, client_secret=self.credentials.CLIENT_SECRET, user_agent=self.credentials.USER_AGENT)
+        self.gfyclient = GfycatClient(self.credentials.GFYCAT_ID, self.credentials.GFYCAT_SECRET)
 
     async def get(self, url):
         async with self._session.get(url) as response:
@@ -392,7 +392,7 @@ class NSFW(commands.Cog):
                 emb = discord.Embed(title=post.title)
                 oldurl = post.url
                 if oldurl.startswith('https://gfycat'):
-                    print(self.client.check_link(oldurl))
+                    print(self.gfyclient.check_link(oldurl))
                     newurl1, newurl2 = post.url.split('//')
                     print(newurl1+newurl2)
                     newurl = newurl1 + "//giant."+newurl2+".gif"
