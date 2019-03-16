@@ -410,5 +410,5 @@ class NSFW(commands.Cog):
                 elif oldurl.startswith('https://i.'):
                     emb.set_image(url=oldurl)
                 else:
-                    embed.set_description(post.description)
+                    emb.set_description(post.description)
                 await ctx.send(embed=emb)
