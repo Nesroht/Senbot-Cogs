@@ -1,4 +1,6 @@
 from .nsfw import NSFW
 
 def setup(bot):
-    bot.add_cog(NSFW(bot))
+    n = NSFW(bot)
+    bot.add_cog(n)
+    bot.loop.create_task(n.boob_knowlegde())
