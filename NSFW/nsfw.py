@@ -54,7 +54,7 @@ class NSFW(commands.Cog):
         self.settings.register_global(**default_global)
         self._session = aiohttp.ClientSession(loop=self.bot.loop)
         self.reddit = praw.Reddit(client_id=self.credentials.CLIENT_ID, client_secret=self.credentials.CLIENT_SECRET, user_agent=self.credentials.USER_AGENT)
-        self.gfyclient = GfycatClient(self.credentials.GFYCAT_ID, self.credentials.GFYCAT_SECRET)
+        self.gfyclient = GfycatClient(client_id=self.credentials.GFYCAT_ID, client_secret=self.credentials.GFYCAT_SECRET)
 
     async def get(self, url):
         async with self._session.get(url) as response:
