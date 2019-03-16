@@ -103,7 +103,7 @@ class NSFW(commands.Cog):
 
     @checks.admin_or_permissions(administrator=True)
     @_nsfw.command(no_pm=True)
-    async def settings(self, ctx):
+    async def togglensfw(self, ctx):
         """Toggle oboobs nswf for this channel on/off.
         Admin/owner restricted."""
         nsfwChan = False
@@ -124,7 +124,7 @@ class NSFW(commands.Cog):
                 await ctx.send("nsfw OFF")
 
     @checks.admin_or_permissions(administrator=True)
-    @settings.command(no_pm=True)
+    @_nsfw.command(no_pm=True)
     async def invert(self, ctx):
         """Invert nsfw blacklist to whitelist
         Admin/owner restricted."""
@@ -136,7 +136,7 @@ class NSFW(commands.Cog):
             await ctx.send("The nsfw list for this server is now: default(blacklist)")
 
     @checks.is_owner()
-    @settings.command(hidden=True)
+    @_nsfw.command(hidden=True)
     async def update(self, ctx):
         await ctx.send("Starting update ...")
         await self.boob_knowlegde()
