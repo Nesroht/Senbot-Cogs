@@ -378,7 +378,7 @@ class NSFW(commands.Cog):
             await ctx.send(f":x: **Error:** `{e}`")
 
     @commands.command()
-    async def reddit(self, ctx, *args):
+    async def reddit(self, ctx, *, args):
         posts = reddit.subreddit(args[0]).hot(limit=100)
         random_post_number = secrets.randbelow(100)
         for i, post in enumerate(posts):
