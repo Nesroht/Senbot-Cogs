@@ -47,6 +47,7 @@ class NSFW(commands.Cog):
         self.settings.register_guild(**default_guild)
         self.settings.register_global(**default_global)
         self._session = aiohttp.ClientSession()
+        self.session = aiohttp.ClientSession(loop=self.bot.loop)
 
     async def get(self, url):
         async with self._session.get(url) as response:
