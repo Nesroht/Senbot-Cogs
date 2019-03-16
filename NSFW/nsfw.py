@@ -421,4 +421,4 @@ class NSFW(commands.Cog):
                     emb.set_image(url=oldurl)
                 await ctx.send(embed=emb)
                 if video == 1:
-                    await.ctx.send(oldurl)
+                    await ctx.send(oldurl)
