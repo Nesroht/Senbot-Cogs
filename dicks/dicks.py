@@ -7,4 +7,4 @@ class Dicks(commands.Cog):
     async def dicks(self, ctx):
         """This does stuff!"""
         # Your code will go here
-        await ctx.send("I can do stuff!")
+        await ctx.send("I can do stuff! dicks!")
