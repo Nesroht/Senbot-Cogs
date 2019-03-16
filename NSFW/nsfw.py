@@ -141,16 +141,16 @@ class NSFW(commands.Cog):
         await self.boob_knowlegde()
         await ctx.send("Looks done !")
 
-    async def boob_knowlegde(self, ctx):
+    async def boob_knowlegde(self):
         # KISS
         last_update = await self.settings.last_update()
         now = round(time.time())
-        await ctx.send("Current Time: " + now)
+        print("Current Time: " + now)
         interval = 86400 * 2
         if now >= last_update + interval:
             await self.settings.last_update.set(now)
         else:
-            await ctx.send("No update needed")
+            print("No update needed")
             return
 
         async def search(url, curr):
