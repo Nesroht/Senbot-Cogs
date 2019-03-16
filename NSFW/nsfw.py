@@ -382,32 +382,33 @@ class NSFW(commands.Cog):
 
     @commands.command()
     async def r(self, ctx, *, subreddit):
-        posts = self.reddit.subreddit(subreddit).hot(limit=32)
-        random_post_number = random.randint(1, 32)
+        posts = self.reddit.subreddit(subreddit).hot(limit=50)
+        random_post_number = random.randint(1, 50)
         for i, post in enumerate(posts):
             if i == random_post_number:
                 emb = discord.Embed(title=post.title + " | " + post.url)
-                if post.url.startswith('https://gfycat'):
+                oldurl = post.url
+                if oldurl.startswith('https://gfycat'):
                     newurl1, newurl2 = post.url.split('//')
                     print(newurl1+newurl2)
                     newurl = newurl1 + "//giant."+newurl2+".gif"
                     emb.set_image(url=newurl)
-                elif post.url.startswith('https://imgur') | post.url.startswith('https://m.imgur'):
+                elif oldurl.startswith('https://imgur') | post.url.startswith('https://m.imgur'):
                     newurl1, newurl2 = post.url.split('//')
                     print(newurl1 + newurl2)
                     newurl = newurl1 + "//i."+newurl2+".gif"
                     emb.set_image(url=newurl)
-                elif post.url.startswith('https://i.imgur') & post.url.endswith('v'):
+                elif oldurl.startswith('https://i.imgur') & post.url.endswith('v'):
                     newurl1, newurl2 = post.url.split('//')
                     print(newurl1 + newurl2)
                     newurl3 = newurl2.split('.gifv')
                     newurl = newurl1 + "//" + newurl3 + ".gif"
                     emb.set_image(url=newurl)
-                elif post.url.startswith('https://youtube') | post.url.startswith('https://www.pornhub') | post.url.startswith('https://pornhub'):
+                elif oldurl.startswith('https://youtube') | post.url.startswith('https://www.pornhub') | post.url.startswith('https://pornhub'):
                     newurl = post.url
                     emb.set_description(url=newurl)
-                elif post.url.startswith('https://i.'):
-                    emb.set_image(url=post.url)
+                elif oldurl.startswith('https://i.'):
+                    emb.set_image(url=oldurl)
                 else:
                     embed.set_description(post.description)
                 await ctx.send(embed=emb)
