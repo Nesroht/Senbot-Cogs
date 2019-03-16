@@ -145,10 +145,12 @@ class NSFW(commands.Cog):
         # KISS
         last_update = await self.settings.last_update()
         now = round(time.time())
+        await ctx.send("Current Time: " + now)
         interval = 86400 * 2
         if now >= last_update + interval:
             await self.settings.last_update.set(now)
         else:
+            await ctx.send("No update needed")
             return
 
         async def search(url, curr):
