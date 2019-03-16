@@ -87,7 +87,7 @@ class NSFW(commands.Cog):
             await ctx.send(embed=emb)
 
     @checks.admin_or_permissions(administrator=True)
-    @_oboobs.command(no_pm=True)
+    @_nsfw.command(no_pm=True)
     async def nsfw(self, ctx):
         """Toggle oboobs nswf for this channel on/off.
         Admin/owner restricted."""
@@ -109,7 +109,7 @@ class NSFW(commands.Cog):
                 await ctx.send("nsfw OFF")
 
     @checks.admin_or_permissions(administrator=True)
-    @_oboobs.command(no_pm=True)
+    @_nsfw.command(no_pm=True)
     async def invert(self, ctx):
         """Invert nsfw blacklist to whitelist
         Admin/owner restricted."""
@@ -121,7 +121,7 @@ class NSFW(commands.Cog):
             await ctx.send("The nsfw list for this server is now: default(blacklist)")
 
     @checks.is_owner()
-    @_oboobs.command(hidden=True)
+    @_nsfw.command(hidden=True)
     async def update(self, ctx):
         await ctx.send("Starting update ...")
         await self.boob_knowlegde()
@@ -199,7 +199,7 @@ class NSFW(commands.Cog):
             await self.settings.ama_ass.set(5500)
         print("Total amount of ass:", await self.settings.ama_ass())
 
-    @nsfw.command()
+    @_nsfw.command()
     @commands.is_nsfw()
     async def yandere(self, ctx):
         """Random Image From Yandere"""
@@ -212,7 +212,7 @@ class NSFW(commands.Cog):
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
-    @nsfw.command()
+    @_nsfw.command()
     @commands.is_nsfw()
     async def konachan(self, ctx):
         """Random Image From Konachan"""
@@ -225,7 +225,7 @@ class NSFW(commands.Cog):
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
-    @nsfw.command()
+    @_nsfw.command()
     @commands.is_nsfw()
     async def e621(self, ctx):
         """Random Image From e621"""
@@ -238,7 +238,7 @@ class NSFW(commands.Cog):
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
-    @nsfw.command()
+    @_nsfw.command()
     @commands.is_nsfw()
     async def rule34(self, ctx):
         """Random Image From rule34"""
@@ -251,7 +251,7 @@ class NSFW(commands.Cog):
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
-    @nsfw.command()
+    @_nsfw.command()
     @commands.is_nsfw()
     async def danbooru(self, ctx):
         """Random Image From Danbooru"""
@@ -264,7 +264,7 @@ class NSFW(commands.Cog):
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
-    @nsfw.command()
+    @_nsfw.command()
     @commands.is_nsfw()
     async def gelbooru(self, ctx):
         """Random Image From Gelbooru"""
@@ -277,7 +277,7 @@ class NSFW(commands.Cog):
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
-    @nsfw.command()
+    @_nsfw.command()
     @commands.is_nsfw()
     async def tbib(self, ctx):
         """Random Image From TBIB"""
@@ -290,7 +290,7 @@ class NSFW(commands.Cog):
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
-    @nsfw.command()
+    @_nsfw.command()
     @commands.is_nsfw()
     async def xbooru(self, ctx):
         """Random Image From Xbooru"""
@@ -303,7 +303,7 @@ class NSFW(commands.Cog):
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
-    @nsfw.command()
+    @_nsfw.command()
     @commands.is_nsfw()
     async def furrybooru(self, ctx):
         """Random Image From Furrybooru"""
@@ -316,7 +316,7 @@ class NSFW(commands.Cog):
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
-    @nsfw.command()
+    @_nsfw.command()
     @commands.is_nsfw()
     async def drunkenpumken(self, ctx):
         """Random Image From DrunkenPumken"""
@@ -329,7 +329,7 @@ class NSFW(commands.Cog):
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
-    @nsfw.command()
+    @_nsfw.command()
     @commands.is_nsfw()
     async def ysearch(self, ctx, *tags: str):
         """Search Yandere With A Tag"""
