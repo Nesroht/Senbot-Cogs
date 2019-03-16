@@ -387,5 +387,5 @@ class NSFW(commands.Cog):
         for i, post in enumerate(posts):
             if i == random_post_number:
                 emb = discord.Embed(title=post.title)
-                emb.set_image(url=post.image.url)
+                emb.set_image(url=post.url + ".gif")
                 await ctx.send(embed=emb)
