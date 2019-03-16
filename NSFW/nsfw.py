@@ -399,18 +399,18 @@ class NSFW(commands.Cog):
                     newurl1, newurl2 = post.url.split('/gfycat.com/')
                     if "-" in newurl2:
                         newurl2 = newurl2.split('-')[0]
-                    print(newurl2)
+                    #print(newurl2)
                     urlList = self.gfyclient.query_gfy(newurl2)
                     gifUrl = urlList["gfyItem"]
                     emb.set_image(url=gifUrl["gifUrl"])
                 elif oldurl.startswith('https://imgur') | oldurl.startswith('https://m.imgur'):
                     newurl1, newurl2 = post.url.split('//')
-                    print(newurl1 + newurl2)
+                    #print(newurl1 + newurl2)
                     newurl = newurl1 + "//i."+newurl2+".gif"
                     emb.set_image(url=newurl)
                 elif oldurl.startswith('https://i.imgur') & oldurl.endswith('v'):
                     newurl1, newurl2 = post.url.split('//')
-                    print(newurl1 + newurl2)
+                    #print(newurl1 + newurl2)
                     newurl3 = newurl2.split('.gifv')
                     newurl = newurl1 + "//" + newurl3 + ".gif"
                     emb.set_image(url=newurl)
