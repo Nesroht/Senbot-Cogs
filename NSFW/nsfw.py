@@ -402,18 +402,18 @@ class NSFW(commands.Cog):
                     urlList = self.gfyclient.query_gfy(newurl2)
                     gifUrl = urlList["gfyItem"]
                     emb.set_image(url=gifUrl["gifUrl"])
-                elif oldurl.startswith('https://imgur') | post.url.startswith('https://m.imgur'):
+                elif oldurl.startswith('https://imgur') | oldurl.startswith('https://m.imgur'):
                     newurl1, newurl2 = post.url.split('//')
                     print(newurl1 + newurl2)
                     newurl = newurl1 + "//i."+newurl2+".gif"
                     emb.set_image(url=newurl)
-                elif oldurl.startswith('https://i.imgur') & post.url.endswith('v'):
+                elif oldurl.startswith('https://i.imgur') & oldurl.endswith('v'):
                     newurl1, newurl2 = post.url.split('//')
                     print(newurl1 + newurl2)
                     newurl3 = newurl2.split('.gifv')
                     newurl = newurl1 + "//" + newurl3 + ".gif"
                     emb.set_image(url=newurl)
-                elif oldurl.startswith('https://youtube') | post.url.startswith('https://www.pornhub') | post.url.startswith('https://pornhub'):
+                elif oldurl.startswith('https://youtube') | oldurl.startswith('https://www.pornhub') | oldurl.startswith('https://pornhub') | oldurl.startswith('https://reddit'):
                     #newurl = post.url
                     random_post_number += 1
                     continue
