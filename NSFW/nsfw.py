@@ -264,7 +264,7 @@ class NSFW(commands.Cog):
             query = ("https://e621.net/post/random")
             page = await (await self._session.get(query)).text()
             soup = BeautifulSoup(page, 'html.parser')
-            image = soup.find(id="highres").get("href")
+            image = soup.find(id="image").get("src")
             emb = discord.Embed(title="e621")
             emb.set_image(url=image)
             await ctx.send(embed=emb)
@@ -388,6 +388,7 @@ class NSFW(commands.Cog):
 
     @commands.command()
     async def r(self, ctx, *, subreddit):
+        """Random Post from subreddit"""
         posts = self.reddit.subreddit(subreddit).hot(limit=50)
         random_post_number = random.randint(1, 50)
         for i, post in enumerate(posts):
