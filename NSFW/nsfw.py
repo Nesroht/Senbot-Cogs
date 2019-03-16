@@ -146,7 +146,6 @@ class NSFW(commands.Cog):
         last_update = await self.settings.last_update()
         now = round(time.time())
         interval = 86400 * 2
-        await self.settings.last_update.set(0)
         print("Current Time: " + str(now) + " | Last Update: " + str(last_update + interval))
         if now >= last_update + interval:
             await self.settings.last_update.set(now)
