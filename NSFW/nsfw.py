@@ -371,7 +371,7 @@ class NSFW(commands.Cog):
         """Random Gif"""
         try:
             emb = discord.Embed(title="Random Test")
-            emb.set_image(url="https://tenor.com/view/2018-fish-dead-gif-10654993")
+            emb.set_image(url="https://media1.tenor.com/images/e0a3715cf354232db50d6bd3476b0576/tenor.gif?itemid=10654993")
             await ctx.send(embed=emb)
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
