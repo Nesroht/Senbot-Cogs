@@ -141,7 +141,7 @@ class NSFW(commands.Cog):
         await self.boob_knowlegde()
         await ctx.send("Looks done !")
 
-    async def boob_knowlegde(self):
+    async def boob_knowlegde(self, ctx):
         # KISS
         last_update = await self.settings.last_update()
         now = round(time.time())
