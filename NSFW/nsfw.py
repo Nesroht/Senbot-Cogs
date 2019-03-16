@@ -256,25 +256,25 @@ class NSFW(commands.Cog):
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
-    @commands.command()
-    @commands.is_nsfw()
-    async def e621(self, ctx):
-        """Random Image From e621"""
-        try:
-            query = ("https://e621.net/post/random")
-            page = await (await self._session.get(query)).text()
-            soup = BeautifulSoup(page, 'html.parser')
-            image = soup.find(id="image").get("src")
-            emb = discord.Embed(title="e621")
-            emb.set_image(url=image)
-            await ctx.send(embed=emb)
-        except Exception as e:
-            await ctx.send(f":x: **Error:** `{e}`")
+    #@commands.command()
+    #@commands.is_nsfw()
+    #async def e621(self, ctx):
+    #    """Random Image From e621"""
+    #    try:
+    #        query = ("https://e621.net/post/random")
+    #        page = await (await self._session.get(query)).text()
+    #        soup = BeautifulSoup(page, 'html.parser')
+    #        image = soup.find(id="image").get("src")
+    #        emb = discord.Embed(title="e621")
+    #        emb.set_image(url=image)
+    #        await ctx.send(embed=emb)
+    #    except Exception as e:
+    #        await ctx.send(f":x: **Error:** `{e}`")
 
     @commands.command()
     @commands.is_nsfw()
     async def rule34(self, ctx):
-        """Random Image From rule34"""
+        """Random Image From rule34"""#
         try:
             query = ("http://rule34.xxx/index.php?page=post&s=random")
             page = await (await self._session.get(query)).text()
@@ -376,15 +376,15 @@ class NSFW(commands.Cog):
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
-    @commands.command()
-    async def randomtest(self, ctx):
-        """Random Gif"""
-        try:
-            emb = discord.Embed(title="Random Test")
-            emb.set_image(url="https://media1.tenor.com/images/e0a3715cf354232db50d6bd3476b0576/tenor.gif?itemid=10654993")
-            await ctx.send(embed=emb)
-        except Exception as e:
-            await ctx.send(f":x: **Error:** `{e}`")
+    #@commands.command()
+    #a#sync def randomtest(self, ctx):
+    #    """Random Gif"""
+    #    try:
+    #        emb = discord.Embed(title="Random Test")
+    #        emb.set_image(url="https://media1.tenor.com/images/e0a3715cf354232db50d6bd3476b0576/tenor.gif?itemid=10654993")
+    #        await ctx.send(embed=emb)
+    #    except Exception as e:
+    #        await ctx.send(f":x: **Error:** `{e}`")
 
     @commands.command()
     async def r(self, ctx, *, subreddit):
