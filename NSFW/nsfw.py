@@ -8,6 +8,8 @@ import random
 
 from NSFW import credentials
 from bs4 import BeautifulSoup
+from gfycat.clien import GfycatClient
+
 import praw
 import os
 import sys
@@ -38,6 +40,7 @@ class NSFW(commands.Cog):
         self.bot = bot
         self.settings = Config.get_conf(self, identifier=69)
         self.credentials = credentials
+        self.client = GfycatClient(self.credentials.GFYCAT_ID, self.credentials.GFYCAT_SECRET)
         default_global = {
             "ama_ass": 0,
             "ama_boobs": 0,
@@ -389,6 +392,7 @@ class NSFW(commands.Cog):
                 emb = discord.Embed(title=post.title)
                 oldurl = post.url
                 if oldurl.startswith('https://gfycat'):
+                    print(self.client.check_link(oldurl))
                     newurl1, newurl2 = post.url.split('//')
                     print(newurl1+newurl2)
                     newurl = newurl1 + "//giant."+newurl2+".gif"
