@@ -392,7 +392,7 @@ class NSFW(commands.Cog):
         random_post_number = random.randint(1, 50)
         for i, post in enumerate(posts):
             if i == random_post_number:
-                emb = discord.Embed(title=post.title, description=post.url)
+                emb = discord.Embed(title=post.title)
                 video = 0
                 oldurl = post.url
                 if oldurl.startswith('https://gfycat'):
