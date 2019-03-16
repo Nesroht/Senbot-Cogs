@@ -392,18 +392,18 @@ class NSFW(commands.Cog):
                     print(newurl1+newurl2)
                     newurl = newurl1 + "//giant."+newurl2+".gif"
                     emb.set_image(url=newurl)
-                if post.url.startswith('https://imgur') | post.url.startswith('https://m.imgur'):
+                elif post.url.startswith('https://imgur') | post.url.startswith('https://m.imgur'):
                     newurl1, newurl2 = post.url.split('//')
                     print(newurl1 + newurl2)
                     newurl = newurl1 + "//i."+newurl2+".gif"
                     emb.set_image(url=newurl)
-                if post.url.startswith('https://i.imgur') & post.url.endswith('v'):
+                elif post.url.startswith('https://i.imgur') & post.url.endswith('v'):
                     newurl1, newurl2 = post.url.split('//')
                     print(newurl1 + newurl2)
                     newurl3 = newurl2.split('.gifv')
                     newurl = newurl1 + "//" + newurl3 + ".gif"
                     emb.set_image(url=newurl)
-                if post.url.startswith('https://youtube'):
+                elif post.url.startswith('https://youtube') | post.url.startswith('https://www.pornhub') | post.url.startswith('https://pornhub'):
                     newurl = post.url
                     emb.set_description(url=newurl)
                 else:
