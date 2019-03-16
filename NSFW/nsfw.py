@@ -387,20 +387,23 @@ class NSFW(commands.Cog):
         for i, post in enumerate(posts):
             if i == random_post_number:
                 emb = discord.Embed(title=post.title + " | " + post.url)
-                if post.url.startswith("https://gfycat"):
+                if post.url.startswith('https://gfycat'):
                     newurl1, newurl2 = post.url.split('//')
+                    print(newurl1+newurl2)
                     newurl = newurl1 + "//giant."+newurl2+".gif"
                     emb.set_image(url=newurl)
-                if post.url.startswith("https://imgur") | post.url.startswith("https://m.imgur"):
+                if post.url.startswith('https://imgur') | post.url.startswith('https://m.imgur'):
                     newurl1, newurl2 = post.url.split('//')
+                    print(newurl1 + newurl2)
                     newurl = newurl1 + "//i."+newurl2+".gif"
                     emb.set_image(url=newurl)
-                if post.url.startswith("https://i.imgur") & post.url.endswith("v"):
+                if post.url.startswith('https://i.imgur') & post.url.endswith('v'):
                     newurl1, newurl2 = post.url.split('//')
+                    print(newurl1 + newurl2)
                     newurl3 = newurl2.split('.gifv')
                     newurl = newurl1 + "//" + newurl3 + ".gif"
                     emb.set_image(url=newurl)
-                if post.url.startswith("https://youtube"):
+                if post.url.startswith('https://youtube'):
                     newurl = post.url
                     emb.set_description(url=newurl)
                 else:
