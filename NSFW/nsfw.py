@@ -43,8 +43,7 @@ class NSFW(commands.Cog):
     async def _nsfw(self, ctx):
         """The nsfw pictures of nature cog."""
         if ctx.invoked_subcommand is None:
-            await
-            ctx.send_help()
+            await ctx.send_help()
             return
 
         # Boobs
@@ -56,19 +55,16 @@ class NSFW(commands.Cog):
             rdm = random.randint(0, await
             self.settings.ama_boobs())
             search = ("http://api.oboobs.ru/boobs/{}".format(rdm))
-            result = await
-            self.get(search)
+            result = await self.get(search)
             tmp = random.choice(result)
             boob = "http://media.oboobs.ru/{}".format(tmp["preview"])
         except Exception as e:
-            await
-            ctx.send("Error getting results.\n{}".format(e))
+            await ctx.send("Error getting results.\n{}".format(e))
             return
         if ctx.channel.is_nsfw():
             emb = discord.Embed(title="Boobs")
             emb.set_image(url=boob)
-            await
-            ctx.send(embed=emb)
+            await ctx.send(embed=emb)
 
     # Ass
     @commands.command(no_pm=False)
@@ -83,14 +79,12 @@ class NSFW(commands.Cog):
             tmp = random.choice(result)
             ass = "http://media.obutts.ru/{}".format(tmp["preview"])
         except Exception as e:
-            await
-            ctx.send("Error getting results.\n{}".format(e))
+            await ctx.send("Error getting results.\n{}".format(e))
             return
         if ctx.channel.is_nsfw():
             emb = discord.Embed(title="Ass")
             emb.set_image(url=ass)
-            await
-            ctx.send(embed=emb)
+            await ctx.send(embed=emb)
 
     @checks.admin_or_permissions(administrator=True)
     @_oboobs.command(no_pm=True)
@@ -99,25 +93,20 @@ class NSFW(commands.Cog):
         Admin/owner restricted."""
         nsfwChan = False
         # Reset nsfw.
-        chans = await
-        self.settings.guild(ctx.guild).nsfw_channels()
+        chans = await self.settings.guild(ctx.guild).nsfw_channels()
         for a in chans:
             if a == ctx.message.channel.id:
                 nsfwChan = True
                 chans.remove(a)
-                await
-                self.settings.guild(ctx.guild).nsfw_channels.set(chans)
-                await
-                ctx.send("nsfw ON")
+                await self.settings.guild(ctx.guild).nsfw_channels.set(chans)
+                await ctx.send("nsfw ON")
                 break
         # Set nsfw.
         if not nsfwChan:
             if ctx.message.channel not in chans:
                 chans.append(ctx.message.channel.id)
-                await
-                self.settings.guild(ctx.guild).nsfw_channels.set(chans)
-                await
-                ctx.send("nsfw OFF")
+                await self.settings.guild(ctx.guild).nsfw_channels.set(chans)
+                await ctx.send("nsfw OFF")
 
     @checks.admin_or_permissions(administrator=True)
     @_oboobs.command(no_pm=True)
@@ -125,47 +114,36 @@ class NSFW(commands.Cog):
         """Invert nsfw blacklist to whitelist
         Admin/owner restricted."""
         if not await self.settings.guild(ctx.guild).invert():
-            await
-            self.settings.guild(ctx.guild).invert.set(True)
-            await
-            ctx.send("The nsfw list for all servers is now: inverted.")
+            await self.settings.guild(ctx.guild).invert.set(True)
+            await ctx.send("The nsfw list for all servers is now: inverted.")
         elif await self.settings.guild(ctx.guild).invert():
-            await
-            self.settings.guild(ctx.guild).invert.set(False)
-            await
-            ctx.send("The nsfw list for this server is now: default(blacklist)")
+            await self.settings.guild(ctx.guild).invert.set(False)
+            await ctx.send("The nsfw list for this server is now: default(blacklist)")
 
     @checks.is_owner()
     @_oboobs.command(hidden=True)
     async def update(self, ctx):
-        await
-        ctx.send("Starting update ...")
-        await
-        self.boob_knowlegde()
-        await
-        ctx.send("Looks done !")
+        await ctx.send("Starting update ...")
+        await self.boob_knowlegde()
+        await ctx.send("Looks done !")
 
     async def boob_knowlegde(self):
         # KISS
-        last_update = await
-        self.settings.last_update()
+        last_update = await self.settings.last_update()
         now = round(time.time())
         interval = 86400 * 2
         if now >= last_update + interval:
-            await
-            self.settings.last_update.set(now)
+            await self.settings.last_update.set(now)
         else:
             return
 
         async def search(url, curr):
             search = ("{}{}".format(url, curr))
-            return await
-            self.get(search)
+            return await self.get(search)
 
         # Upadate boobs len
         print("Updating amount of boobs...")
-        curr_boobs = await
-        self.settings.ama_boobs()
+        curr_boobs = await self.settings.ama_boobs()
         url = "http://api.oboobs.ru/boobs/"
         done = False
         reachable = curr_boobs
@@ -173,34 +151,27 @@ class NSFW(commands.Cog):
         while not done:
             q = reachable + step
             print("Searching for boobs:", q)
-            res = await
-            search(url, q)
+            res = await search(url, q)
             if res != []:
                 reachable = q
-                res_dc = await
-                search(url, q + 1)
+                res_dc = await search(url, q + 1)
                 if res_dc == []:
-                    await
-                    self.settings.ama_boobs.set(reachable)
+                    await self.settings.ama_boobs.set(reachable)
                     break
                 else:
-                    await
-                    asyncio.sleep(1)  # Trying to be a bit gentle for the api.
+                    await asyncio.sleep(1)  # Trying to be a bit gentle for the api.
                     continue
             elif res == []:
                 step = round(step / 2)
                 if step <= 1:
-                    await
-                    self.settings.ama_boobs.set(curr_boobs)
+                    await self.settings.ama_boobs.set(curr_boobs)
                     done = True
-            await
-            asyncio.sleep(1)
+            await asyncio.sleep(1)
         print("Total amount of boobs:", await self.settings.ama_boobs())
 
         # Upadate ass len
         print("Updating amount of ass...")
-        curr_ass = await
-        self.settings.ama_ass()
+        curr_ass = await self.settings.ama_ass()
         url = "http://api.obutts.ru/butts/"
         done = False
         reachable = curr_ass
@@ -208,29 +179,22 @@ class NSFW(commands.Cog):
         while not done:
             q = reachable + step
             print("Searching for ass:", q)
-            res = await
-            search(url, q)
+            res = await search(url, q)
             if res != []:
                 reachable = q
-                res_dc = await
-                search(url, q + 1)
+                res_dc = await search(url, q + 1)
                 if res_dc == []:
-                    await
-                    self.settings.ama_ass.set(reachable)
+                    await self.settings.ama_ass.set(reachable)
                     break
                 else:
-                    await
-                    asyncio.sleep(1)
+                    await asyncio.sleep(1)
                     continue
             elif res == []:
                 step = round(step / 2)
                 if step <= 1:
-                    await
-                    self.settings.ama_ass.set(curr_ass)
+                    await self.settings.ama_ass.set(curr_ass)
                     done = True
-            await
-            asyncio.sleep(1)
+            await asyncio.sleep(1)
         if await self.settings.ama_ass() == 0:
-            await
-            self.settings.ama_ass.set(5500)
+            await self.settings.ama_ass.set(5500)
         print("Total amount of ass:", await self.settings.ama_ass())
