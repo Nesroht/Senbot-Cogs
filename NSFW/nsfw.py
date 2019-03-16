@@ -73,11 +73,9 @@ class NSFW(commands.Cog):
     async def ass(self, ctx):
         """Shows some ass."""
         try:
-            rdm = random.randint(0, await
-            self.settings.ama_ass())
+            rdm = random.randint(0, await self.settings.ama_ass())
             search = ("http://api.obutts.ru/butts/{}".format(rdm))
-            result = await
-            self.get(search)
+            result = await self.get(search)
             tmp = random.choice(result)
             ass = "http://media.obutts.ru/{}".format(tmp["preview"])
         except Exception as e:
@@ -200,7 +198,7 @@ class NSFW(commands.Cog):
         if await self.settings.ama_ass() == 0:
             await self.settings.ama_ass.set(5500)
         print("Total amount of ass:", await self.settings.ama_ass())
-        
+
     @nsfw.command()
     @commands.is_nsfw()
     async def yandere(self, ctx):
