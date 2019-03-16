@@ -394,9 +394,8 @@ class NSFW(commands.Cog):
                 emb = discord.Embed(title=post.title)
                 oldurl = post.url
                 if oldurl.startswith('https://gfycat'):
-                    print(self.gfyclient.check_link(oldurl))
-                    newurl1, newurl2 = post.url.split('//')
-                    print(newurl1+newurl2)
+                    newurl1, newurl2 = post.url.split('/gfycat.com/')
+                    print(self.gfyclient.query_gfy(newurl2))
                     newurl = newurl1 + "//giant."+newurl2+".gif"
                     emb.set_image(url=newurl)
                 elif oldurl.startswith('https://imgur') | post.url.startswith('https://m.imgur'):
