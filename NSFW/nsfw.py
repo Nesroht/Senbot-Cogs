@@ -412,7 +412,7 @@ class NSFW(commands.Cog):
                     emb.set_image(url=newurl)
                 elif oldurl.startswith('https://youtube') | post.url.startswith('https://www.pornhub') | post.url.startswith('https://pornhub'):
                     #newurl = post.url
-                    emb.set_thumbnail(url=oldurl)
+                    random_post_number += 1
                 elif oldurl.startswith('https://i.'):
                     emb.set_image(url=oldurl)
                 await ctx.send(embed=emb)
