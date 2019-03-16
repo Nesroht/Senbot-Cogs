@@ -1,6 +1,6 @@
 from redbot.core import commands
 
-class Dicks(commands.Cog):
+class NSFW(commands.Cog):
     """My custom cog"""
 
     @commands.command()

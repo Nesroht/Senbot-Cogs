@@ -1,4 +1,4 @@
-from .dicks import Dicks
+from .nsfw import NSFW
 
 def setup(bot):
-    bot.add_cog(Dicks())
+    bot.add_cog(NSFW())
