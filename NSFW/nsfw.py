@@ -437,6 +437,7 @@ class NSFW(commands.Cog):
                             'https://soundcloud') or oldurl.startswith(
                             'https://www.soundcloud'):
                         # newurl = post.url
+                        print(oldurl)
                         video = 1
                     elif oldurl.startswith('https://i.'):
                         emb.set_image(url=oldurl)
