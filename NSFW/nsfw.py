@@ -429,7 +429,7 @@ class NSFW(commands.Cog):
                             'https://www.pornhub') or oldurl.startswith('https://pornhub') or oldurl.startswith(
                             'https://www.reddit') or oldurl.startswith(
                             'https://reddit') or oldurl.startswith(
-                            'https://v.reddit') or oldurl.startswith(
+                            'https://v.redd') or oldurl.startswith(
                             'https://soundcloud') or oldurl.startswith(
                             'https://www.soundcloud'):
                         # newurl = post.url
