@@ -395,6 +395,7 @@ class NSFW(commands.Cog):
             numberofposts = list(posts)
             print(len(numberofposts))
             random_post_number = random.randint(1, len(numberofposts))
+            print(random_post_number)
             for i, post in enumerate(posts):
                 if i == random_post_number:
                     if post.url is None:
