@@ -389,8 +389,8 @@ class NSFW(commands.Cog):
     @commands.command()
     async def r(self, ctx, *, subreddit):
         """Random Post from subreddit"""
-        posts = self.reddit.subreddit(subreddit).hot(limit=50)
-        random_post_number = random.randint(1, 50)
+        posts = self.reddit.subreddit(subreddit).hot(limit=100)
+        random_post_number = random.randint(1, 100)
         for i, post in enumerate(posts):
             if i == random_post_number:
                 emb = discord.Embed(title=post.title)
