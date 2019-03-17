@@ -420,7 +420,9 @@ class NSFW(commands.Cog):
                     elif oldurl.startswith('https://youtube') | oldurl.startswith(
                             'https://youtu.be') | oldurl.startswith('https://www.youtube') | oldurl.startswith(
                             'https://www.pornhub') | oldurl.startswith('https://pornhub') | oldurl.startswith(
-                            'https://www.reddit'):
+                            'https://www.reddit') | oldurl.startswith(
+                            'https://soundcloud') | oldurl.startswith(
+                            'https://www.soundcloud'):
                         # newurl = post.url
                         video = 1
                     elif oldurl.startswith('https://i.'):
