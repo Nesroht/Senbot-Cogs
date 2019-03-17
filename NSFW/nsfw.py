@@ -388,7 +388,6 @@ class NSFW(commands.Cog):
     #        await ctx.send(f":x: **Error:** `{e}`")
 
     @commands.command()
-    @commands.is_nsfw()
     async def r(self, ctx, *, subreddit):
         """Random Post from subreddit"""
         try:
@@ -403,6 +402,9 @@ class NSFW(commands.Cog):
                     if post.url is None:
                         random_post_number += 1
                         continue
+                    if ctx.channel.is_nsfw() == False & post.over_18 == True:
+                        await ctx.send("**`r/"+subreddit+" is not fit for this discord channel!`**")
+                        break
                     emb = discord.Embed(title="r/" + subreddit, description=post.title)
                     video = 0
                     oldurl = post.url
