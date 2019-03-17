@@ -395,6 +395,9 @@ class NSFW(commands.Cog):
             random_post_number = random.randint(1, 100)
             for i, post in enumerate(posts):
                 if i == random_post_number:
+                    if post.url is None:
+                        random_post_number++
+                        continue
                     emb = discord.Embed(title="r/" + subreddit, description=post.title)
                     video = 0
                     oldurl = post.url
