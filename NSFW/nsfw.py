@@ -387,6 +387,7 @@ class NSFW(commands.Cog):
     #        await ctx.send(f":x: **Error:** `{e}`")
 
     @commands.command()
+    @commands.is_nsfw()
     async def r(self, ctx, *, subreddit):
         """Random Post from subreddit"""
         posts = self.reddit.subreddit(subreddit).hot(limit=100)
