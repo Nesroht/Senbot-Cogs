@@ -391,9 +391,10 @@ class NSFW(commands.Cog):
     async def r(self, ctx, *, subreddit):
         """Random Post from subreddit"""
         try:
-            posts = self.reddit.subreddit(subreddit).hot()
-            print(posts.length)
-            random_post_number = random.randint(1, posts.length)
+            posts = self.reddit.subreddit(subreddit).hot(limit=None)
+            numberofposts = list(posts)
+            print len(numberofposts)
+            random_post_number = random.randint(1, len(numberofposts))
             for i, post in enumerate(posts):
                 if i == random_post_number:
                     if post.url is None:
