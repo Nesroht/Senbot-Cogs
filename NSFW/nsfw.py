@@ -432,6 +432,8 @@ class NSFW(commands.Cog):
                             'https://youtu.be') | oldurl.startswith('https://www.youtube') | oldurl.startswith(
                             'https://www.pornhub') | oldurl.startswith('https://pornhub') | oldurl.startswith(
                             'https://www.reddit') | oldurl.startswith(
+                            'https://reddit') | oldurl.startswith(
+                            'https://v.reddit') | oldurl.startswith(
                             'https://soundcloud') | oldurl.startswith(
                             'https://www.soundcloud'):
                         # newurl = post.url
