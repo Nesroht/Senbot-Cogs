@@ -398,7 +398,7 @@ class NSFW(commands.Cog):
             for i, post in enumerate(posts):
                 #print(i)
                 if i == random_post_number:
-                    #print("success")
+                    print(post.url)
                     if post.url is None or post.stickied:
                         random_post_number += 1
                         continue
@@ -437,7 +437,6 @@ class NSFW(commands.Cog):
                             'https://soundcloud') or oldurl.startswith(
                             'https://www.soundcloud'):
                         # newurl = post.url
-                        print(oldurl)
                         video = 1
                     elif oldurl.startswith('https://i.'):
                         emb.set_image(url=oldurl)
