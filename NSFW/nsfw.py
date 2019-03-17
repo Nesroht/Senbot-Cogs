@@ -438,6 +438,7 @@ class NSFW(commands.Cog):
                     await ctx.send(embed=emb)
                     if video == 1:
                         await ctx.send(oldurl)
+                    break
         except Exception as e:
             #await ctx.send("**`Can't find subreddit " + subreddit + "`**")
             await ctx.send(f":x: **Error:** `{e}`")
