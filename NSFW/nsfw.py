@@ -398,9 +398,9 @@ class NSFW(commands.Cog):
             posts = self.reddit.subreddit(subreddit).hot(limit=250)
             #print(random_post_number)
             for i, post in enumerate(posts):
-                print(i)
+                #print(i)
                 if i == random_post_number:
-                    print("success")
+                    #print("success")
                     if post.url is None:
                         random_post_number += 1
                         continue
