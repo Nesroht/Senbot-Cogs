@@ -393,7 +393,7 @@ class NSFW(commands.Cog):
         try:
             posts = self.reddit.subreddit(subreddit).hot(limit=None)
             numberofposts = list(posts)
-            print len(numberofposts)
+            print(len(numberofposts))
             random_post_number = random.randint(1, len(numberofposts))
             for i, post in enumerate(posts):
                 if i == random_post_number:
