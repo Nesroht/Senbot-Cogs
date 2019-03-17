@@ -399,7 +399,7 @@ class NSFW(commands.Cog):
                 #print(i)
                 if i == random_post_number:
                     #print("success")
-                    if post.url is None:
+                    if post.url is None or post.stickied:
                         random_post_number += 1
                         continue
                     #print("NSFW Channel?: "+ str(ctx.channel.is_nsfw()) + " | NSFW Post?: "+str(post.over_18))
@@ -417,24 +417,24 @@ class NSFW(commands.Cog):
                         urlList = self.gfyclient.query_gfy(newurl2)
                         gifUrl = urlList["gfyItem"]
                         emb.set_image(url=gifUrl["gifUrl"])
-                    elif oldurl.startswith('https://imgur') | oldurl.startswith('https://m.imgur'):
+                    elif oldurl.startswith('https://imgur') or oldurl.startswith('https://m.imgur'):
                         newurl1, newurl2 = post.url.split('//')
                         # print(newurl1 + newurl2)
                         newurl = newurl1 + "//i." + newurl2 + ".gif"
                         emb.set_image(url=newurl)
-                    elif oldurl.startswith('https://i.imgur') & oldurl.endswith('v'):
+                    elif oldurl.startswith('https://i.imgur') and oldurl.endswith('v'):
                         newurl1, newurl2 = post.url.split('//')
                         # print(newurl1 + newurl2)
                         newurl3 = newurl2.split('.gifv')
                         newurl = newurl1 + "//" + newurl3 + ".gif"
                         emb.set_image(url=newurl)
-                    elif oldurl.startswith('https://youtube') | oldurl.startswith(
-                            'https://youtu.be') | oldurl.startswith('https://www.youtube') | oldurl.startswith(
-                            'https://www.pornhub') | oldurl.startswith('https://pornhub') | oldurl.startswith(
-                            'https://www.reddit') | oldurl.startswith(
-                            'https://reddit') | oldurl.startswith(
-                            'https://v.reddit') | oldurl.startswith(
-                            'https://soundcloud') | oldurl.startswith(
+                    elif oldurl.startswith('https://youtube') or oldurl.startswith(
+                            'https://youtu.be') or oldurl.startswith('https://www.youtube') or oldurl.startswith(
+                            'https://www.pornhub') or oldurl.startswith('https://pornhub') or oldurl.startswith(
+                            'https://www.reddit') or oldurl.startswith(
+                            'https://reddit') or oldurl.startswith(
+                            'https://v.reddit') or oldurl.startswith(
+                            'https://soundcloud') or oldurl.startswith(
                             'https://www.soundcloud'):
                         # newurl = post.url
                         video = 1
