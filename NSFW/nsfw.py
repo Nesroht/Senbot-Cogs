@@ -425,7 +425,7 @@ class NSFW(commands.Cog):
                     elif oldurl.startswith('https://i.imgur') and oldurl.endswith('v'):
                         newurl1, newurl2 = post.url.split('//')
                         # print(newurl1 + newurl2)
-                        newurl3 = newurl2.split('.gifv')
+                        newurl3, newurl4 = newurl2.split('.gif')
                         newurl = newurl1 + "//" + newurl3 + ".gif"
                         emb.set_image(url=newurl)
                     elif oldurl.startswith('https://youtube') or oldurl.startswith(
