@@ -402,7 +402,7 @@ class NSFW(commands.Cog):
                     if post.url is None:
                         random_post_number += 1
                         continue
-                    print("NSFW Channel?: "+ ctx.channel.is_nsfw() + " | NSFW Post?: "+post.over_18)
+                    print("NSFW Channel?: "+ str(ctx.channel.is_nsfw()) + " | NSFW Post?: "+str(post.over_18))
                     if ctx.channel.is_nsfw() == False & post.over_18 == True:
                         await ctx.send("**`r/"+subreddit+" is not fit for this discord channel!`**")
                         break
