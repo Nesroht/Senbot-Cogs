@@ -425,10 +425,8 @@ class NSFW(commands.Cog):
                         video = 1
                     elif oldurl.startswith('https://i.'):
                         emb.set_image(url=oldurl)
-                    await
-                    ctx.send(embed=emb)
+                    await ctx.send(embed=emb)
                     if video == 1:
-                        await
-                        ctx.send(oldurl)
+                        await ctx.send(oldurl)
         except Exception as e:
         await ctx.send("**`Can't find subreddit " + subreddit + "`**")
