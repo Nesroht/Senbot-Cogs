@@ -390,37 +390,45 @@ class NSFW(commands.Cog):
     @commands.is_nsfw()
     async def r(self, ctx, *, subreddit):
         """Random Post from subreddit"""
-        posts = self.reddit.subreddit(subreddit).hot(limit=100)
-        random_post_number = random.randint(1, 100)
-        for i, post in enumerate(posts):
-            if i == random_post_number:
-                emb = discord.Embed(title="r/"+subreddit, description=post.title)
-                video = 0
-                oldurl = post.url
-                if oldurl.startswith('https://gfycat'):
-                    newurl1, newurl2 = post.url.split('/gfycat.com/')
-                    if "-" in newurl2:
-                        newurl2 = newurl2.split('-')[0]
-                    #print(newurl2)
-                    urlList = self.gfyclient.query_gfy(newurl2)
-                    gifUrl = urlList["gfyItem"]
-                    emb.set_image(url=gifUrl["gifUrl"])
-                elif oldurl.startswith('https://imgur') | oldurl.startswith('https://m.imgur'):
-                    newurl1, newurl2 = post.url.split('//')
-                    #print(newurl1 + newurl2)
-                    newurl = newurl1 + "//i."+newurl2+".gif"
-                    emb.set_image(url=newurl)
-                elif oldurl.startswith('https://i.imgur') & oldurl.endswith('v'):
-                    newurl1, newurl2 = post.url.split('//')
-                    #print(newurl1 + newurl2)
-                    newurl3 = newurl2.split('.gifv')
-                    newurl = newurl1 + "//" + newurl3 + ".gif"
-                    emb.set_image(url=newurl)
-                elif oldurl.startswith('https://youtube') | oldurl.startswith('https://youtu.be') | oldurl.startswith('https://www.youtube') | oldurl.startswith('https://www.pornhub') | oldurl.startswith('https://pornhub') | oldurl.startswith('https://www.reddit'):
-                    #newurl = post.url
-                    video = 1
-                elif oldurl.startswith('https://i.'):
-                    emb.set_image(url=oldurl)
-                await ctx.send(embed=emb)
-                if video == 1:
-                    await ctx.send(oldurl)
+        try:
+            posts = self.reddit.subreddit(subreddit).hot(limit=100)
+            random_post_number = random.randint(1, 100)
+            for i, post in enumerate(posts):
+                if i == random_post_number:
+                    emb = discord.Embed(title="r/" + subreddit, description=post.title)
+                    video = 0
+                    oldurl = post.url
+                    if oldurl.startswith('https://gfycat'):
+                        newurl1, newurl2 = post.url.split('/gfycat.com/')
+                        if "-" in newurl2:
+                            newurl2 = newurl2.split('-')[0]
+                        # print(newurl2)
+                        urlList = self.gfyclient.query_gfy(newurl2)
+                        gifUrl = urlList["gfyItem"]
+                        emb.set_image(url=gifUrl["gifUrl"])
+                    elif oldurl.startswith('https://imgur') | oldurl.startswith('https://m.imgur'):
+                        newurl1, newurl2 = post.url.split('//')
+                        # print(newurl1 + newurl2)
+                        newurl = newurl1 + "//i." + newurl2 + ".gif"
+                        emb.set_image(url=newurl)
+                    elif oldurl.startswith('https://i.imgur') & oldurl.endswith('v'):
+                        newurl1, newurl2 = post.url.split('//')
+                        # print(newurl1 + newurl2)
+                        newurl3 = newurl2.split('.gifv')
+                        newurl = newurl1 + "//" + newurl3 + ".gif"
+                        emb.set_image(url=newurl)
+                    elif oldurl.startswith('https://youtube') | oldurl.startswith(
+                            'https://youtu.be') | oldurl.startswith('https://www.youtube') | oldurl.startswith(
+                            'https://www.pornhub') | oldurl.startswith('https://pornhub') | oldurl.startswith(
+                            'https://www.reddit'):
+                        # newurl = post.url
+                        video = 1
+                    elif oldurl.startswith('https://i.'):
+                        emb.set_image(url=oldurl)
+                    await
+                    ctx.send(embed=emb)
+                    if video == 1:
+                        await
+                        ctx.send(oldurl)
+        except Exception as e:
+        await ctx.send("**`Can't find subreddit " + subreddit + "`**")
