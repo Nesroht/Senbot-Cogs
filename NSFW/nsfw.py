@@ -114,7 +114,7 @@ class NSFW(commands.Cog):
     @checks.admin_or_permissions(administrator=True)
     @_nsfw.command(no_pm=True)
     async def togglensfw(self, ctx):
-        """Toggle oboobs nswf for this channel on/off.
+        """Toggle nswf for this channel on/off.
         Admin/owner restricted."""
         nsfwChan = False
         # Reset nsfw.
