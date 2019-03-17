@@ -391,8 +391,8 @@ class NSFW(commands.Cog):
     async def r(self, ctx, *, subreddit):
         """Random Post from subreddit"""
         try:
-            posts = self.reddit.subreddit(subreddit).hot(limit=100)
-            random_post_number = random.randint(1, 100)
+            posts = self.reddit.subreddit(subreddit).hot('all')
+            random_post_number = random.randint(1, posts.length)
             for i, post in enumerate(posts):
                 if i == random_post_number:
                     if post.url is None:
@@ -434,4 +434,5 @@ class NSFW(commands.Cog):
                     if video == 1:
                         await ctx.send(oldurl)
         except Exception as e:
-            await ctx.send("**`Can't find subreddit " + subreddit + "`**")
+            #await ctx.send("**`Can't find subreddit " + subreddit + "`**")
+            await ctx.send(f":x: **Error:** `{e}`")
