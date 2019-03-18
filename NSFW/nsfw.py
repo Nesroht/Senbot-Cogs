@@ -393,9 +393,10 @@ class NSFW(commands.Cog):
     async def r(self, ctx, *, subreddit):
         """Random Post from subreddit"""
         try:
-            # query = urlopen("https://oauth.reddit.com/r/"+subreddit+"/random.json")
-            # postjson = json.load(query)
-            # post = postjson[0]['data']['children']['data']
+            query = urlopen("https://oauth.reddit.com/r/"+subreddit+"/random.json")
+            postjson = json.load(query)
+            post = postjson[0].data.children.data
+            print(post.url)
             limit = self.redditlimit
             posts = self.reddit.subreddit(subreddit).hot(limit=limit)
             #posts = copy.deepcopy(postlist)
@@ -459,3 +460,9 @@ class NSFW(commands.Cog):
         self.redditlimit = int(limit)
         await ctx.send("Changed the post poll limit for reddit pulls to: " + limit)
 
+    @commands.command()
+    async def rtest(self, ctx, *, subreddit):
+        query = urlopen("https://oauth.reddit.com/r/" + subreddit + "/random.json")
+        postjson = json.load(query)
+        post = postjson[0].data.children.data
+        await ctx.send(post.url)
