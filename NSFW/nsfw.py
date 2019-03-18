@@ -11,6 +11,7 @@ from urllib.request import urlopen
 import requests
 import requests.auth
 from imgurpython import ImgurClient
+from praw.exceptions import ClientException
 
 
 from NSFW import credentials
@@ -262,15 +263,18 @@ class NSFW(commands.Cog):
 
     @commands.command()
     async def r(self, ctx, *, subreddit):
-        print("test")
-        if self.reddit.subreddit(subreddit).random() is None:
-            print("yes")
-        else:
-            print("no")
-        await self.red(ctx, subreddit=subreddit)
-        # if test2 is None:
-        #    await self.oldred(ctx,subreddit=subreddit)
-        #   return
+        try:
+            test = self.reddit.subreddit(subreddit).random()
+            await self.red(ctx, subreddit=subreddit)
+            # if test2 is None:
+            #    await self.oldred(ctx,subreddit=subreddit)
+            #   return
+        except ClientException as e:
+            if e:
+                print("yes")
+                await self.oldred(ctx, subreddit=subreddit)
+                return
+
 
     async def oldred(self,ctx,*,subreddit):
         try:
