@@ -285,7 +285,7 @@ class NSFW(commands.Cog):
                 r(self, ctx, subreddit)
                 # continue
             # print("NSFW Channel?: "+ str(ctx.channel.is_nsfw()) + " | NSFW Post?: "+str(post.over_18))
-            if ctx.channel.is_nsfw() == False and post.over_18 == True:
+            if ctx.channel.is_nsfw() == False and post.get("over_18") == True:
                 await ctx.send("**`r/" + subreddit + " or the random post is not fit for this discord channel!`**")
                 # break
                 return
