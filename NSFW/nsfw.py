@@ -65,7 +65,7 @@ class NSFW(commands.Cog):
         self.gfyclient.client_secret = self.credentials.GFYCAT_SECRET
 
         self.client_auth = requests.auth.HTTPBasicAuth(credentials.CLIENT_ID, credentials.CLIENT_SECRET)
-        self.post_data = {"grant_type": "password", "username": credentials.REDDIT_USERNAME, "password": REDDIT_PASSWORD}
+        self.post_data = {"grant_type": "password", "username": credentials.REDDIT_USERNAME, "password": credentials.REDDIT_PASSWORD}
         self.headers = {"User-Agent": credentials.USER_AGENT}
 
 
