@@ -342,13 +342,14 @@ class NSFW(commands.Cog):
         except Exception as e:
             # await ctx.send("**`Can't find subreddit " + subreddit + "`**")
             await ctx.send(f":x: **Error:** `{e}`")
+
     async def red(self, ctx, *, subreddit):
         """Random Post from subreddit"""
         try:
-            print(self.reddit.subreddit(subreddit).random() + " | Test")
-            if self.reddit.subreddit(subreddit).random() is None:
-                self.oldred(ctx,subreddit=subreddit)
-                return
+            #print(self.reddit.subreddit(subreddit).random() + " | Test")
+            #if self.reddit.subreddit(subreddit).random() is None:
+            #    self.oldred(ctx,subreddit=subreddit)
+            #    return
             query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=self.headers)
             #print(query.status_code)
             if query.status_code == 401:
