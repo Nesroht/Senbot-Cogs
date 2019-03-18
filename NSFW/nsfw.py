@@ -332,7 +332,7 @@ class NSFW(commands.Cog):
             albumlist = self.iclient.get_album_images(album_id)
             size = len(albumlist)
             random_count = random.randint(0,size)
-            if random_count >= size-5:
+            if random_count >= size-5 and random_count >= 5:
                 random_count = size-5
             count = 1
             for i, pic in enumerate(albumlist):
@@ -343,12 +343,13 @@ class NSFW(commands.Cog):
                                                 size))
                         emb.set_image(url=pic.link)
                         count += 1
+                        random_count += 1
                         await ctx.send(embed=emb)
             if origin == "old":
                 self.r_old_one = True
                 return False
             return
-        
+
         #
         #   Check if url is imgur, if it is reformat to .gif to work in embed
         #
