@@ -337,9 +337,9 @@ class NSFW(commands.Cog):
             count = 1
             for i, pic in enumerate(albumlist):
                 if i == random_count:
-                    if count <= 6:
+                    if count <= 5:
                         emb = discord.Embed(title="r/" + subreddit,
-                                            description=title + " " + str(count) + "/" + str(
+                                            description=title + " " + str(count+random_count) + "/" + str(
                                                 size))
                         emb.set_image(url=pic.link)
                         count += 1
