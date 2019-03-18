@@ -391,8 +391,8 @@ class NSFW(commands.Cog):
     async def r(self, ctx, *, subreddit):
         """Random Post from subreddit"""
         try:
-            postlist = self.reddit.subreddit(subreddit).hot(limit=100)
-            posts = copy.deepcopy(postlist)
+            await postlist = self.reddit.subreddit(subreddit).hot(limit=100)
+            await posts = copy.deepcopy(postlist)
             random_post_number = random.randint(0, len(list(postlist)))
             #print(random_post_number)
             for i, post in enumerate(posts):
