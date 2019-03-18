@@ -10,6 +10,8 @@ import json
 from urllib.request import urlopen
 import requests
 import requests.auth
+from imgurpython import ImgurClient
+
 
 from NSFW import credentials
 from bs4 import BeautifulSoup
@@ -76,6 +78,14 @@ class NSFW(commands.Cog):
         self.headers = {"Authorization": response_data["token_type"] + " " + response_data["access_token"],
                         "User-Agent": credentials.USER_AGENT}
 
+        #Imgur api access token querying
+        self.iclient_id = self.credentials.ICLIENT_ID
+        self.iclient_secret = self.credentials.ICLIENT_SECRET
+
+        self.iclient = ImgurClient(self.iclient_id, self.iclient_secret)
+
+        self.icredentials = self.iclient.authorize('PIN OBTAINED FROM AUTHORIZATION', 'pin')
+        self.iclient.set_user_auth(self.icredentials['access_token'], self.icredentials['refresh_token'])
 
     async def get(self, url):
         async with self._session.get(url) as response:
@@ -296,6 +306,19 @@ class NSFW(commands.Cog):
                 urlList = self.gfyclient.query_gfy(newurl2)
                 gifUrl = urlList["gfyItem"]
                 emb.set_image(url=gifUrl["gifUrl"])
+            elif "imgur.com/a" or "imgur.com/album" in oldurl:
+                if "imgur.com/a" in oldurl:
+                    dump, album_id = oldurl.split("/a/")
+                    albumlist = self.iclient.get_album_images(album_id)
+                    for pic in albumlist:
+                        emb.set_image(url=pic)
+                        await ctx.send(embed=emb)
+                if "imgur.com/album" in oldurl:
+                    dump, album_id = oldurl.split("/album/")
+                    albumlist = self.iclient.get_album_images(album_id)
+                    for pic in albumlist:
+                        emb.set_image(url=pic)
+                        await ctx.send(embed=emb)
             elif oldurl.startswith('https://imgur') or oldurl.startswith('https://m.imgur'):
                 newurl1, newurl2 = post.get("url").split('//')
                 # print(newurl1 + newurl2)
