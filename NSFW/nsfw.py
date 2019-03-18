@@ -7,7 +7,7 @@ import time
 import random
 import copy
 import json
-import urllib2
+import urllib.requests
 
 from NSFW import credentials
 from bs4 import BeautifulSoup
@@ -393,7 +393,7 @@ class NSFW(commands.Cog):
         """Random Post from subreddit"""
         try:
             #postlist = self.reddit.subreddit(subreddit).hot(limit=50)
-            query = urllib2.urlopen("https://reddit.com/r/"+subreddit+"/random.json")
+            query = urllib.urlopen("https://reddit.com/r/"+subreddit+"/random.json")
             postjson = json.load(query)
             post = postjson['data']['children']['data']
             #posts = copy.deepcopy(postlist)
