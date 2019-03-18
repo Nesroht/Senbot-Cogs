@@ -256,7 +256,7 @@ class NSFW(commands.Cog):
     async def r(self, ctx, *, subreddit):
         await self.red(self,ctx,subreddit=subreddit)
 
-    async def red(self, ctx, *, subreddit):
+    async def red(self, ctx, subreddit):
         """Random Post from subreddit"""
         try:
             # limit = self.redditlimit
@@ -392,7 +392,7 @@ class NSFW(commands.Cog):
                 emb.set_image(url=image)
                 await ctx.send(embed=emb)
             else:
-                await self.red(self,ctx,"rule34")
+                await self.red(self,ctx,subreddit="rule34")
 
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
