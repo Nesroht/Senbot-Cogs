@@ -465,8 +465,8 @@ class NSFW(commands.Cog):
 
     @commands.command()
     async def rtest(self, ctx, *, subreddit):
-        response = requests.post("https://www.reddit.com/api/v1/access_token", auth=client_auth, data=post_data,
-                                 headers=headers)
+        response = requests.post("https://www.reddit.com/api/v1/access_token", auth=self.client_auth, data=self.post_data,
+                                 headers=self.headers)
         response.json()
         self.headers = {"Authorization": response['access_token'],
                    "User-Agent": credentials.USER_AGENT}
