@@ -327,37 +327,36 @@ class NSFW(commands.Cog):
         #
         #   Check if url is Imgur album, if it is post all images in album
         #
-        elif "imgur.com/a/" or "imgur.com/album/" in oldurl:
-            if "imgur.com/a/" in oldurl:
-                dump, album_id = oldurl.split("/a/")
-                albumlist = self.iclient.get_album_images(album_id)
-                count = 1
-                for pic in albumlist:
-                    emb = discord.Embed(title="r/" + subreddit,
-                                        description=title + " " + str(count) + "/" + str(
-                                            len(albumlist)))
-                    emb.set_image(url=pic.link)
-                    count += 1
-                    await ctx.send(embed=emb)
-                if origin == "old":
-                    self.r_old_one = True
-                    return False
-                return
-            elif "imgur.com/album" in oldurl:
-                dump, album_id = oldurl.split("/album/")
-                albumlist = self.iclient.get_album_images(album_id)
-                count = 1
-                for pic in albumlist:
-                    emb = discord.Embed(title="r/" + subreddit,
-                                        description=title + " " + str(count) + "/" + str(
-                                            len(albumlist)))
-                    emb.set_image(url=pic.link)
-                    count += 1
-                    await ctx.send(embed=emb)
-                if origin == "old":
-                    self.r_old_one = True
-                    return False
-                return
+        elif "imgur.com/a/" in oldurl:
+            dump, album_id = oldurl.split("/a/")
+            albumlist = self.iclient.get_album_images(album_id)
+            count = 1
+            for pic in albumlist:
+                emb = discord.Embed(title="r/" + subreddit,
+                                    description=title + " " + str(count) + "/" + str(
+                                        len(albumlist)))
+                emb.set_image(url=pic.link)
+                count += 1
+                await ctx.send(embed=emb)
+            if origin == "old":
+                self.r_old_one = True
+                return False
+            return
+        elif "imgur.com/album" in oldurl:
+            dump, album_id = oldurl.split("/album/")
+            albumlist = self.iclient.get_album_images(album_id)
+            count = 1
+            for pic in albumlist:
+                emb = discord.Embed(title="r/" + subreddit,
+                                    description=title + " " + str(count) + "/" + str(
+                                        len(albumlist)))
+                emb.set_image(url=pic.link)
+                count += 1
+                await ctx.send(embed=emb)
+            if origin == "old":
+                self.r_old_one = True
+                return False
+            return
 
         #
         #   Check if url is imgur, if it is reformat to .gif to work in embed
