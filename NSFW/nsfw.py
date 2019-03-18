@@ -658,7 +658,7 @@ class NSFW(commands.Cog):
     #    except Exception as e:
     #        await ctx.send(f":x: **Error:** `{e}`")
 
-    @commands.command()
+    @_nsfw.command()
     async def rdebug(self, ctx):
         if self.redditdebug is False:
             self.redditdebug = True
@@ -667,99 +667,11 @@ class NSFW(commands.Cog):
             self.redditdebug = False
             await ctx.send("Disabled reddit debug output in console!")
 
-    @commands.command()
+    @_nsfw.command()
     async def albumlimit(self, ctx, *, limit):
         self.alimit = int(limit)
         await ctx.send("Set number of album pictures to post at once to: " + str(self.alimit))
 
-    @commands.command()
+    @_nsfw.command()
     async def rtest(self, ctx, *, subreddit):
-        query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=self.headers)
-        # print(query.status_code)
-        if query.status_code == 401:
-            self.authorize(self)
-            query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=self.headers)
-        postin = query.json()
-        if postin is list:
-            postin = postin[0]
-        postjson = postin.get("data")
-        postjson = postjson.get("children")
-        postjson = postjson[0]
-        post = postjson.get("data")
-        # print(i)
-        if self.redditdebug:
-            print(post.get("url"))
-        if post.get("url") is None or post.get("stickied"):
-            r(self, ctx, subreddit)
-        # print("NSFW Channel?: "+ str(ctx.channel.is_nsfw()) + " | NSFW Post?: "+str(post.over_18))
-        if ctx.channel.is_nsfw() == False and post.get("over_18") == True:
-            await ctx.send("**`r/" + subreddit + " or the random post is not fit for this discord channel!`**")
-            return
-        emb = discord.Embed(title="r/" + subreddit, description=post.get("title"))
-        video = 0
-        oldurl = post.get("url")
-        if oldurl.endswith(".gif" or ".jpg" or ".png"):
-            emb.set_image(url=oldurl)
-        elif oldurl.startswith('https://gfycat'):
-            newurl1, newurl2 = post.get("url").split('/gfycat.com/')
-            if "-" in newurl2:
-                newurl2 = newurl2.split('-')[0]
-            if "/" in newurl2:
-                if newurl2[2] == "/":
-                    newurl2 = newurl2[2:]
-            # print(newurl2)
-            urlList = self.gfyclient.query_gfy(newurl2)
-            gifUrl = urlList["gfyItem"]
-            emb.set_image(url=gifUrl["gifUrl"])
-        elif "imgur.com/a" in oldurl:
-            if "imgur.com/a" in oldurl:
-                dump, album_id = oldurl.split("/a/")
-                albumlist = self.iclient.get_album_images(album_id)
-                count = 1
-                for pic in albumlist:
-                    emb = discord.Embed(title="r/" + subreddit, description=post.get("title") + " " + str(count) + "/" + str(len(albumlist)))
-                    emb.set_image(url=pic.link)
-                    count += 1
-                    await ctx.send(embed=emb)
-                return
-            if "imgur.com/album" in oldurl:
-                dump, album_id = oldurl.split("/album/")
-                albumlist = self.iclient.get_album_images(album_id)
-                count = 1
-                for pic in albumlist:
-                    emb = discord.Embed(title="r/" + subreddit, description=post.get("title") + " " + str(count) + "/" + str(len(albumlist)))
-                    emb.set_image(url=pic.link)
-                    count += 1
-                    await ctx.send(embed=emb)
-                return
-        elif oldurl.startswith('https://imgur') or oldurl.startswith('https://m.imgur'):
-            newurl1, newurl2 = post.get("url").split('//')
-            # print(newurl1 + newurl2)
-            newurl = newurl1 + "//i." + newurl2 + ".gif"
-            emb.set_image(url=newurl)
-        elif oldurl.startswith('https://i.imgur') and oldurl.endswith('v'):
-            video = 1
-        elif subreddit in oldurl:
-            if "i.redd.it" in post.get("selftext"):
-                newurl1, newurl2 = oldurl.split("https://")
-                newurl = "https://" + newurl2
-                emb.set_image(url=newurl)
-            else:
-                await self.red(ctx, subreddit=subreddit)
-                return
-        elif oldurl.startswith('https://youtube') or oldurl.startswith(
-                'https://youtu.be') or oldurl.startswith('https://www.youtube') or oldurl.startswith(
-            'https://www.pornhub') or oldurl.startswith('https://pornhub') or oldurl.startswith(
-            'https://soundcloud') or oldurl.startswith(
-            'https://www.soundcloud'):
-            # newurl = post.get("url")
-            video = 1
-        elif oldurl.startswith('https://i.'):
-            emb.set_image(url=oldurl)
-        else:
-            await self.red(ctx, subreddit=subreddit)
-            return
-        await ctx.send(embed=emb)
-        if video == 1:
-            await ctx.send(oldurl)
-        return
+        await ctx.send("Nothing to test.")
