@@ -271,7 +271,7 @@ class NSFW(commands.Cog):
             #   return
         except ClientException as e:
             if e:
-                print("yes")
+                #print("yes")
                 await self.oldred(ctx, subreddit=subreddit)
                 return
 
@@ -285,6 +285,8 @@ class NSFW(commands.Cog):
                 # print(i)
                 if i == random_post_number:
                     # print(post.url)
+                    if self.redditdebug:
+                        print(post.get("url"))
                     if post.url is None or post.stickied:
                         random_post_number += 1
                         continue
@@ -295,7 +297,9 @@ class NSFW(commands.Cog):
                     emb = discord.Embed(title="r/" + subreddit, description=post.title)
                     video = 0
                     oldurl = post.url
-                    if "imgur.com/a" in oldurl:
+                    if oldurl.endswith(".gif" or ".jpg" or ".png"):
+                        emb.set_image(url=oldurl)
+                    elif "imgur.com/a" in oldurl:
                         if "imgur.com/a" in oldurl:
                             dump, album_id = oldurl.split("/a/")
                             albumlist = self.iclient.get_album_images(album_id)
@@ -334,9 +338,6 @@ class NSFW(commands.Cog):
                     elif oldurl.startswith('https://youtube') or oldurl.startswith(
                             'https://youtu.be') or oldurl.startswith('https://www.youtube') or oldurl.startswith(
                         'https://www.pornhub') or oldurl.startswith('https://pornhub') or oldurl.startswith(
-                        'https://www.reddit') or oldurl.startswith(
-                        'https://reddit') or oldurl.startswith(
-                        'https://v.redd') or oldurl.startswith(
                         'https://soundcloud') or oldurl.startswith(
                         'https://www.soundcloud'):
                         # newurl = post.url
@@ -351,8 +352,10 @@ class NSFW(commands.Cog):
                         await ctx.send(oldurl)
                     break
         except Exception as e:
-            # await ctx.send("**`Can't find subreddit " + subreddit + "`**")
-            await ctx.send(f":x: **Error:** `{e}`")
+            if self.redditdebug is False:
+                await ctx.send("**`Can't find subreddit " + subreddit + "`**")
+            else:
+                print(e)
 
     async def red(self, ctx, *, subreddit):
         """Random Post from subreddit"""
