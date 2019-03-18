@@ -472,6 +472,7 @@ class NSFW(commands.Cog):
                    "User-Agent": credentials.USER_AGENT}
         query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=self.headers)
         postin = query.json()
+        print(postin)
         postin = postin[0]
         postjson = postin.get("data")
         postjson = postjson.get("children")
