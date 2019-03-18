@@ -285,7 +285,7 @@ class NSFW(commands.Cog):
                 if i == random_post_number:
                     check_if_done = True
                     while check_if_done:
-                        check_if_done = redfunc(self, ctx, *, subreddit=subreddit, oldurl=post.url, stickied=post.stickied, over_18=post.over_18, title=post.title, selftext=post.selftext, origin="old")
+                        check_if_done = redfunc(ctx, subreddit=subreddit, oldurl=post.url, stickied=post.stickied, over_18=post.over_18, title=post.title, selftext=post.selftext, origin="old")
                         if check_if_done is False:
                             break
                     if check_if_done is False:
@@ -339,7 +339,7 @@ class NSFW(commands.Cog):
             post = postjson.get("data")
             # print(i)
 
-            redfunc(self, ctx, *, subreddit=subreddit, oldurl=post.get("url"), stickied=post.get("stickied"), over_18=post.get("over_18"), title=post.get("title"), selftext=post.get("selftext"), origin="new")
+            redfunc(ctx, subreddit=subreddit, oldurl=post.get("url"), stickied=post.get("stickied"), over_18=post.get("over_18"), title=post.get("title"), selftext=post.get("selftext"), origin="new")
         except Exception as e:
             if self.redditdebug is False:
                 await ctx.send("**`Can't find subreddit " + subreddit + "`**")
