@@ -63,6 +63,7 @@ class NSFW(commands.Cog):
         self._session = aiohttp.ClientSession(loop=self.bot.loop)
         self.reddit = praw.Reddit(client_id=self.credentials.CLIENT_ID, client_secret=self.credentials.CLIENT_SECRET, user_agent=self.credentials.USER_AGENT)
         self.redditdebug = False
+        self.r_old_done = False
         self.gfyclient = GfycatClient()
         self.gfyclient.client_id = self.credentials.GFYCAT_ID
         self.gfyclient.client_secret = self.credentials.GFYCAT_SECRET
@@ -281,6 +282,7 @@ class NSFW(commands.Cog):
             #print("old")
             posts = self.reddit.subreddit(subreddit).hot(limit=100)
             random_post_number = random.randint(0, 100)
+            self.r_old_done = False
             for i, post in enumerate(posts):
                 if i == random_post_number:
                     check_if_done = True
@@ -288,11 +290,11 @@ class NSFW(commands.Cog):
                         check_if_done = redfunc(ctx, subreddit=subreddit, oldurl=post.url, stickied=post.stickied, over_18=post.over_18, title=post.title, selftext=post.selftext, origin="old")
                         if check_if_done is False:
                             break
-                    if check_if_done is False:
+                    if self.r_old_done is False:
                         random_post_number += 1
                         continue
-
-
+                    else:
+                        break
         except Exception as e:
 
             #
@@ -367,7 +369,8 @@ class NSFW(commands.Cog):
             if origin == "new":
                 return
             else:
-
+                self.r_old_done = True
+                return False
 
         #
         #   Prepare variables for later
@@ -410,6 +413,9 @@ class NSFW(commands.Cog):
                     emb.set_image(url=pic.link)
                     count += 1
                     await ctx.send(embed=emb)
+                if origin == "old":
+                    self.r_old_one = True
+                    return False
                 return
             elif "imgur.com/album" in oldurl:
                 dump, album_id = oldurl.split("/album/")
@@ -421,6 +427,9 @@ class NSFW(commands.Cog):
                     emb.set_image(url=pic.link)
                     count += 1
                     await ctx.send(embed=emb)
+                if origin == "old":
+                    self.r_old_one = True
+                    return False
                 return
 
         #
@@ -451,6 +460,7 @@ class NSFW(commands.Cog):
                     await self.red(ctx, subreddit=subreddit)
                     return
                 else:
+                    self.r_old_done = False
                     return False
 
         #
@@ -477,6 +487,7 @@ class NSFW(commands.Cog):
                 await self.red(ctx, subreddit=subreddit)
                 return
             else:
+                self.r_old_done = False
                 return False
         await ctx.send(embed=emb)
 
@@ -485,6 +496,9 @@ class NSFW(commands.Cog):
         #
         if video == 1:
             await ctx.send(oldurl)
+        if origin == "old":
+            self.r_old_done = True
+            return False
         return
 
 
