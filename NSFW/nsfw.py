@@ -292,7 +292,9 @@ class NSFW(commands.Cog):
             emb = discord.Embed(title="r/" + subreddit, description=post.get("title"))
             video = 0
             oldurl = post.get("url")
-            if oldurl.startswith('https://gfycat'):
+            if oldurl.endswith(".gif"):
+                emb.set_image(url=oldurl)
+            elif oldurl.startswith('https://gfycat'):
                 newurl1, newurl2 = post.get("url").split('/gfycat.com/')
                 if "-" in newurl2:
                     newurl2 = newurl2.split('-')[0]
