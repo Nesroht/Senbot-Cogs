@@ -334,7 +334,7 @@ class NSFW(commands.Cog):
                 count = 1
                 for pic in albumlist:
                     emb = discord.Embed(title="r/" + subreddit,
-                                        description=post.get("title") + " " + str(count) + "/" + str(
+                                        description=title + " " + str(count) + "/" + str(
                                             len(albumlist)))
                     emb.set_image(url=pic.link)
                     count += 1
@@ -349,7 +349,7 @@ class NSFW(commands.Cog):
                 count = 1
                 for pic in albumlist:
                     emb = discord.Embed(title="r/" + subreddit,
-                                        description=post.get("title") + " " + str(count) + "/" + str(
+                                        description=title + " " + str(count) + "/" + str(
                                             len(albumlist)))
                     emb.set_image(url=pic.link)
                     count += 1
