@@ -388,7 +388,7 @@ class NSFW(commands.Cog):
                 emb.set_image(url=image)
                 await ctx.send(embed=emb)
             else:
-                self.r(self,ctx,"rule34")
+                await self.r(self,ctx,"rule34")
 
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
