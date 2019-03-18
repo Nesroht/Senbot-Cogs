@@ -660,6 +660,7 @@ class NSFW(commands.Cog):
 
     @_nsfw.command()
     async def rdebug(self, ctx):
+        """Turn on debug mode for the reddit command"""
         if self.redditdebug is False:
             self.redditdebug = True
             await ctx.send("Enabled reddit debug output in console!")
@@ -669,9 +670,11 @@ class NSFW(commands.Cog):
 
     @_nsfw.command()
     async def albumlimit(self, ctx, *, limit):
+        """Set the limit on pictures from albums"""
         self.alimit = int(limit)
         await ctx.send("Set number of album pictures to post at once to: " + str(self.alimit))
 
     @_nsfw.command()
     async def rtest(self, ctx, *, subreddit):
+        """Test command"""
         await ctx.send("Nothing to test.")
