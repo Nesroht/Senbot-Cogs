@@ -399,7 +399,7 @@ class NSFW(commands.Cog):
             limit = self.redditlimit
             posts = self.reddit.subreddit(subreddit).hot(limit=limit)
             #posts = copy.deepcopy(postlist)
-            random_post_number = random.randint(0, sum(1 for x in posts))
+            random_post_number = random.randint(0, limit)
             #print(random_post_number)
             for i, post in enumerate(posts):
                 #print(i)
