@@ -85,7 +85,7 @@ class NSFW(commands.Cog):
     def __unload(self):
         asyncio.get_event_loop().create_task(self._session.close())
 
-    async def authorize(self, ctx,):
+    async def authorize(self):
         response = requests.post("https://www.reddit.com/api/v1/access_token", auth=self.client_auth,
                                  data=self.post_data,
                                  headers=self.headers)
@@ -264,7 +264,7 @@ class NSFW(commands.Cog):
             # for i, post in enumerate(posts):
             query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=self.headers)
             if query.status_code == 401:
-                authorize(self, ctx)
+                self.authorize(self)
                 query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json",
                                      headers=self.headers)
             postin = query.json()
@@ -388,7 +388,7 @@ class NSFW(commands.Cog):
                 emb.set_image(url=image)
                 await ctx.send(embed=emb)
             else:
-                r(self,ctx,"rule34")
+                self.r(self,ctx,"rule34")
 
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
