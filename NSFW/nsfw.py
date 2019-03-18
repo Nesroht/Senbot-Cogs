@@ -59,7 +59,7 @@ class NSFW(commands.Cog):
         self.settings.register_global(**default_global)
         self._session = aiohttp.ClientSession(loop=self.bot.loop)
         self.reddit = praw.Reddit(client_id=self.credentials.CLIENT_ID, client_secret=self.credentials.CLIENT_SECRET, user_agent=self.credentials.USER_AGENT)
-        self.redditlimit = 100
+        self.redditdebug = False
         self.gfyclient = GfycatClient()
         self.gfyclient.client_id = self.credentials.GFYCAT_ID
         self.gfyclient.client_secret = self.credentials.GFYCAT_SECRET
@@ -259,12 +259,6 @@ class NSFW(commands.Cog):
     async def red(self, ctx, *, subreddit):
         """Random Post from subreddit"""
         try:
-            # limit = self.redditlimit
-            # posts = self.reddit.subreddit(subreddit).hot(limit=limit)
-            # posts = copy.deepcopy(postlist)
-            # random_post_number = random.randint(0, limit)
-            # print(random_post_number)
-            # for i, post in enumerate(posts):
             query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=self.headers)
             #print(query.status_code)
             if query.status_code == 401:
@@ -278,16 +272,13 @@ class NSFW(commands.Cog):
             postjson = postjson[0]
             post = postjson.get("data")
             # print(i)
-            # if i == random_post_number:
-            print(post.get("url"))
+            if self.redditdebug:
+                print(post.get("url"))
             if post.get("url") is None or post.get("stickied"):
-                # random_post_number += 1
                 r(self, ctx, subreddit)
-                # continue
             # print("NSFW Channel?: "+ str(ctx.channel.is_nsfw()) + " | NSFW Post?: "+str(post.over_18))
             if ctx.channel.is_nsfw() == False and post.get("over_18") == True:
                 await ctx.send("**`r/" + subreddit + " or the random post is not fit for this discord channel!`**")
-                # break
                 return
             emb = discord.Embed(title="r/" + subreddit, description=post.get("title"))
             video = 0
@@ -330,18 +321,17 @@ class NSFW(commands.Cog):
             elif oldurl.startswith('https://i.'):
                 emb.set_image(url=oldurl)
             else:
-                # random_post_number += 1
-                # continue
                 await self.red(ctx, subreddit=subreddit)
                 return
             await ctx.send(embed=emb)
             if video == 1:
                 await ctx.send(oldurl)
-            # break
             return
         except Exception as e:
-            # await ctx.send("**`Can't find subreddit " + subreddit + "`**")
-            await ctx.send(f":x: **Error:** `{e}`")
+            if self.redditdebug is False:
+                await ctx.send("**`Can't find subreddit " + subreddit + "`**")
+            else:
+                await ctx.send(f":x: **Error:** `{e}`")
 
     @commands.command()
     @commands.is_nsfw()
@@ -509,9 +499,13 @@ class NSFW(commands.Cog):
     #        await ctx.send(f":x: **Error:** `{e}`")
 
     @commands.command()
-    async def rlimit(self, ctx, *, limit):
-        self.redditlimit = int(limit)
-        await ctx.send("Changed the post poll limit for reddit pulls to: " + limit)
+    async def rdebug(self, ctx):
+        if self.redditdebug is False:
+            self.redditdebug = True
+            await ctx.send("Enabled reddit debug output in console!")
+        else:
+            self.redditdebug = False
+            await ctx.send("Disabled reddit debug output in console!")
 
     @commands.command()
     async def rtest(self, ctx, *, subreddit):
