@@ -8,6 +8,8 @@ import random
 import copy
 import json
 from urllib.request import urlopen
+import requests
+import requests.auth
 
 from NSFW import credentials
 from bs4 import BeautifulSoup
@@ -61,6 +63,11 @@ class NSFW(commands.Cog):
         self.gfyclient = GfycatClient()
         self.gfyclient.client_id = self.credentials.GFYCAT_ID
         self.gfyclient.client_secret = self.credentials.GFYCAT_SECRET
+
+        self.client_auth = requests.auth.HTTPBasicAuth(credentials.CLIENT_ID, credentials.CLIENT_SECRET)
+        self.post_data = {"grant_type": "password", "username": credentials.REDDIT_USERNAME, "password": REDDIT_PASSWORD}
+        self.headers = {"User-Agent": credentials.USER_AGENT}
+
 
     async def get(self, url):
         async with self._session.get(url) as response:
@@ -458,7 +465,12 @@ class NSFW(commands.Cog):
 
     @commands.command()
     async def rtest(self, ctx, *, subreddit):
-        query = urlopen("https://reddit.com/r/" + subreddit + "/random.json")
+        response = requests.post("https://www.reddit.com/api/v1/access_token", auth=client_auth, data=post_data,
+                                 headers=headers)
+        response.json()
+        self.headers = {"Authorization": response['access_token'],
+                   "User-Agent": credentials.USER_AGENT}
+        query = urlopen("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=self.headers)
         postin = json.load(query)
         postin = postin[0]
         postjson = postin.get("data")
