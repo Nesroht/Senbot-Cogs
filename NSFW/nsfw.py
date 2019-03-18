@@ -323,7 +323,6 @@ class NSFW(commands.Cog):
             elif oldurl.startswith('https://youtube') or oldurl.startswith(
                     'https://youtu.be') or oldurl.startswith('https://www.youtube') or oldurl.startswith(
                 'https://www.pornhub') or oldurl.startswith('https://pornhub') or oldurl.startswith(
-                'https://v.redd') or oldurl.startswith(
                 'https://soundcloud') or oldurl.startswith(
                 'https://www.soundcloud'):
                 # newurl = post.get("url")
