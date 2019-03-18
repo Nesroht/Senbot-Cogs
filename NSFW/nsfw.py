@@ -397,9 +397,10 @@ class NSFW(commands.Cog):
             # postjson = json.load(query)
             # post = postjson[0]['data']['children']['data']
             limit = self.redditlimit
-            postlist = self.reddit.subreddit(subreddit).hot(limit=limit)
-            posts = copy.deepcopy(postlist)
-            random_post_number = random.randint(0, len(list(postlist)))
+            posts = self.reddit.subreddit(subreddit).hot(limit=limit)
+            #posts = copy.deepcopy(postlist)
+            length = sum(1 for x in enumerate(posts))
+            random_post_number = random.randint(0, length)
             #print(random_post_number)
             for i, post in enumerate(posts):
                 #print(i)
