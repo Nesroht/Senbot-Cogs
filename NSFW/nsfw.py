@@ -463,5 +463,6 @@ class NSFW(commands.Cog):
         postin = postin[0]
         postjson = postin.get("data")
         postjson = postjson.get("children")
+        postjson = postjson[0]
         post = postjson.get("data")
         await ctx.send(post.get("url"))
