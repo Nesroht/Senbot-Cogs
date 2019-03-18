@@ -476,44 +476,39 @@ class NSFW(commands.Cog):
                 print(e)
 
     async def red(self, ctx, *, subreddit):
-        try:
-            #
-            #   Request random post json from reddit
-            #
-            if self.redditdebug:
-                print("new")
+
+        #
+        #   Request random post json from reddit
+        #
+        if self.redditdebug:
+            print("new")
+        query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=self.headers)
+        #print(query.status_code)
+
+        #
+        #   If query responds with 401, reauthorize client
+        #
+        if query.status_code == 401:
+            self.authorize(self)
             query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=self.headers)
-            #print(query.status_code)
 
-            #
-            #   If query responds with 401, reauthorize client
-            #
-            if query.status_code == 401:
-                self.authorize(self)
-                query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=self.headers)
+        #
+        #   Make sure to parse query as json, check if json is instance of list, if it is get first instance in list
+        #
+        postin = query.json()
+        if isinstance(postin, list):
+            postin = postin[0]
 
-            #
-            #   Make sure to parse query as json, check if json is instance of list, if it is get first instance in list
-            #
-            postin = query.json()
-            if isinstance(postin, list):
-                postin = postin[0]
+        #
+        #   Parse through json to easily get variables needed from post
+        #
+        postjson = postin.get("data")
+        postjson = postjson.get("children")
+        postjson = postjson[0]
+        post = postjson.get("data")
+        # print(i)
 
-            #
-            #   Parse through json to easily get variables needed from post
-            #
-            postjson = postin.get("data")
-            postjson = postjson.get("children")
-            postjson = postjson[0]
-            post = postjson.get("data")
-            # print(i)
-
-            await self.redfunc(ctx, subreddit=subreddit, oldurl=post.get("url"), stickied=post.get("stickied"), over_18=post.get("over_18"), title=post.get("title"), selftext=post.get("selftext"), origin="new")
-        except Exception as e:
-            if self.redditdebug is False:
-                await ctx.send("**`Can't find subreddit " + subreddit + "`**")
-            else:
-                print(e)
+        await self.redfunc(ctx, subreddit=subreddit, oldurl=post.get("url"), stickied=post.get("stickied"), over_18=post.get("over_18"), title=post.get("title"), selftext=post.get("selftext"), origin="new")
 
 
     @commands.command()
