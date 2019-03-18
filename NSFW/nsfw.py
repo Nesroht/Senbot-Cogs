@@ -409,7 +409,9 @@ class NSFW(commands.Cog):
         #
         else:
             if self.randomattempt == True:
+                await ctx.send(embed=emb)
                 await ctx.send(oldurl)
+                return
             elif origin == "new":
                 await self.red(ctx, subreddit=subreddit)
                 return
