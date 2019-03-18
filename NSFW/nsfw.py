@@ -392,9 +392,7 @@ class NSFW(commands.Cog):
         """Random Post from subreddit"""
         try:
             #postlist = self.reddit.subreddit(subreddit).hot(limit=50)
-            query = ("https://reddit.com/r/"+subreddit+"/random.json")
-            postbase = await (await self._session.get(query)).text()
-            postjson = json.loads(postbase)
+            postjson = json.load(query)
             post = postjson['data']['children']['data']
             #posts = copy.deepcopy(postlist)
             #random_post_number = random.randint(0, len(list(postlist)))
