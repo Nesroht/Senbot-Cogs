@@ -408,7 +408,7 @@ class NSFW(commands.Cog):
             #for i, post in enumerate(posts):
             query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=self.headers)
             postin = query.json()
-            if postin[0].get("status_code") == 401:
+            if postin["status_code"] == 401:
                 authorize(self,ctx)
                 query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=self.headers)
                 postin = query.json()
