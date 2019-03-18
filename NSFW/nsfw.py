@@ -685,9 +685,9 @@ class NSFW(commands.Cog):
     @commands.command()
     async def random(self,ctx):
         """Get Random subreddit post"""
-        if ctx.channel.is_nsfw():
+        if ctx.channel.is_nsfw() == True:
             subreddit = str(self.reddit.random_subreddit(nsfw=True))
-        else:
+        elif ctx.channel.is_nsfw() == False:
             subreddit = str(self.reddit.random_subreddit())
         print(subreddit)
         await self.redditcommand(ctx,subreddit=subreddit)
