@@ -678,3 +678,13 @@ class NSFW(commands.Cog):
     async def rtest(self, ctx, *, subreddit):
         """Test command"""
         await ctx.send("Nothing to test.")
+
+    @commands.command()
+    async def random(self,ctx,*,nsfw):
+        """Get Random subreddit post - add nsfw to the end to include nsfw subs"""
+        if nsfw == "nsfw":
+            subreddit = str(self.reddit.random_subreddit(nsfw=True))
+        else:
+            subreddit = str(self.reddit.random_subreddit())
+        print(subreddit)
+        self.r(ctx,subreddit=subreddit)
