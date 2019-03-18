@@ -65,6 +65,8 @@ class NSFW(commands.Cog):
         self.redditdebug = False
         self.r_old_done = False
         self.alimit = 5
+        self.randomattempt = False
+
         self.gfyclient = GfycatClient()
         self.gfyclient.client_id = self.credentials.GFYCAT_ID
         self.gfyclient.client_secret = self.credentials.GFYCAT_SECRET
@@ -406,7 +408,9 @@ class NSFW(commands.Cog):
         #   If none of the cases above passed, try another post
         #
         else:
-            if origin == "new":
+            if self.randomattempt == True:
+                await ctx.send(oldurl)
+            elif origin == "new":
                 await self.red(ctx, subreddit=subreddit)
                 return
             else:
@@ -690,4 +694,6 @@ class NSFW(commands.Cog):
         elif ctx.channel.is_nsfw() == False:
             subreddit = str(self.reddit.random_subreddit())
         print(subreddit)
+        self.randomattempt = True
         await self.redditcommand(ctx,subreddit=subreddit)
+        self.randomattempt = False
