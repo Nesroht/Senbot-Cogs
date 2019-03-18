@@ -486,11 +486,11 @@ class NSFW(commands.Cog):
         # print(random_post_number)
         # for i, post in enumerate(posts):
         query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=self.headers)
-        postin = query.json()
-        if postin["status_code"] == 401:
+        if query.status_code== 401:
             authorize(self, ctx)
             query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=self.headers)
             postin = query.json()
+        postin = query.json()
         postin = postin[0]
         postjson = postin.get("data")
         postjson = postjson.get("children")
