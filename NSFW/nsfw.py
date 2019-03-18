@@ -294,13 +294,18 @@ class NSFW(commands.Cog):
     async def rule34(self, ctx):
         """Random Image From rule34"""#
         try:
-            query = ("http://rule34.xxx/index.php?page=post&s=random")
-            page = await (await self._session.get(query)).text()
-            soup = BeautifulSoup(page, 'html.parser')
-            image = soup.find(id="image").get("src")
-            emb = discord.Embed(title="Rule34")
-            emb.set_image(url=image)
-            await ctx.send(embed=emb)
+            random_number = random.randint(0,100)
+            if random_number < 50:
+                query = ("http://rule34.xxx/index.php?page=post&s=random")
+                page = await (await self._session.get(query)).text()
+                soup = BeautifulSoup(page, 'html.parser')
+                image = soup.find(id="image").get("src")
+                emb = discord.Embed(title="Rule34")
+                emb.set_image(url=image)
+                await ctx.send(embed=emb)
+            else:
+                r(self,ctx,"rule34")
+
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
