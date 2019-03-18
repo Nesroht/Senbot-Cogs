@@ -349,7 +349,10 @@ class NSFW(commands.Cog):
             print("test")
             test = self.reddit.subreddit(subreddit).random()
             #test2 = copy.deepcopy(test)
-            print(str(test) + " | Test")
+            if test is None:
+                print("yes")
+            else:
+                print("no")
             #if test2 is None:
             #    await self.oldred(ctx,subreddit=subreddit)
              #   return
