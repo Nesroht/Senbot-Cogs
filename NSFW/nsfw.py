@@ -254,9 +254,9 @@ class NSFW(commands.Cog):
 
     @commands.command()
     async def r(self, ctx, *, subreddit):
-        await self.red(self,ctx,subreddit=subreddit)
+        await self.red(ctx,subreddit=subreddit)
 
-    async def red(self, ctx, subreddit):
+    async def red(self, ctx, *, subreddit):
         """Random Post from subreddit"""
         try:
             # limit = self.redditlimit
