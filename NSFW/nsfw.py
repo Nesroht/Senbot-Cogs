@@ -317,7 +317,7 @@ class NSFW(commands.Cog):
                     dump, album_id = oldurl.split("/album/")
                     albumlist = self.iclient.get_album_images(album_id)
                     for pic in albumlist:
-                        emb.set_image(url=pic)
+                        emb.set_image(url=pic.link)
                         await ctx.send(embed=emb)
             elif oldurl.startswith('https://imgur') or oldurl.startswith('https://m.imgur'):
                 newurl1, newurl2 = post.get("url").split('//')
