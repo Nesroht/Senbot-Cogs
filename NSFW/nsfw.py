@@ -356,7 +356,7 @@ class NSFW(commands.Cog):
             if random_count >= size-5:
                 random_count = size-5
             count = 1
-            for i, pic in albumlist:
+            for i, pic in enumerate(albumlist):
                 if i == random_count:
                     if count <= 6:
                         emb = discord.Embed(title="r/" + subreddit,
