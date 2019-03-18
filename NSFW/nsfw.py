@@ -359,8 +359,6 @@ class NSFW(commands.Cog):
         except Exception as e:
             if self.redditdebug is False:
                 await ctx.send("**`Can't find subreddit " + subreddit + "`**")
-            else:
-                await ctx.send(f":x: **Error:** `{e}`")
 
     @commands.command()
     @commands.is_nsfw()
