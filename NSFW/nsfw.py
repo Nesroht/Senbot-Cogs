@@ -263,6 +263,7 @@ class NSFW(commands.Cog):
             # print(random_post_number)
             # for i, post in enumerate(posts):
             query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=self.headers)
+            print(query.status_code)
             if query.status_code == 401:
                 self.authorize(self)
                 query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json",
