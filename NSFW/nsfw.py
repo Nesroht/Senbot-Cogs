@@ -310,19 +310,21 @@ class NSFW(commands.Cog):
                     albumlist = self.iclient.get_album_images(album_id)
                     count = 1
                     for pic in albumlist:
-                        emb = discord.Embed(title="r/" + subreddit, description=post.get("title")+ str(count)+"/"+str(len(albumlist)))
+                        emb = discord.Embed(title="r/" + subreddit, description=post.get("title") +" "+ str(count)+"/"+str(len(albumlist)))
                         emb.set_image(url=pic.link)
                         count += 1
                         await ctx.send(embed=emb)
+                    return
                 if "imgur.com/album" in oldurl:
                     dump, album_id = oldurl.split("/album/")
                     albumlist = self.iclient.get_album_images(album_id)
                     count = 1
                     for pic in albumlist:
-                        emb = discord.Embed(title="r/" + subreddit, description=post.get("title") + str(count) + "/" + str(len(albumlist)))
+                        emb = discord.Embed(title="r/" + subreddit, description=post.get("title") +" "+ str(count) + "/" + str(len(albumlist)))
                         emb.set_image(url=pic.link)
                         count += 1
                         await ctx.send(embed=emb)
+                    return
             elif oldurl.startswith('https://imgur') or oldurl.startswith('https://m.imgur'):
                 newurl1, newurl2 = post.get("url").split('//')
                 # print(newurl1 + newurl2)
