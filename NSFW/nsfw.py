@@ -274,7 +274,7 @@ class NSFW(commands.Cog):
                 query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json",
                                      headers=self.headers)
             postin = query.json()
-            if postin is list:
+            if isinstance(postin, list):
                 postin = postin[0]
             postjson = postin.get("data")
             postjson = postjson.get("children")
@@ -284,7 +284,7 @@ class NSFW(commands.Cog):
             if self.redditdebug:
                 print(post.get("url"))
             if post.get("url") is None or post.get("stickied"):
-                r(self, ctx, subreddit)
+                self.r(self, ctx, subreddit)
             # print("NSFW Channel?: "+ str(ctx.channel.is_nsfw()) + " | NSFW Post?: "+str(post.over_18))
             if ctx.channel.is_nsfw() == False and post.get("over_18") == True:
                 await ctx.send("**`r/" + subreddit + " or the random post is not fit for this discord channel!`**")
