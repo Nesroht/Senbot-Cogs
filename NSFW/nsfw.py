@@ -264,9 +264,7 @@ class NSFW(commands.Cog):
     async def r(self, ctx, *, subreddit):
         await self.red(ctx,subreddit=subreddit)
         print("test")
-        test = self.reddit.subreddit(subreddit).random()
-        # test2 = copy.deepcopy(test)
-        if test:
+        if self.reddit.subreddit(subreddit).random() is None:
             print("yes")
         else:
             print("no")
