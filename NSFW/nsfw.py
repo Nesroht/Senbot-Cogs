@@ -263,6 +263,16 @@ class NSFW(commands.Cog):
     @commands.command()
     async def r(self, ctx, *, subreddit):
         await self.red(ctx,subreddit=subreddit)
+        print("test")
+        test = self.reddit.subreddit(subreddit).random()
+        # test2 = copy.deepcopy(test)
+        if test:
+            print("yes")
+        else:
+            print("no")
+        # if test2 is None:
+        #    await self.oldred(ctx,subreddit=subreddit)
+        #   return
 
     async def oldred(self,ctx,*,subreddit):
         try:
@@ -346,16 +356,6 @@ class NSFW(commands.Cog):
     async def red(self, ctx, *, subreddit):
         """Random Post from subreddit"""
         try:
-            print("test")
-            test = self.reddit.subreddit(subreddit).random()
-            #test2 = copy.deepcopy(test)
-            if test:
-                print("yes")
-            else:
-                print("no")
-            #if test2 is None:
-            #    await self.oldred(ctx,subreddit=subreddit)
-             #   return
             query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=self.headers)
             #print(query.status_code)
             if query.status_code == 401:
