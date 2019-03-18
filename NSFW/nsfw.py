@@ -338,7 +338,9 @@ class NSFW(commands.Cog):
             albumlist = self.iclient.get_album_images(album_id)
             size = len(albumlist)
             random_count = random.randint(0,size)
-            if random_count >= size-self.alimit and random_count >= self.alimit:
+            if len(albumlist)<= self.alimit:
+                random_count = 0
+            elif random_count >= size-self.alimit and random_count >= self.alimit:
                 random_count = size-self.alimit
             orig_rand = random_count
             count = 1
