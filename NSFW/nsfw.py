@@ -312,11 +312,17 @@ class NSFW(commands.Cog):
                 emb.set_image(url=newurl)
             elif oldurl.startswith('https://i.imgur') and oldurl.endswith('v'):
                 video = 1
+            elif subreddit in oldurl:
+                if "i.redd.it" in post.get("selftext"):
+                    newurl1, newurl2 = oldurl.split("https://")
+                    newurl = "https://" + newurl2
+                    embed.set_image(url=newurl)
+                else:
+                    await self.red(ctx, subreddit=subreddit)
+                    return
             elif oldurl.startswith('https://youtube') or oldurl.startswith(
                     'https://youtu.be') or oldurl.startswith('https://www.youtube') or oldurl.startswith(
                 'https://www.pornhub') or oldurl.startswith('https://pornhub') or oldurl.startswith(
-                'https://www.reddit') or oldurl.startswith(
-                'https://reddit') or oldurl.startswith(
                 'https://v.redd') or oldurl.startswith(
                 'https://soundcloud') or oldurl.startswith(
                 'https://www.soundcloud'):
