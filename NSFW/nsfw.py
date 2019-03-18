@@ -81,11 +81,9 @@ class NSFW(commands.Cog):
         #Imgur api access token querying
         self.iclient_id = self.credentials.ICLIENT_ID
         self.iclient_secret = self.credentials.ICLIENT_SECRET
-
         self.iclient = ImgurClient(self.iclient_id, self.iclient_secret)
-
-        self.icredentials = self.iclient.authorize('PIN OBTAINED FROM AUTHORIZATION', 'pin')
-        self.iclient.set_user_auth(self.icredentials['access_token'], self.icredentials['refresh_token'])
+        #self.icredentials = self.iclient.authorize('PIN OBTAINED FROM AUTHORIZATION', 'pin')
+        #self.iclient.set_user_auth(self.icredentials['access_token'], self.icredentials['refresh_token'])
 
     async def get(self, url):
         async with self._session.get(url) as response:
