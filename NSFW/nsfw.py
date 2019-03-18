@@ -268,7 +268,7 @@ class NSFW(commands.Cog):
     @commands.command()
     async def r(self, ctx, *, subreddit):
         """Random Post from subreddit"""
-        self.redditcommand(ctx, subreddit)
+        await self.redditcommand(ctx, subreddit=subreddit)
 
     async def redditcommand(self, ctx, *, subreddit):
         try:
@@ -376,7 +376,12 @@ class NSFW(commands.Cog):
         #   Checks if url is .gifv, if it is post out of embed
         #
         elif subreddit in oldurl:
-            if "i.redd.it" in selftext:
+            randcheck = self.randatt
+            if randcheck is True:
+                await ctx.send(embed=emb)
+                await ctx.send(oldurl)
+                return
+            elif "i.redd.it" in selftext:
                 newurl1, newurl2 = oldurl.split("https://")
                 newurl = "https://" + newurl2
                 emb.set_image(url=newurl)
