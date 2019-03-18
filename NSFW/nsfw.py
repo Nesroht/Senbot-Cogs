@@ -64,9 +64,17 @@ class NSFW(commands.Cog):
         self.gfyclient.client_id = self.credentials.GFYCAT_ID
         self.gfyclient.client_secret = self.credentials.GFYCAT_SECRET
 
+
+        #Reddit API access token querying
         self.client_auth = requests.auth.HTTPBasicAuth(credentials.CLIENT_ID, credentials.CLIENT_SECRET)
         self.post_data = {"grant_type": "password", "username": credentials.REDDIT_USERNAME, "password": credentials.REDDIT_PASSWORD}
         self.headers = {"User-Agent": credentials.USER_AGENT}
+        response = requests.post("https://www.reddit.com/api/v1/access_token", auth=self.client_auth,
+                                 data=self.post_data,
+                                 headers=self.headers)
+        response_data = response.json()
+        self.headers = {"Authorization": response_data["token_type"] + " " + response_data["access_token"],
+                        "User-Agent": credentials.USER_AGENT}
 
 
     async def get(self, url):
@@ -486,10 +494,9 @@ class NSFW(commands.Cog):
         # print(random_post_number)
         # for i, post in enumerate(posts):
         query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=self.headers)
-        if query.status_code== 401:
+        if query.status_code == 401:
             authorize(self, ctx)
             query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=self.headers)
-            postin = query.json()
         postin = query.json()
         postin = postin[0]
         postjson = postin.get("data")
