@@ -64,6 +64,7 @@ class NSFW(commands.Cog):
         self.reddit = praw.Reddit(client_id=self.credentials.CLIENT_ID, client_secret=self.credentials.CLIENT_SECRET, user_agent=self.credentials.USER_AGENT)
         self.redditdebug = False
         self.r_old_done = False
+        self.alimit = 5
         self.gfyclient = GfycatClient()
         self.gfyclient.client_id = self.credentials.GFYCAT_ID
         self.gfyclient.client_secret = self.credentials.GFYCAT_SECRET
@@ -332,12 +333,12 @@ class NSFW(commands.Cog):
             albumlist = self.iclient.get_album_images(album_id)
             size = len(albumlist)
             random_count = random.randint(0,size)
-            if random_count >= size-5 and random_count >= 5:
-                random_count = size-5
+            if random_count >= size-limit and random_count >= limit:
+                random_count = size-limit
             count = 1
             for i, pic in enumerate(albumlist):
                 if i == random_count:
-                    if count <= 5:
+                    if count <= limit:
                         emb = discord.Embed(title="r/" + subreddit,
                                             description=title + " " + str(count+random_count) + "/" + str(
                                                 size))
@@ -664,6 +665,11 @@ class NSFW(commands.Cog):
         else:
             self.redditdebug = False
             await ctx.send("Disabled reddit debug output in console!")
+
+    @commands.command()
+    async def alimit(self, ctx, *, limit):
+        self.alimit = limit
+        await ctx.send("Set number of album pictures to post at once to: " + str(limit))
 
     @commands.command()
     async def rtest(self, ctx, *, subreddit):
