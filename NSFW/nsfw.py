@@ -304,7 +304,7 @@ class NSFW(commands.Cog):
                 urlList = self.gfyclient.query_gfy(newurl2)
                 gifUrl = urlList["gfyItem"]
                 emb.set_image(url=gifUrl["gifUrl"])
-            elif "imgur.com/a" or "imgur.com/album" in oldurl:
+            elif "imgur.com/a" in oldurl:
                 if "imgur.com/a" in oldurl:
                     dump, album_id = oldurl.split("/a/")
                     albumlist = self.iclient.get_album_images(album_id)
