@@ -404,7 +404,7 @@ class NSFW(commands.Cog):
                         continue
                     #print("NSFW Channel?: "+ str(ctx.channel.is_nsfw()) + " | NSFW Post?: "+str(post.over_18))
                     if ctx.channel.is_nsfw() == False and post.over_18 == True:
-                        await ctx.send("**`r/"+subreddit+" is not fit for this discord channel!`**")
+                        await ctx.send("**`r/"+subreddit+" or the random post is not fit for this discord channel!`**")
                         break
                     emb = discord.Embed(title="r/" + subreddit, description=post.title)
                     video = 0
