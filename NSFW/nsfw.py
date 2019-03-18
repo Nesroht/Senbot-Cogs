@@ -327,8 +327,8 @@ class NSFW(commands.Cog):
         #
         #   Check if url is Imgur album, if it is post all images in album
         #
-        elif "imgur.com/a" in oldurl:
-            if "imgur.com/a" in oldurl:
+        elif "imgur.com/a/" or "imgur.com/album/" in oldurl:
+            if "imgur.com/a/" in oldurl:
                 dump, album_id = oldurl.split("/a/")
                 albumlist = self.iclient.get_album_images(album_id)
                 count = 1
