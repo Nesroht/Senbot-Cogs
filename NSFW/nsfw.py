@@ -279,7 +279,7 @@ class NSFW(commands.Cog):
         #
         if self.redditdebug:
             print(oldurl)
-            
+
         #
         #   Check if post url exists or is stickied, if it is find a new post
         #
@@ -441,7 +441,7 @@ class NSFW(commands.Cog):
                 if i == random_post_number:
                     check_if_done = True
                     while check_if_done:
-                        check_if_done = redfunc(ctx, subreddit=subreddit, oldurl=post.url, stickied=post.stickied, over_18=post.over_18, title=post.title, selftext=post.selftext, origin="old")
+                        check_if_done = await redfunc(ctx, subreddit=subreddit, oldurl=post.url, stickied=post.stickied, over_18=post.over_18, title=post.title, selftext=post.selftext, origin="old")
                         if check_if_done is False:
                             break
                     if self.r_old_done is False:
@@ -495,7 +495,7 @@ class NSFW(commands.Cog):
             post = postjson.get("data")
             # print(i)
 
-            redfunc(ctx, subreddit=subreddit, oldurl=post.get("url"), stickied=post.get("stickied"), over_18=post.get("over_18"), title=post.get("title"), selftext=post.get("selftext"), origin="new")
+            await redfunc(ctx, subreddit=subreddit, oldurl=post.get("url"), stickied=post.get("stickied"), over_18=post.get("over_18"), title=post.get("title"), selftext=post.get("selftext"), origin="new")
         except Exception as e:
             if self.redditdebug is False:
                 await ctx.send("**`Can't find subreddit " + subreddit + "`**")
