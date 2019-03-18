@@ -57,6 +57,7 @@ class NSFW(commands.Cog):
         self.settings.register_global(**default_global)
         self._session = aiohttp.ClientSession(loop=self.bot.loop)
         self.reddit = praw.Reddit(client_id=self.credentials.CLIENT_ID, client_secret=self.credentials.CLIENT_SECRET, user_agent=self.credentials.USER_AGENT)
+        self.redditlimit = 100
         self.gfyclient = GfycatClient()
         self.gfyclient.client_id = self.credentials.GFYCAT_ID
         self.gfyclient.client_secret = self.credentials.GFYCAT_SECRET
@@ -395,7 +396,8 @@ class NSFW(commands.Cog):
             # query = urlopen("https://oauth.reddit.com/r/"+subreddit+"/random.json")
             # postjson = json.load(query)
             # post = postjson[0]['data']['children']['data']
-            postlist = self.reddit.subreddit(subreddit).hot(limit=100)
+            limit = self.redditlimit
+            postlist = self.reddit.subreddit(subreddit).hot(limit=limit)
             posts = copy.deepcopy(postlist)
             random_post_number = random.randint(0, len(list(postlist)))
             #print(random_post_number)
@@ -452,25 +454,8 @@ class NSFW(commands.Cog):
             #await ctx.send("**`Can't find subreddit " + subreddit + "`**")
             await ctx.send(f":x: **Error:** `{e}`")
 
-    async def make_request(
-        session: aiohttp.ClientSession,
-        method: str,
-        url: str,
-        headers: dict = None,
-        data: dict = None,
-        params: dict = None,
-        auth: aiohttp.BasicAuth = None,
-    ):
-        async with session.request(
-            method, url, headers=headers, data=data, params=params, auth=auth, allow_redirects=False
-        ) as resp:
-            if resp.status == 403:
-                raise AccessForbiddenError("I do not have access to that.")
-            elif resp.status == 404 or resp.status == 302:
-                # 302 will happen if the subreddit name meets the
-                # requirements, but the subreddit doesn't exist
-                raise NotFoundError("That does not appear to exist.")
-            elif resp.status != 200:
-                raise RedditAPIError("An error occurred. Status code: {}".format(resp.status))
-            return await resp.json()
+    @commands.command()
+    async def rlimit(self, ctx, *, limit):
+        await self.redditlimit = limit
+        await ctx.send("Changed the post poll limit for reddit pulls to: " + limit)
 
