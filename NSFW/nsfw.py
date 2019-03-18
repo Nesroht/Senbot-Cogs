@@ -683,9 +683,9 @@ class NSFW(commands.Cog):
         await ctx.send("Nothing to test.")
 
     @commands.command()
-    async def random(self,ctx,*,nsfw):
-        """Get Random subreddit post - add nsfw to the end to include nsfw subs"""
-        if nsfw == "nsfw":
+    async def random(self,ctx):
+        """Get Random subreddit post"""
+        if ctx.channel.is_nsfw():
             subreddit = str(self.reddit.random_subreddit(nsfw=True))
         else:
             subreddit = str(self.reddit.random_subreddit())
