@@ -322,7 +322,7 @@ class NSFW(commands.Cog):
             else:
                 # random_post_number += 1
                 # continue
-                red(ctx, subreddit)
+                self.red(ctx, subreddit=subreddit)
             await ctx.send(embed=emb)
             if video == 1:
                 await ctx.send(oldurl)
