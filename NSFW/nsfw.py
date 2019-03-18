@@ -266,6 +266,9 @@ class NSFW(commands.Cog):
     @commands.command()
     async def r(self, ctx, *, subreddit):
         """Random Post from subreddit"""
+        self.redditcommand(ctx, subreddit)
+
+    async def redditcommand(self, ctx, *, subreddit):
         try:
             test = self.reddit.subreddit(subreddit).random()
             await self.red(ctx, subreddit=subreddit)
@@ -687,4 +690,4 @@ class NSFW(commands.Cog):
         else:
             subreddit = str(self.reddit.random_subreddit())
         print(subreddit)
-        self.r(ctx,subreddit=subreddit)
+        self.redditcommand(ctx,subreddit=subreddit)
