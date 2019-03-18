@@ -433,7 +433,8 @@ class NSFW(commands.Cog):
             #
             #   Initiate ListingGenerator for given subreddit with limit, Iterate over each post until given random number reached
             #
-            #print("old")
+            if self.redditdebug:
+                print("old")
             posts = self.reddit.subreddit(subreddit).hot(limit=100)
             random_post_number = random.randint(0, 100)
             self.r_old_done = False
@@ -468,7 +469,8 @@ class NSFW(commands.Cog):
             #
             #   Request random post json from reddit
             #
-            print("new")
+            if self.redditdebug:
+                print("new")
             query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=self.headers)
             #print(query.status_code)
 
