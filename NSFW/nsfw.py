@@ -273,143 +273,115 @@ class NSFW(commands.Cog):
                 await self.oldred(ctx, subreddit=subreddit)
                 return
 
-        async def redfunc(self, ctx, *, subreddit, oldurl, stickied, over_18, title, selftext, origin):
+    async def redfunc(self, ctx, *, subreddit, oldurl, stickied, over_18, title, selftext, origin):
+        #
+        #   If redditdebug is active print post url in console
+        #
+        if self.redditdebug:
+            print(oldurl)
+            
+        #
+        #   Check if post url exists or is stickied, if it is find a new post
+        #
+        if oldurl is None or stickied:
+            await self.red(ctx, subreddit=subreddit)
 
-            #
-            #   If redditdebug is active print post url in console
-            #
-            if self.redditdebug:
-                print(oldurl)
+        #
+        #   Check if post is allowed in channel
+        #
+        if ctx.channel.is_nsfw() == False and over_18 == True:
+            await ctx.send("**`r/" + subreddit + " or the random post is not fit for this discord channel!`**")
+            if origin == "new":
+                return
+            else:
+                self.r_old_done = True
+                return False
 
-            #
-            #   Check if post url exists or is stickied, if it is find a new post
-            #
-            if oldurl is None or stickied:
-                await self.red(ctx, subreddit=subreddit)
+        #
+        #   Prepare variables for later
+        #
+        emb = discord.Embed(title="r/" + subreddit, description=title)
+        video = 0
 
-            #
-            #   Check if post is allowed in channel
-            #
-            if ctx.channel.is_nsfw() == False and over_18 == True:
-                await ctx.send("**`r/" + subreddit + " or the random post is not fit for this discord channel!`**")
-                if origin == "new":
-                    return
-                else:
-                    self.r_old_done = True
+        #
+        #   Check if url ends with valid image formats, if it does put in embed
+        #
+        if oldurl.endswith(".gif" or ".jpg" or ".png"):
+            emb.set_image(url=oldurl)
+
+        #
+        #   Check if url is gfycat, if it is reformat link to work in embed
+        #
+        elif oldurl.startswith('https://gfycat'):
+            newurl1, newurl2 = oldurl.split('/gfycat.com/')
+            if "-" in newurl2:
+                newurl2 = newurl2.split('-')[0]
+            if "/" in newurl2:
+                if newurl2[2] == "/":
+                    newurl2 = newurl2[2:]
+            # print(newurl2)
+            urlList = self.gfyclient.query_gfy(newurl2)
+            gifUrl = urlList["gfyItem"]
+            emb.set_image(url=gifUrl["gifUrl"])
+
+        #
+        #   Check if url is Imgur album, if it is post all images in album
+        #
+        elif "imgur.com/a" in oldurl:
+            if "imgur.com/a" in oldurl:
+                dump, album_id = oldurl.split("/a/")
+                albumlist = self.iclient.get_album_images(album_id)
+                count = 1
+                for pic in albumlist:
+                    emb = discord.Embed(title="r/" + subreddit,
+                                        description=post.get("title") + " " + str(count) + "/" + str(
+                                            len(albumlist)))
+                    emb.set_image(url=pic.link)
+                    count += 1
+                    await ctx.send(embed=emb)
+                if origin == "old":
+                    self.r_old_one = True
                     return False
+                return
+            elif "imgur.com/album" in oldurl:
+                dump, album_id = oldurl.split("/album/")
+                albumlist = self.iclient.get_album_images(album_id)
+                count = 1
+                for pic in albumlist:
+                    emb = discord.Embed(title="r/" + subreddit,
+                                        description=post.get("title") + " " + str(count) + "/" + str(
+                                            len(albumlist)))
+                    emb.set_image(url=pic.link)
+                    count += 1
+                    await ctx.send(embed=emb)
+                if origin == "old":
+                    self.r_old_one = True
+                    return False
+                return
 
-            #
-            #   Prepare variables for later
-            #
-            emb = discord.Embed(title="r/" + subreddit, description=title)
-            video = 0
+        #
+        #   Check if url is imgur, if it is reformat to .gif to work in embed
+        #
+        elif oldurl.startswith('https://imgur') or oldurl.startswith('https://m.imgur'):
+            newurl1, newurl2 = oldurl.split('//')
+            # print(newurl1 + newurl2)
+            newurl = newurl1 + "//i." + newurl2 + ".gif"
+            emb.set_image(url=newurl)
 
-            #
-            #   Check if url ends with valid image formats, if it does put in embed
-            #
-            if oldurl.endswith(".gif" or ".jpg" or ".png"):
-                emb.set_image(url=oldurl)
+        #
+        #   Checks if url is imgur, if it is changes ending to work with embed
+        #
+        elif oldurl.startswith('https://i.imgur') and oldurl.endswith('v'):
+            video = 1
 
-            #
-            #   Check if url is gfycat, if it is reformat link to work in embed
-            #
-            elif oldurl.startswith('https://gfycat'):
-                newurl1, newurl2 = oldurl.split('/gfycat.com/')
-                if "-" in newurl2:
-                    newurl2 = newurl2.split('-')[0]
-                if "/" in newurl2:
-                    if newurl2[2] == "/":
-                        newurl2 = newurl2[2:]
-                # print(newurl2)
-                urlList = self.gfyclient.query_gfy(newurl2)
-                gifUrl = urlList["gfyItem"]
-                emb.set_image(url=gifUrl["gifUrl"])
-
-            #
-            #   Check if url is Imgur album, if it is post all images in album
-            #
-            elif "imgur.com/a" in oldurl:
-                if "imgur.com/a" in oldurl:
-                    dump, album_id = oldurl.split("/a/")
-                    albumlist = self.iclient.get_album_images(album_id)
-                    count = 1
-                    for pic in albumlist:
-                        emb = discord.Embed(title="r/" + subreddit,
-                                            description=post.get("title") + " " + str(count) + "/" + str(
-                                                len(albumlist)))
-                        emb.set_image(url=pic.link)
-                        count += 1
-                        await ctx.send(embed=emb)
-                    if origin == "old":
-                        self.r_old_one = True
-                        return False
-                    return
-                elif "imgur.com/album" in oldurl:
-                    dump, album_id = oldurl.split("/album/")
-                    albumlist = self.iclient.get_album_images(album_id)
-                    count = 1
-                    for pic in albumlist:
-                        emb = discord.Embed(title="r/" + subreddit,
-                                            description=post.get("title") + " " + str(count) + "/" + str(
-                                                len(albumlist)))
-                        emb.set_image(url=pic.link)
-                        count += 1
-                        await ctx.send(embed=emb)
-                    if origin == "old":
-                        self.r_old_one = True
-                        return False
-                    return
-
-            #
-            #   Check if url is imgur, if it is reformat to .gif to work in embed
-            #
-            elif oldurl.startswith('https://imgur') or oldurl.startswith('https://m.imgur'):
-                newurl1, newurl2 = oldurl.split('//')
-                # print(newurl1 + newurl2)
-                newurl = newurl1 + "//i." + newurl2 + ".gif"
+        #
+        #   Checks if url is .gifv, if it is post out of embed
+        #
+        elif subreddit in oldurl:
+            if "i.redd.it" in selftext:
+                newurl1, newurl2 = oldurl.split("https://")
+                newurl = "https://" + newurl2
                 emb.set_image(url=newurl)
-
-            #
-            #   Checks if url is imgur, if it is changes ending to work with embed
-            #
-            elif oldurl.startswith('https://i.imgur') and oldurl.endswith('v'):
-                video = 1
-
-            #
-            #   Checks if url is .gifv, if it is post out of embed
-            #
-            elif subreddit in oldurl:
-                if "i.redd.it" in selftext:
-                    newurl1, newurl2 = oldurl.split("https://")
-                    newurl = "https://" + newurl2
-                    emb.set_image(url=newurl)
-                else:
-                    if origin == "new":
-                        await self.red(ctx, subreddit=subreddit)
-                        return
-                    else:
-                        self.r_old_done = False
-                        return False
-
-            #
-            #   Checks if url is various video/audio sites, if it is post out of embed
-            #
-            elif oldurl.startswith('https://youtube') or oldurl.startswith(
-                    'https://youtu.be') or oldurl.startswith('https://www.youtube') or oldurl.startswith(
-                'https://www.pornhub') or oldurl.startswith('https://pornhub') or oldurl.startswith(
-                'https://soundcloud') or oldurl.startswith(
-                'https://www.soundcloud'):
-                video = 1
-
-            #
-            #   Catch check, if url starts with i. assume it is a valid image link and add it to embed
-            #
-            elif oldurl.startswith('https://i.'):
-                emb.set_image(url=oldurl)
-
-            #
-            #   If none of the cases above passed, try another post
-            #
             else:
                 if origin == "new":
                     await self.red(ctx, subreddit=subreddit)
@@ -417,17 +389,44 @@ class NSFW(commands.Cog):
                 else:
                     self.r_old_done = False
                     return False
-            await ctx.send(embed=emb)
 
-            #
-            #   Variable check for if url should be passed outside of embed
-            #
-            if video == 1:
-                await ctx.send(oldurl)
-            if origin == "old":
-                self.r_old_done = True
+        #
+        #   Checks if url is various video/audio sites, if it is post out of embed
+        #
+        elif oldurl.startswith('https://youtube') or oldurl.startswith(
+                'https://youtu.be') or oldurl.startswith('https://www.youtube') or oldurl.startswith(
+            'https://www.pornhub') or oldurl.startswith('https://pornhub') or oldurl.startswith(
+            'https://soundcloud') or oldurl.startswith(
+            'https://www.soundcloud'):
+            video = 1
+
+        #
+        #   Catch check, if url starts with i. assume it is a valid image link and add it to embed
+        #
+        elif oldurl.startswith('https://i.'):
+            emb.set_image(url=oldurl)
+
+        #
+        #   If none of the cases above passed, try another post
+        #
+        else:
+            if origin == "new":
+                await self.red(ctx, subreddit=subreddit)
+                return
+            else:
+                self.r_old_done = False
                 return False
-            return
+        await ctx.send(embed=emb)
+
+        #
+        #   Variable check for if url should be passed outside of embed
+        #
+        if video == 1:
+            await ctx.send(oldurl)
+        if origin == "old":
+            self.r_old_done = True
+            return False
+        return
 
     async def oldred(self,ctx,*,subreddit):
         try:
