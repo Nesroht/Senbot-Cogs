@@ -436,6 +436,9 @@ class NSFW(commands.Cog):
                         video = 1
                     elif oldurl.startswith('https://i.'):
                         emb.set_image(url=oldurl)
+                    else:
+                        random_post_number += 1
+                        continue
                     await ctx.send(embed=emb)
                     if video == 1:
                         await ctx.send(oldurl)
