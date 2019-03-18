@@ -456,6 +456,6 @@ class NSFW(commands.Cog):
 
     @commands.command()
     async def rlimit(self, ctx, *, limit):
-        await self.redditlimit = limit
+        self.redditlimit = limit
         await ctx.send("Changed the post poll limit for reddit pulls to: " + limit)
 
