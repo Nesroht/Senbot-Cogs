@@ -670,7 +670,7 @@ class NSFW(commands.Cog):
     @commands.command()
     async def alimit(self, ctx, *, limit):
         self.alimit = limit
-        await ctx.send("Set number of album pictures to post at once to: " + str(limit))
+        await ctx.send("Set number of album pictures to post at once to: " + str(self.alimit))
 
     @commands.command()
     async def rtest(self, ctx, *, subreddit):
