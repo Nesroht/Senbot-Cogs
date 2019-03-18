@@ -254,7 +254,7 @@ class NSFW(commands.Cog):
 
     @commands.command()
     async def r(self, ctx, *, subreddit):
-        await self.red(ctx,subreddit)
+        await self.red(subreddit)
 
     async def red(self, ctx, *, subreddit):
         """Random Post from subreddit"""
