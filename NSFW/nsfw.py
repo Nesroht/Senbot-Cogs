@@ -263,6 +263,7 @@ class NSFW(commands.Cog):
 
     @commands.command()
     async def r(self, ctx, *, subreddit):
+        """Random Post from subreddit"""
         try:
             test = self.reddit.subreddit(subreddit).random()
             await self.red(ctx, subreddit=subreddit)
@@ -278,6 +279,7 @@ class NSFW(commands.Cog):
 
     async def oldred(self,ctx,*,subreddit):
         try:
+            print("old")
             posts = self.reddit.subreddit(subreddit).hot(limit=100)
             random_post_number = random.randint(0, 100)
             # print(random_post_number)
@@ -358,8 +360,8 @@ class NSFW(commands.Cog):
                 print(e)
 
     async def red(self, ctx, *, subreddit):
-        """Random Post from subreddit"""
         try:
+            print("new")
             query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=self.headers)
             #print(query.status_code)
             if query.status_code == 401:
