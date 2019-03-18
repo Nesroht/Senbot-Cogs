@@ -330,16 +330,17 @@ class NSFW(commands.Cog):
         elif "imgur.com/a/" in oldurl:
             dump, album_id = oldurl.split("/a/")
             albumlist = self.iclient.get_album_images(album_id)
-            random_count = random.randint(0,len(albumlist))
-            if random_count >= len(albumlist)-5:
-                random_count = len(albumlist)-5
+            size = len(albumlist)
+            random_count = random.randint(0,size)
+            if random_count >= size-5:
+                random_count = size-5
             count = 1
             for i, pic in albumlist:
                 if i == random_count:
                     if count <= 6:
                         emb = discord.Embed(title="r/" + subreddit,
                                             description=title + " " + str(count) + "/" + str(
-                                                len(albumlist)))
+                                                size))
                         emb.set_image(url=pic.link)
                         count += 1
                         await ctx.send(embed=emb)
@@ -350,14 +351,17 @@ class NSFW(commands.Cog):
         elif "imgur.com/album/" in oldurl:
             dump, album_id = oldurl.split("/album/")
             albumlist = self.iclient.get_album_images(album_id)
-            random_count = random.randint(0, len(albumlist))
+            size = len(albumlist)
+            random_count = random.randint(0, size)
+            if random_count >= size-5:
+                random_count = size-5
             count = 1
             for i, pic in albumlist:
                 if i == random_count:
                     if count <= 6:
                         emb = discord.Embed(title="r/" + subreddit,
                                             description=title + " " + str(count) + "/" + str(
-                                                len(albumlist)))
+                                                size))
                         emb.set_image(url=pic.link)
                         count += 1
                         await ctx.send(embed=emb)
