@@ -422,7 +422,7 @@ class NSFW(commands.Cog):
                 #print(i)
                 #if i == random_post_number:
             print(post.get("url"))
-            if post.get("url") is None or post.stickied:
+            if post.get("url") is None or post.get("stickied"):
                 #random_post_number += 1
                 r(self,ctx,subreddit)
                 #continue
