@@ -346,7 +346,7 @@ class NSFW(commands.Cog):
     async def red(self, ctx, *, subreddit):
         """Random Post from subreddit"""
         try:
-            print(self.reddit.subreddit(subreddit).random().text() + " | Test")
+            print(str(self.reddit.subreddit(subreddit).random()) + " | Test")
             if self.reddit.subreddit(subreddit).random() is None:
                 await self.oldred(ctx,subreddit=subreddit)
                 return
