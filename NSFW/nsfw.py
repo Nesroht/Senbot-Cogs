@@ -342,8 +342,7 @@ class NSFW(commands.Cog):
         except Exception as e:
             # await ctx.send("**`Can't find subreddit " + subreddit + "`**")
             await ctx.send(f":x: **Error:** `{e}`")
-
-        async def red(self, ctx, *, subreddit):
+    async def red(self, ctx, *, subreddit):
         """Random Post from subreddit"""
         try:
             if self.reddit.subreddit(subreddit).random() is None:
