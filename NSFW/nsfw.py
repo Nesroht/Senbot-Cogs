@@ -690,4 +690,4 @@ class NSFW(commands.Cog):
         else:
             subreddit = str(self.reddit.random_subreddit())
         print(subreddit)
-        self.redditcommand(ctx,subreddit=subreddit)
+        await self.redditcommand(ctx,subreddit=subreddit)
