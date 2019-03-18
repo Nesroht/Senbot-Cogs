@@ -477,6 +477,77 @@ class NSFW(commands.Cog):
         self.redditlimit = int(limit)
         await ctx.send("Changed the post poll limit for reddit pulls to: " + limit)
 
+    @commands.command()
+    async def rtest(self, ctx, *, subreddit):
+        # limit = self.redditlimit
+        # posts = self.reddit.subreddit(subreddit).hot(limit=limit)
+        # posts = copy.deepcopy(postlist)
+        # random_post_number = random.randint(0, limit)
+        # print(random_post_number)
+        # for i, post in enumerate(posts):
+        query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=self.headers)
+        postin = query.json()
+        if postin["status_code"] == 401:
+            authorize(self, ctx)
+            query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=self.headers)
+            postin = query.json()
+        postin = postin[0]
+        postjson = postin.get("data")
+        postjson = postjson.get("children")
+        postjson = postjson[0]
+        post = postjson.get("data")
+        # print(i)
+        # if i == random_post_number:
+        print(post.get("url"))
+        if post.get("url") is None or post.get("stickied"):
+            # random_post_number += 1
+            r(self, ctx, subreddit)
+            # continue
+        # print("NSFW Channel?: "+ str(ctx.channel.is_nsfw()) + " | NSFW Post?: "+str(post.over_18))
+        if ctx.channel.is_nsfw() == False and post.over_18 == True:
+            await ctx.send("**`r/" + subreddit + " or the random post is not fit for this discord channel!`**")
+            # break
+            return
+        emb = discord.Embed(title="r/" + subreddit, description=post.get("title"))
+        video = 0
+        oldurl = post.get("url")
+        if oldurl.startswith('https://gfycat'):
+            newurl1, newurl2 = post.get("url").split('/gfycat.com/')
+            if "-" in newurl2:
+                newurl2 = newurl2.split('-')[0]
+            # print(newurl2)
+            urlList = self.gfyclient.query_gfy(newurl2)
+            gifUrl = urlList["gfyItem"]
+            emb.set_image(url=gifUrl["gifUrl"])
+        elif oldurl.startswith('https://imgur') or oldurl.startswith('https://m.imgur'):
+            newurl1, newurl2 = post.get("url").split('//')
+            # print(newurl1 + newurl2)
+            newurl = newurl1 + "//i." + newurl2 + ".gif"
+            emb.set_image(url=newurl)
+        elif oldurl.startswith('https://i.imgur') and oldurl.endswith('v'):
+            video = 1
+        elif oldurl.startswith('https://youtube') or oldurl.startswith(
+                'https://youtu.be') or oldurl.startswith('https://www.youtube') or oldurl.startswith(
+            'https://www.pornhub') or oldurl.startswith('https://pornhub') or oldurl.startswith(
+            'https://www.reddit') or oldurl.startswith(
+            'https://reddit') or oldurl.startswith(
+            'https://v.redd') or oldurl.startswith(
+            'https://soundcloud') or oldurl.startswith(
+            'https://www.soundcloud'):
+            # newurl = post.get("url")
+            video = 1
+        elif oldurl.startswith('https://i.'):
+            emb.set_image(url=oldurl)
+        else:
+            # random_post_number += 1
+            # continue
+            r(self, ctx, subreddit)
+        await ctx.send(embed=emb)
+        if video == 1:
+            await ctx.send(oldurl)
+        # break
+        return
+
     async def authorize(self, ctx,):
         response = requests.post("https://www.reddit.com/api/v1/access_token", auth=self.client_auth,
                                  data=self.post_data,
