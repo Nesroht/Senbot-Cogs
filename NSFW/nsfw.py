@@ -262,12 +262,12 @@ class NSFW(commands.Cog):
 
     @commands.command()
     async def r(self, ctx, *, subreddit):
-        await self.red(ctx,subreddit=subreddit)
         print("test")
         if self.reddit.subreddit(subreddit).random() is None:
             print("yes")
         else:
             print("no")
+        await self.red(ctx, subreddit=subreddit)
         # if test2 is None:
         #    await self.oldred(ctx,subreddit=subreddit)
         #   return
