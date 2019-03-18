@@ -284,7 +284,7 @@ class NSFW(commands.Cog):
             if self.redditdebug:
                 print(post.get("url"))
             if post.get("url") is None or post.get("stickied"):
-                self.r(self, ctx, subreddit)
+                self.red(ctx, subreddit)
             # print("NSFW Channel?: "+ str(ctx.channel.is_nsfw()) + " | NSFW Post?: "+str(post.over_18))
             if ctx.channel.is_nsfw() == False and post.get("over_18") == True:
                 await ctx.send("**`r/" + subreddit + " or the random post is not fit for this discord channel!`**")
