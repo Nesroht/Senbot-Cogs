@@ -278,8 +278,8 @@ class NSFW(commands.Cog):
 
     async def oldred(self,ctx,*,subreddit):
         try:
-            posts = self.reddit.subreddit(subreddit).hot(limit=50)
-            random_post_number = random.randint(0, 50)
+            posts = self.reddit.subreddit(subreddit).hot(limit=100)
+            random_post_number = random.randint(0, 100)
             # print(random_post_number)
             for i, post in enumerate(posts):
                 # print(i)
