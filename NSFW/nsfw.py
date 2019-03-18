@@ -392,10 +392,10 @@ class NSFW(commands.Cog):
     async def r(self, ctx, *, subreddit):
         """Random Post from subreddit"""
         try:
-            # query = urlopen("https://reddit.com/r/"+subreddit+"/random.json")
+            # query = urlopen("https://oauth.reddit.com/r/"+subreddit+"/random.json")
             # postjson = json.load(query)
             # post = postjson[0]['data']['children']['data']
-            postlist = self.reddit.subreddit(subreddit).hot(limit=100)
+            postlist = self.reddit.subreddit(subreddit).hot(limit=50)
             posts = copy.deepcopy(postlist)
             random_post_number = random.randint(0, len(list(postlist)))
             #print(random_post_number)
@@ -451,3 +451,26 @@ class NSFW(commands.Cog):
         except Exception as e:
             #await ctx.send("**`Can't find subreddit " + subreddit + "`**")
             await ctx.send(f":x: **Error:** `{e}`")
+
+    async def make_request(
+        session: aiohttp.ClientSession,
+        method: str,
+        url: str,
+        headers: dict = None,
+        data: dict = None,
+        params: dict = None,
+        auth: aiohttp.BasicAuth = None,
+    ):
+        async with session.request(
+            method, url, headers=headers, data=data, params=params, auth=auth, allow_redirects=False
+        ) as resp:
+            if resp.status == 403:
+                raise AccessForbiddenError("I do not have access to that.")
+            elif resp.status == 404 or resp.status == 302:
+                # 302 will happen if the subreddit name meets the
+                # requirements, but the subreddit doesn't exist
+                raise NotFoundError("That does not appear to exist.")
+            elif resp.status != 200:
+                raise RedditAPIError("An error occurred. Status code: {}".format(resp.status))
+            return await resp.json()
+
