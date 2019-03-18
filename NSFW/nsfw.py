@@ -544,7 +544,8 @@ class NSFW(commands.Cog):
             self.authorize(self)
             query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=self.headers)
         postin = query.json()
-        postin = postin[0]
+        if postin is list:
+            postin = postin[0]
         postjson = postin.get("data")
         postjson = postjson.get("children")
         postjson = postjson[0]
