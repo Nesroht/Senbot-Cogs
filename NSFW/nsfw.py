@@ -668,7 +668,7 @@ class NSFW(commands.Cog):
             await ctx.send("Disabled reddit debug output in console!")
 
     @commands.command()
-    async def alimit(self, ctx, *, limit):
+    async def albumlimit(self, ctx, *, limit):
         self.alimit = limit
         await ctx.send("Set number of album pictures to post at once to: " + str(self.alimit))
 
