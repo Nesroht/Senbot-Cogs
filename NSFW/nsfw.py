@@ -395,7 +395,7 @@ class NSFW(commands.Cog):
             query = ("https://reddit.com/r/"+subreddit+"/random.json")
             postbase = await (await self._session.get(query)).text()
             postjson = json.loads(postbase)
-            post = postjson.data.children.data
+            post = postjson['data']['children']['data']
             #posts = copy.deepcopy(postlist)
             #random_post_number = random.randint(0, len(list(postlist)))
             #print(random_post_number)
