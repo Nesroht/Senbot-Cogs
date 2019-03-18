@@ -421,8 +421,8 @@ class NSFW(commands.Cog):
             post = postjson.get("data")
                 #print(i)
                 #if i == random_post_number:
-            print(post.url)
-            if post.url is None or post.stickied:
+            print(post.get("url"))
+            if post.get("url") is None or post.stickied:
                 #random_post_number += 1
                 r(self,ctx,subreddit)
                 #continue
@@ -430,11 +430,12 @@ class NSFW(commands.Cog):
             if ctx.channel.is_nsfw() == False and post.over_18 == True:
                 await ctx.send("**`r/"+subreddit+" or the random post is not fit for this discord channel!`**")
                 #break
-            emb = discord.Embed(title="r/" + subreddit, description=post.title)
+                return
+            emb = discord.Embed(title="r/" + subreddit, description=post.get("title"))
             video = 0
-            oldurl = post.url
+            oldurl = post.get("url")
             if oldurl.startswith('https://gfycat'):
-                newurl1, newurl2 = post.url.split('/gfycat.com/')
+                newurl1, newurl2 = post.get("url").split('/gfycat.com/')
                 if "-" in newurl2:
                     newurl2 = newurl2.split('-')[0]
                 # print(newurl2)
@@ -442,7 +443,7 @@ class NSFW(commands.Cog):
                 gifUrl = urlList["gfyItem"]
                 emb.set_image(url=gifUrl["gifUrl"])
             elif oldurl.startswith('https://imgur') or oldurl.startswith('https://m.imgur'):
-                newurl1, newurl2 = post.url.split('//')
+                newurl1, newurl2 = post.get("url").split('//')
                 # print(newurl1 + newurl2)
                 newurl = newurl1 + "//i." + newurl2 + ".gif"
                 emb.set_image(url=newurl)
@@ -456,17 +457,19 @@ class NSFW(commands.Cog):
                     'https://v.redd') or oldurl.startswith(
                     'https://soundcloud') or oldurl.startswith(
                     'https://www.soundcloud'):
-                # newurl = post.url
+                # newurl = post.get("url")
                 video = 1
             elif oldurl.startswith('https://i.'):
                 emb.set_image(url=oldurl)
-            #else:
+            else:
                 #random_post_number += 1
                 #continue
+                r(self, ctx, subreddit)
             await ctx.send(embed=emb)
             if video == 1:
                 await ctx.send(oldurl)
             #break
+            return
         except Exception as e:
             #await ctx.send("**`Can't find subreddit " + subreddit + "`**")
             await ctx.send(f":x: **Error:** `{e}`")
