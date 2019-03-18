@@ -460,6 +460,7 @@ class NSFW(commands.Cog):
     async def rtest(self, ctx, *, subreddit):
         query = urlopen("https://reddit.com/r/" + subreddit + "/random.json")
         postin = json.load(query)
-        postjson = json.loads(postin[0])
-        post = postjson.data.children.data
+        postjson = postin['data']
+        postjson = postjson['children']
+        post = postjson['data']
         await ctx.send(post.url)
