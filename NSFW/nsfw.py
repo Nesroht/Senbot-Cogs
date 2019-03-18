@@ -395,7 +395,7 @@ class NSFW(commands.Cog):
             #postlist = self.reddit.subreddit(subreddit).hot(limit=50)
             query = urlopen("https://reddit.com/r/"+subreddit+"/random.json")
             postjson = json.load(query)
-            post = postjson['data']['children']['data']
+            post = postjson[0]['data']['children']['data']
             #posts = copy.deepcopy(postlist)
             #random_post_number = random.randint(0, len(list(postlist)))
             #print(random_post_number)
