@@ -347,8 +347,10 @@ class NSFW(commands.Cog):
         """Random Post from subreddit"""
         try:
             print("test")
-            print(str(self.reddit.subreddit(subreddit).random()) + " | Test")
-            if self.reddit.subreddit(subreddit).random() is None:
+            test = self.reddit.subreddit(subreddit).random()
+            test2 = copy.deepcopy(test)
+            print(str(test) + " | Test")
+            if test2 is None:
                 await self.oldred(ctx,subreddit=subreddit)
                 return
             query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=self.headers)
