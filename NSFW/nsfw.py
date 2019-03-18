@@ -335,27 +335,6 @@ class NSFW(commands.Cog):
             if random_count >= size-5:
                 random_count = size-5
             count = 1
-            for i, pic in albumlist:
-                if i == random_count:
-                    if count <= 6:
-                        emb = discord.Embed(title="r/" + subreddit,
-                                            description=title + " " + str(count) + "/" + str(
-                                                size))
-                        emb.set_image(url=pic.link)
-                        count += 1
-                        await ctx.send(embed=emb)
-            if origin == "old":
-                self.r_old_one = True
-                return False
-            return
-        elif "imgur.com/album/" in oldurl:
-            dump, album_id = oldurl.split("/album/")
-            albumlist = self.iclient.get_album_images(album_id)
-            size = len(albumlist)
-            random_count = random.randint(0, size)
-            if random_count >= size-5:
-                random_count = size-5
-            count = 1
             for i, pic in enumerate(albumlist):
                 if i == random_count:
                     if count <= 6:
@@ -369,7 +348,7 @@ class NSFW(commands.Cog):
                 self.r_old_one = True
                 return False
             return
-
+        
         #
         #   Check if url is imgur, if it is reformat to .gif to work in embed
         #
