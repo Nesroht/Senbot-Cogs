@@ -406,14 +406,12 @@ class NSFW(commands.Cog):
             #random_post_number = random.randint(0, limit)
             #print(random_post_number)
             #for i, post in enumerate(posts):
-            response = requests.post("https://www.reddit.com/api/v1/access_token", auth=self.client_auth,
-                                     data=self.post_data,
-                                     headers=self.headers)
-            response_data = response.json()
-            self.headers = {"Authorization": response_data["token_type"] + " " + response_data["access_token"],
-                            "User-Agent": credentials.USER_AGENT}
             query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=self.headers)
             postin = query.json()
+            if postin[0].get("status_code") == 401:
+                authorize(self,ctx)
+                query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=self.headers)
+                postin = query.json()
             postin = postin[0]
             postjson = postin.get("data")
             postjson = postjson.get("children")
@@ -479,19 +477,10 @@ class NSFW(commands.Cog):
         self.redditlimit = int(limit)
         await ctx.send("Changed the post poll limit for reddit pulls to: " + limit)
 
-    @commands.command()
-    async def rtest(self, ctx, *, subreddit):
-        response = requests.post("https://www.reddit.com/api/v1/access_token", auth=self.client_auth, data=self.post_data,
+    async def authorize(self, ctx,):
+        response = requests.post("https://www.reddit.com/api/v1/access_token", auth=self.client_auth,
+                                 data=self.post_data,
                                  headers=self.headers)
         response_data = response.json()
         self.headers = {"Authorization": response_data["token_type"] + " " + response_data["access_token"],
-                   "User-Agent": credentials.USER_AGENT}
-        query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=self.headers)
-        postin = query.json()
-        print(postin)
-        postin = postin[0]
-        postjson = postin.get("data")
-        postjson = postjson.get("children")
-        postjson = postjson[0]
-        post = postjson.get("data")
-        await ctx.send(post.get("url"))
+                        "User-Agent": credentials.USER_AGENT}
