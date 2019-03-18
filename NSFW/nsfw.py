@@ -468,8 +468,8 @@ class NSFW(commands.Cog):
         response = requests.post("https://www.reddit.com/api/v1/access_token", auth=self.client_auth, data=self.post_data,
                                  headers=self.headers)
         print(response.json())
-        #innerheaders = {"Authorization": response['access_token'],
-        #           "User-Agent": credentials.USER_AGENT}
+        innerheaders = {"Authorization": response['access_token'],
+                   "User-Agent": credentials.USER_AGENT}
         query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=innerheaders)
         postin = json.load(query)
         postin = postin[0]
