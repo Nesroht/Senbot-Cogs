@@ -316,7 +316,7 @@ class NSFW(commands.Cog):
                 if "i.redd.it" in post.get("selftext"):
                     newurl1, newurl2 = oldurl.split("https://")
                     newurl = "https://" + newurl2
-                    embed.set_image(url=newurl)
+                    emb.set_image(url=newurl)
                 else:
                     await self.red(ctx, subreddit=subreddit)
                     return
