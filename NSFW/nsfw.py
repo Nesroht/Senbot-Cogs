@@ -467,10 +467,10 @@ class NSFW(commands.Cog):
     async def rtest(self, ctx, *, subreddit):
         response = requests.post("https://www.reddit.com/api/v1/access_token", auth=self.client_auth, data=self.post_data,
                                  headers=self.headers)
-        print(response.json())
-        innerheaders = {"Authorization": response.access_token,
+        response_data = response.json()
+        self.headers = {"Authorization": response_data["token_type"] + " " + response_data["access_token"],
                    "User-Agent": credentials.USER_AGENT}
-        query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=innerheaders)
+        query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=self.headers)
         postin = json.load(query)
         postin = postin[0]
         postjson = postin.get("data")
