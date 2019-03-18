@@ -333,14 +333,15 @@ class NSFW(commands.Cog):
             albumlist = self.iclient.get_album_images(album_id)
             size = len(albumlist)
             random_count = random.randint(0,size)
-            if random_count >= size-limit and random_count >= limit:
-                random_count = size-limit
+            orig_rand = random_count
+            if random_count >= size-self.alimit and random_count >= self.alimit:
+                random_count = size-self.alimit
             count = 1
             for i, pic in enumerate(albumlist):
                 if i == random_count:
-                    if count <= limit:
+                    if count <= self.alimit:
                         emb = discord.Embed(title="r/" + subreddit,
-                                            description=title + " " + str(count+random_count) + "/" + str(
+                                            description=title + " " + str(count+orig_rand) + "/" + str(
                                                 size))
                         emb.set_image(url=pic.link)
                         count += 1
