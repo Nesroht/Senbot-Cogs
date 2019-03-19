@@ -488,7 +488,7 @@ class NSFW(commands.Cog):
         #   If query responds with 401, reauthorize client
         #
         if query.status_code == 401:
-            self.authorize()
+            await self.authorize()
             query = requests.get("https://oauth.reddit.com/r/" + subreddit + "/random.json", headers=self.headers)
 
         #
