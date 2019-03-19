@@ -694,7 +694,7 @@ class NSFW(commands.Cog):
     @_nsfw.command()
     async def rtest(self, ctx, *, subreddit):
         """Test command"""
-        await ctx.send("Nothing to test.")
+        await ctx.send("Nothing to test. test")
 
     @commands.command()
     async def random(self,ctx):
