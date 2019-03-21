@@ -292,7 +292,11 @@ class NSFW(commands.Cog):
         #   Check if post url exists or is stickied, if it is find a new post
         #
         if oldurl is None or stickied:
-            await self.red(ctx, subreddit=subreddit)
+            if origin == "new":
+                await self.newred(ctx, subreddit=subreddit)
+            else:
+                self.r_old_done = True
+                return False
 
         #
         #   Check if post is allowed in channel
@@ -314,8 +318,8 @@ class NSFW(commands.Cog):
         #
         #   Check if url ends with valid image formats, if it does put in embed
         #
-        if oldurl.endswith(".gif" or ".jpg" or ".png"):
-            await ctx.send("Ends with .gif, .jpg or .png")
+        if oldurl.contains(".gif" or ".jpg" or ".png"):
+            await ctx.send("Contains .gif, .jpg or .png")
             emb.set_image(url=oldurl)
 
         #
@@ -396,7 +400,7 @@ class NSFW(commands.Cog):
                 emb.set_image(url=newurl)
             else:
                 if origin == "new":
-                    await self.red(ctx, subreddit=subreddit)
+                    await self.newred(ctx, subreddit=subreddit)
                     return
                 else:
                     self.r_old_done = False
@@ -428,7 +432,7 @@ class NSFW(commands.Cog):
                 self.r_old_done = True
                 return False
             elif origin == "new":
-                await self.red(ctx, subreddit=subreddit)
+                await self.newred(ctx, subreddit=subreddit)
                 return
             else:
                 self.r_old_done = False
