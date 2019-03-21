@@ -22,7 +22,7 @@ import praw
 import os
 import sys
 
-DEFAULT = {"nsfw_channels": ["133251234164375552"], "invert" : False, "nsfw_msg": True, "last_update": 0,  "ama_boobs": 10548, "ama_ass": 4542}# Red's testing chan. nsfw content off by default.
+DEFAULT = {"nsfw_channels": ["133251234164375552"], "invert" : False, "nsfw_msg": True, "last_update": 0,  "ama_boobs": 10548, "ama_ass": 4542}# Red"s testing chan. nsfw content off by default.
 
 #API info:
 #example: "/boobs/10/20/rank/" - get 20 boobs elements, start from 10th ordered by rank; noise: "/noise/{count=1; sql limit}/",
@@ -87,8 +87,8 @@ class NSFW(commands.Cog):
         self.iclient_id = self.credentials.ICLIENT_ID
         self.iclient_secret = self.credentials.ICLIENT_SECRET
         self.iclient = ImgurClient(self.iclient_id, self.iclient_secret)
-        #self.icredentials = self.iclient.authorize('PIN OBTAINED FROM AUTHORIZATION', 'pin')
-        #self.iclient.set_user_auth(self.icredentials['access_token'], self.icredentials['refresh_token'])
+        #self.icredentials = self.iclient.authorize("PIN OBTAINED FROM AUTHORIZATION", "pin")
+        #self.iclient.set_user_auth(self.icredentials["access_token"], self.icredentials["refresh_token"])
 
     async def get(self, url):
         async with self._session.get(url) as response:
@@ -326,10 +326,10 @@ class NSFW(commands.Cog):
         #
         #   Check if url is gfycat, if it is reformat link to work in embed
         #
-        elif oldurl.startswith('https://gfycat'):
-            newurl1, newurl2 = oldurl.split('/gfycat.com/')
+        elif oldurl.startswith("https://gfycat"):
+            newurl1, newurl2 = oldurl.rsplit("/", 1)
             if "-" in newurl2:
-                newurl2 = newurl2.split('-')[0]
+                newurl2 = newurl2.split("-")[0]
             if "/" in newurl2:
                 if newurl2[2] == "/":
                     newurl2 = newurl2[2:]
@@ -374,8 +374,8 @@ class NSFW(commands.Cog):
         #
         #   Check if url is imgur, if it is reformat to .gif to work in embed
         #
-        elif oldurl.startswith('https://imgur') or oldurl.startswith('https://m.imgur'):
-            newurl1, newurl2 = oldurl.split('//')
+        elif oldurl.startswith("https://imgur") or oldurl.startswith("https://m.imgur"):
+            newurl1, newurl2 = oldurl.split("//")
             # print(newurl1 + newurl2)
             if ".gifv" in newurl2:
                 oldurl = newurl1 + "//i." + newurl2
@@ -390,7 +390,7 @@ class NSFW(commands.Cog):
         #
         #   Checks if url is .gifv, if it is post out of embed
         #
-        elif oldurl.startswith('https://i.imgur') and oldurl.endswith('v'):
+        elif oldurl.startswith("https://i.imgur") and oldurl.endswith("v"):
             video = 1
 
         #
@@ -417,17 +417,17 @@ class NSFW(commands.Cog):
         #
         #   Checks if url is various video/audio sites, if it is post out of embed
         #
-        elif oldurl.startswith('https://youtube') or oldurl.startswith(
-                'https://youtu.be') or oldurl.startswith('https://www.youtube') or oldurl.startswith(
-            'https://www.pornhub') or oldurl.startswith('https://pornhub') or oldurl.startswith(
-            'https://soundcloud') or oldurl.startswith(
-            'https://www.soundcloud'):
+        elif oldurl.startswith("https://youtube") or oldurl.startswith(
+                "https://youtu.be") or oldurl.startswith("https://www.youtube") or oldurl.startswith(
+            "https://www.pornhub") or oldurl.startswith("https://pornhub") or oldurl.startswith(
+            "https://soundcloud") or oldurl.startswith(
+            "https://www.soundcloud"):
             video = 1
 
         #
         #   Catch check, if url starts with i. assume it is a valid image link and add it to embed
         #
-        elif oldurl.startswith('https://i.'):
+        elif oldurl.startswith("https://i."):
             emb.set_image(url=oldurl)
 
         #
@@ -485,7 +485,7 @@ class NSFW(commands.Cog):
             #   Is redditdebug false? Consider all errors as reddit not existing
             #
             if self.redditdebug is False:
-                await ctx.send("**`Can't find subreddit " + subreddit + "`**")
+                await ctx.send("**`Can"t find subreddit " + subreddit + "`**")
 
             #
             #   Is redditdebug true? print error to console
@@ -508,7 +508,7 @@ class NSFW(commands.Cog):
             #   Is redditdebug false? Consider all errors as reddit not existing
             #
             if self.redditdebug is False:
-                await ctx.send("**`Can't find subreddit " + subreddit + "`**")
+                await ctx.send("**`Can"t find subreddit " + subreddit + "`**")
 
             #
             #   Is redditdebug true? print error to console
@@ -559,7 +559,7 @@ class NSFW(commands.Cog):
         try:
             query = ("https://yande.re/post/random")
             page = await (await self._session.get(query)).text()
-            soup = BeautifulSoup(page, 'html.parser')
+            soup = BeautifulSoup(page, "html.parser")
             image = soup.find(id="highres").get("href")
             emb = discord.Embed(title="Yandere")
             emb.set_image(url=image)
@@ -574,7 +574,7 @@ class NSFW(commands.Cog):
         try:
             query = ("https://konachan.com/post/random")
             page = await (await self._session.get(query)).text()
-            soup = BeautifulSoup(page, 'html.parser')
+            soup = BeautifulSoup(page, "html.parser")
             image = soup.find(id="highres").get("href")
             emb = discord.Embed(title="Konachan")
             emb.set_image(url=image)
@@ -589,7 +589,7 @@ class NSFW(commands.Cog):
     #    try:
     #        query = ("https://e621.net/post/random")
     #        page = await (await self._session.get(query)).text()
-    #        soup = BeautifulSoup(page, 'html.parser')
+    #        soup = BeautifulSoup(page, "html.parser")
     #        image = soup.find(id="image").get("src")
     #        emb = discord.Embed(title="e621")
     #        emb.set_image(url=image)
@@ -606,7 +606,7 @@ class NSFW(commands.Cog):
             if random_number < 50:
                 query = ("http://rule34.xxx/index.php?page=post&s=random")
                 page = await (await self._session.get(query)).text()
-                soup = BeautifulSoup(page, 'html.parser')
+                soup = BeautifulSoup(page, "html.parser")
                 image = soup.find(id="image").get("src")
                 emb = discord.Embed(title="Rule34")
                 emb.set_image(url=image)
@@ -624,7 +624,7 @@ class NSFW(commands.Cog):
         try:
             query = ("http://danbooru.donmai.us/posts/random")
             page = await (await self._session.get(query)).text()
-            soup = BeautifulSoup(page, 'html.parser')
+            soup = BeautifulSoup(page, "html.parser")
             image = soup.find(id="image").get("src")
             emb = discord.Embed(title="Danbooru")
             emb.set_image(url=image)
@@ -639,7 +639,7 @@ class NSFW(commands.Cog):
         try:
             query = ("http://www.gelbooru.com/index.php?page=post&s=random")
             page = await (await self._session.get(query)).text()
-            soup = BeautifulSoup(page, 'html.parser')
+            soup = BeautifulSoup(page, "html.parser")
             image = soup.find(id="image").get("src")
             emb = discord.Embed(title="Gelbooru")
             emb.set_image(url=image)
@@ -654,7 +654,7 @@ class NSFW(commands.Cog):
         try:
             query = ("http://www.tbib.org/index.php?page=post&s=random")
             page = await (await self._session.get(query)).text()
-            soup = BeautifulSoup(page, 'html.parser')
+            soup = BeautifulSoup(page, "html.parser")
             image = soup.find(id="image").get("src")
             emb = discord.Embed(title="Tbib")
             emb.set_image(url="http:" + image)
@@ -669,7 +669,7 @@ class NSFW(commands.Cog):
         try:
             query = ("http://xbooru.com/index.php?page=post&s=random")
             page = await (await self._session.get(query)).text()
-            soup = BeautifulSoup(page, 'html.parser')
+            soup = BeautifulSoup(page, "html.parser")
             image = soup.find(id="image").get("src")
             emb = discord.Embed(title="xBooru")
             emb.set_image(url=image)
@@ -684,7 +684,7 @@ class NSFW(commands.Cog):
         try:
             query = ("http://furry.booru.org/index.php?page=post&s=random")
             page = await (await self._session.get(query)).text()
-            soup = BeautifulSoup(page, 'html.parser')
+            soup = BeautifulSoup(page, "html.parser")
             image = soup.find(id="image").get("src")
             emb = discord.Embed(title="FurryBooru")
             emb.set_image(url=image)
@@ -699,7 +699,7 @@ class NSFW(commands.Cog):
         try:
             query = ("http://drunkenpumken.booru.org/index.php?page=post&s=random")
             page = await (await self._session.get(query)).text()
-            soup = BeautifulSoup(page, 'html.parser')
+            soup = BeautifulSoup(page, "html.parser")
             image = soup.find(id="image").get("src")
             emb = discord.Embed(title="DrunkenPumken")
             emb.set_image(url=image)
