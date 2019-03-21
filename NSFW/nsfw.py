@@ -433,7 +433,7 @@ class NSFW(commands.Cog):
         else:
             randcheck = self.randatt
             if randcheck is True:
-                randomfunc(ctx)
+                self.randomfunc(ctx)
                 self.r_old_done = True
                 return False
             elif origin == "new":
@@ -738,4 +738,4 @@ class NSFW(commands.Cog):
     @commands.command()
     async def random(self,ctx):
         """Get Random subreddit post"""
-        randomfunc(ctx)
+        self.randomfunc(ctx)
