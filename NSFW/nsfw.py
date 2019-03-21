@@ -313,6 +313,7 @@ class NSFW(commands.Cog):
         #   Check if url ends with valid image formats, if it does put in embed
         #
         if oldurl.endswith(".gif" or ".jpg" or ".png"):
+            await ctx.send("Ends with .gif, .jpg or .png")
             emb.set_image(url=oldurl)
 
         #
@@ -350,12 +351,16 @@ class NSFW(commands.Cog):
                         emb = discord.Embed(title="r/" + subreddit,
                                             description=title + " " + str(count+orig_rand) + "/" + str(
                                                 size))
-                        emb.set_image(url=pic.link)
+                        if ".gifv" in pic.link:
+                            await ctx.send(embed=emb)
+                            await ctx.send(pic.link)
+                        else:
+                            emb.set_image(url=pic.link)
+                            await ctx.send(embed=emb)
                         count += 1
                         random_count += 1
-                        await ctx.send(embed=emb)
             if origin == "old":
-                self.r_old_one = True
+                self.r_old_done = True
                 return False
             return
 
@@ -417,9 +422,9 @@ class NSFW(commands.Cog):
         else:
             randcheck = self.randatt
             if randcheck is True:
-                await ctx.send(embed=emb)
-                await ctx.send(oldurl)
-                return
+                randomfunc(ctx)
+                self.r_old_done = True
+                return False
             elif origin == "new":
                 await self.red(ctx, subreddit=subreddit)
                 return
@@ -722,11 +727,14 @@ class NSFW(commands.Cog):
     @commands.command()
     async def random(self,ctx):
         """Get Random subreddit post"""
+        randomfunc(ctx)
+
+    async def randomfunc(self,ctx):
         if ctx.channel.is_nsfw() == True:
             subreddit = str(self.reddit.random_subreddit(nsfw=True))
         elif ctx.channel.is_nsfw() == False:
             subreddit = str(self.reddit.random_subreddit())
         print(subreddit)
         self.randatt = True
-        await self.redditcommand(ctx,subreddit=subreddit)
+        await self.redditcommand(ctx, subreddit=subreddit)
         self.randatt = False
