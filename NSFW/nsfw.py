@@ -291,9 +291,10 @@ class NSFW(commands.Cog):
         #
         #   Check if post url exists or is stickied, if it is find a new post
         #
-        if oldurl is None or stickied:
+        if (oldurl is "") or (oldurl is stickied):
             if origin == "new":
                 await self.newred(ctx, subreddit=subreddit)
+                return
             else:
                 self.r_old_done = True
                 return False
@@ -376,8 +377,15 @@ class NSFW(commands.Cog):
         elif oldurl.startswith('https://imgur') or oldurl.startswith('https://m.imgur'):
             newurl1, newurl2 = oldurl.split('//')
             # print(newurl1 + newurl2)
-            newurl = newurl1 + "//i." + newurl2 + ".gif"
-            emb.set_image(url=newurl)
+            if ".gifv" in newurl2:
+                oldurl = newurl1 + "//i." + newurl2
+                video = 1
+            elif (".gif" in newurl2) or (".jpg" in newurl2) or (".png" in newurl2):
+                newurl = newurl1 + "//i." + newurl2
+                emb.set_image(url=newurl)
+            else:
+                newurl = newurl1 + "//i." + newurl2 + ".gif"
+                emb.set_image(url=newurl)
 
         #
         #   Checks if url is .gifv, if it is post out of embed
