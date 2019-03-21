@@ -273,7 +273,7 @@ class NSFW(commands.Cog):
     async def redditcommand(self, ctx, *, subreddit):
         try:
             test = self.reddit.subreddit(subreddit).random()
-            await self.red(ctx, subreddit=subreddit)
+            await self.newred(ctx, subreddit=subreddit)
         except ClientException as e:
             if e:
                 await self.oldred(ctx, subreddit=subreddit)
@@ -369,13 +369,13 @@ class NSFW(commands.Cog):
             emb.set_image(url=newurl)
 
         #
-        #   Checks if url is imgur, if it is changes ending to work with embed
+        #   Checks if url is .gifv, if it is post out of embed
         #
         elif oldurl.startswith('https://i.imgur') and oldurl.endswith('v'):
             video = 1
 
         #
-        #   Checks if url is .gifv, if it is post out of embed
+        #
         #
         elif subreddit in oldurl:
             randcheck = self.randatt
@@ -460,6 +460,30 @@ class NSFW(commands.Cog):
                         continue
                     else:
                         break
+        except Exception as e:
+
+            #
+            #   Is redditdebug false? Consider all errors as reddit not existing
+            #
+            if self.redditdebug is False:
+                await ctx.send("**`Can't find subreddit " + subreddit + "`**")
+
+            #
+            #   Is redditdebug true? print error to console
+            #
+            else:
+                print(e)
+
+    async def newred(self, ctx, *, subreddit):
+        try:
+            #
+            #   Initiate ListingGenerator for given subreddit with limit, Iterate over each post until given random number reached
+            #
+            if self.redditdebug:
+                print("newer")
+            post = self.reddit.subreddit(subreddit).random()
+            await self.redfunc(ctx, subreddit=subreddit, oldurl=post.url, stickied=post.stickied, over_18=post.over_18, title=post.title, selftext=post.selftext, origin="new")
+            break
         except Exception as e:
 
             #
