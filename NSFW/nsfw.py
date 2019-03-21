@@ -277,8 +277,7 @@ class NSFW(commands.Cog):
             subreddit = str(self.reddit.random_subreddit())
         print(subreddit)
         self.randatt = True
-        await
-        self.redditcommand(ctx, subreddit=subreddit)
+        await self.redditcommand(ctx, subreddit=subreddit)
         self.randatt = False
 
     async def redditcommand(self, ctx, *, subreddit):
