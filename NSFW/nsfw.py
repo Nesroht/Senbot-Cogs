@@ -483,7 +483,6 @@ class NSFW(commands.Cog):
                 print("newer")
             post = self.reddit.subreddit(subreddit).random()
             await self.redfunc(ctx, subreddit=subreddit, oldurl=post.url, stickied=post.stickied, over_18=post.over_18, title=post.title, selftext=post.selftext, origin="new")
-            break
         except Exception as e:
 
             #
