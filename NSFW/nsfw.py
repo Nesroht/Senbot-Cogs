@@ -268,17 +268,9 @@ class NSFW(commands.Cog):
     @commands.command()
     async def r(self, ctx, *, subreddit):
         """Random Post from subreddit"""
+        self.randatt = False
         await self.redditcommand(ctx, subreddit=subreddit)
 
-    async def randomfunc(self, ctx):
-        if ctx.channel.is_nsfw() == True:
-            subreddit = str(self.reddit.random_subreddit(nsfw=True))
-        elif ctx.channel.is_nsfw() == False:
-            subreddit = str(self.reddit.random_subreddit())
-        print(subreddit)
-        await self.randatt = True
-        await self.redditcommand(ctx, subreddit=subreddit)
-        await self.randatt = False
 
     async def redditcommand(self, ctx, *, subreddit):
         try:
@@ -738,3 +730,12 @@ class NSFW(commands.Cog):
     async def random(self,ctx):
         """Get Random subreddit post"""
         self.randomfunc(ctx)
+
+    async def randomfunc(self, ctx):
+        if ctx.channel.is_nsfw() == True:
+            subreddit = str(self.reddit.random_subreddit(nsfw=True))
+        elif ctx.channel.is_nsfw() == False:
+            subreddit = str(self.reddit.random_subreddit())
+        print(subreddit)
+        self.randatt = True
+        await self.redditcommand(ctx, subreddit=subreddit)
