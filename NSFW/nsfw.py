@@ -318,7 +318,7 @@ class NSFW(commands.Cog):
         #
         #   Check if url ends with valid image formats, if it does put in embed
         #
-        if (".gif" in oldurl) or (".jpg" in oldurl) or (".png" in oldurl):
+        if ((".gif" in oldurl) or (".jpg" in oldurl) or (".png" in oldurl)) and ".gifv" not in oldurl:
             await ctx.send("Contains .gif, .jpg or .png")
             emb.set_image(url=oldurl)
 
@@ -389,17 +389,17 @@ class NSFW(commands.Cog):
         #
         #
         elif subreddit in oldurl:
-            randcheck = self.randatt
-            if randcheck is True:
-                await ctx.send(embed=emb)
-                await ctx.send(oldurl)
-                return
-            elif "i.redd.it" in selftext:
+            if "i.redd.it" in selftext:
                 newurl1, newurl2 = oldurl.split("https://")
                 newurl = "https://" + newurl2
                 emb.set_image(url=newurl)
             else:
-                if origin == "new":
+                randcheck = self.randatt
+                if randcheck is True:
+                    await self.randomfunc(ctx)
+                    self.r_old_done = True
+                    return False
+                elif origin == "new":
                     await self.newred(ctx, subreddit=subreddit)
                     return
                 else:
