@@ -320,7 +320,7 @@ class NSFW(commands.Cog):
         #   Check if url ends with valid image formats, if it does put in embed
         #
         if ((".gif" in oldurl) or (".jpg" in oldurl) or (".png" in oldurl)) and ".gifv" not in oldurl:
-            await ctx.send("Contains .gif, .jpg or .png")
+            #await ctx.send("Contains .gif, .jpg or .png")
             emb.set_image(url=oldurl)
 
         #
@@ -748,6 +748,6 @@ class NSFW(commands.Cog):
             subreddit = str(self.reddit.random_subreddit(nsfw=True))
         elif ctx.channel.is_nsfw() == False:
             subreddit = str(self.reddit.random_subreddit())
-        print(subreddit)
+        #print(subreddit)
         self.randatt = True
         await self.redditcommand(ctx, subreddit=subreddit)
