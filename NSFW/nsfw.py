@@ -276,9 +276,9 @@ class NSFW(commands.Cog):
         elif ctx.channel.is_nsfw() == False:
             subreddit = str(self.reddit.random_subreddit())
         print(subreddit)
-        self.randatt = True
+        await self.randatt = True
         await self.redditcommand(ctx, subreddit=subreddit)
-        self.randatt = False
+        await self.randatt = False
 
     async def redditcommand(self, ctx, *, subreddit):
         try:
