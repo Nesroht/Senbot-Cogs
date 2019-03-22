@@ -321,7 +321,13 @@ class NSFW(commands.Cog):
         #
         if ((".gif" in oldurl) or (".jpg" in oldurl) or (".png" in oldurl)) and ".gifv" not in oldurl:
             #await ctx.send("Contains .gif, .jpg or .png")
-            emb.set_image(url=oldurl)
+            if "?" in oldurl:
+                newurl, dump = oldurl.split("?")
+                if "_" in newurl:
+                    newurl2, dump2 = newurl.split("_")
+                    emb.set_image(url=newurl2 + ".gif")
+            else:
+                emb.set_image(url=oldurl)
 
         #
         #   Check if url is gfycat, if it is reformat link to work in embed
