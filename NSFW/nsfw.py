@@ -329,6 +329,11 @@ class NSFW(commands.Cog):
             else:
                 emb.set_image(url=oldurl)
 
+        elif (".mp4") in oldurl and "imgur.com" in oldurl:
+            newurl, dump = oldurl.split(".mp")
+            video = 1
+            oldurl = newurl + ".gifv"
+
         #
         #   Check if url is gfycat, if it is reformat link to work in embed
         #
