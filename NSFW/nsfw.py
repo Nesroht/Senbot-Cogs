@@ -326,6 +326,8 @@ class NSFW(commands.Cog):
                 if "_" in newurl:
                     newurl2, dump2 = newurl.split("_")
                     emb.set_image(url=newurl2 + ".gif")
+                else:
+                    emb.set_image(url=newurl)
             else:
                 emb.set_image(url=oldurl)
 
