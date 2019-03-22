@@ -403,7 +403,7 @@ class NSFW(commands.Cog):
         #
         #   Check if url is imgur, if it is reformat to .gif to work in embed
         #
-        elif oldurl.startswith("https://imgur") or oldurl.startswith("https://m.imgur"):
+        elif ("https://imgur" in oldurl) or ("https://m.imgur" in oldurl):
             newurl1, newurl2 = oldurl.split("//")
             # print(newurl1 + newurl2)
             if ".gifv" in newurl2:
@@ -413,7 +413,10 @@ class NSFW(commands.Cog):
                 newurl = newurl1 + "//i." + newurl2
                 emb.set_image(url=newurl)
             else:
-                newurl = newurl1 + "//i." + newurl2 + ".gif"
+                if "m.imgur" in oldurl:
+                    newurl = newurl1 + "//"+newurl2 + ".gif"
+                else:
+                    newurl = newurl1 + "//i." + newurl2 + ".gif"
                 emb.set_image(url=newurl)
 
         #
