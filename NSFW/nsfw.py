@@ -341,8 +341,11 @@ class NSFW(commands.Cog):
         #
         #   Check if url is Imgur album, if it is post all images in album
         #
-        elif "imgur.com/a/" in oldurl:
-            dump, album_id = oldurl.split("/a/")
+        elif ("imgur.com/a/" in oldurl) or ("imgur.com/album/" in oldurl):
+            if "imgur.com/a/" in oldurl:
+                dump, album_id = oldurl.split("/a/")
+            elif "imgur.com/album/" in oldurl:
+                dump, album_id = oldurl.split("/album/")
             albumlist = self.iclient.get_album_images(album_id)
             size = len(albumlist)
             random_count = random.randint(0,size)
@@ -370,6 +373,19 @@ class NSFW(commands.Cog):
                 self.r_old_done = True
                 return False
             return
+
+        elif ("imgur.com/gallery/" in oldurl) or ("imgur.com/g/" in oldurl):
+            randcheck = self.randatt
+            if randcheck is True:
+                await self.randomfunc(ctx)
+                self.r_old_done = True
+                return False
+            elif origin == "new":
+                await self.newred(ctx, subreddit=subreddit)
+                return
+            else:
+                self.r_old_done = False
+                return False
 
         #
         #   Check if url is imgur, if it is reformat to .gif to work in embed
