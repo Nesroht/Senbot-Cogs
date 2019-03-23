@@ -622,7 +622,7 @@ class NSFW(commands.Cog):
         try:
             query = ("https://e621.net/post/random")
             page = await (await self._session.get(query)).text()
-            print(page)
+            await ctx.send("```page```")
             soup = BeautifulSoup(page, "html.parser")
             image = soup.find(id="highres").get("href")
             emb = discord.Embed(title="e621")
