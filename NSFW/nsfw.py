@@ -115,7 +115,8 @@ class NSFW(commands.Cog):
 
         # Boobs
 
-    @commands.command(no_pm=True)
+    @commands.command()
+    @commands.is_nsfw()
     async def boobs(self, ctx):
         """Shows some boobs."""
         try:
@@ -133,7 +134,8 @@ class NSFW(commands.Cog):
             await ctx.send(embed=emb)
 
     # Ass
-    @commands.command(no_pm=False)
+    @commands.command()
+    @commands.is_nsfw()
     async def ass(self, ctx):
         """Shows some ass."""
         try:
@@ -613,20 +615,20 @@ class NSFW(commands.Cog):
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
-    #@commands.command()
-    #@commands.is_nsfw()
-    #async def e621(self, ctx):
-    #    """Random Image From e621"""
-    #    try:
-    #        query = ("https://e621.net/post/random")
-    #        page = await (await self._session.get(query)).text()
-    #        soup = BeautifulSoup(page, "html.parser")
-    #        image = soup.find(id="image").get("src")
-    #        emb = discord.Embed(title="e621")
-    #        emb.set_image(url=image)
-    #        await ctx.send(embed=emb)
-    #    except Exception as e:
-    #        await ctx.send(f":x: **Error:** `{e}`")
+    @commands.command()
+    @commands.is_nsfw()
+    async def e621(self, ctx):
+        """Random Image From e621"""
+        try:
+            query = ("https://e621.net/post/random")
+            page = await (await self._session.get(query)).text()
+            soup = BeautifulSoup(page, "html.parser")
+            image = soup.find(id="image").get("src")
+            emb = discord.Embed(title="e621")
+            emb.set_image(url=image)
+            await ctx.send(embed=emb)
+        except Exception as e:
+            await ctx.send(f":x: **Error:** `{e}`")
 
     @commands.command()
     @commands.is_nsfw()
@@ -635,7 +637,7 @@ class NSFW(commands.Cog):
         try:
             random_number = random.randint(0,100)
             if random_number < 50:
-                query = ("http://rule34.xxx/index.php?page=post&s=random")
+                query = ("")
                 page = await (await self._session.get(query)).text()
                 soup = BeautifulSoup(page, "html.parser")
                 image = soup.find(id="image").get("src")
