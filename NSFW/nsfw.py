@@ -621,8 +621,8 @@ class NSFW(commands.Cog):
         """Random Image From e621"""
         try:
             query = ("https://e621.net/post/random")
-            page = await (await self._session.get(query, headers={"User-Agent":"Senbot discord bot (by Senbot on e621)"})).text()
-            await ctx.send("```"+page+"```")
+            page = await (await self._session.get(query, headers={"User-Agent":"Senbot discord bot(by Senbot on e621)"})).text()
+            #await ctx.send("```"+page+"```")
             soup = BeautifulSoup(page, "html.parser")
             image = soup.find(id="highres").get("href")
             emb = discord.Embed(title="e621")
