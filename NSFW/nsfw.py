@@ -623,7 +623,7 @@ class NSFW(commands.Cog):
             query = ("https://e621.net/post/random")
             page = await (await self._session.get(query)).text()
             soup = BeautifulSoup(page, "html.parser")
-            image = soup.find(id="image").get("src")
+            image = soup.find(id="highres").get("src")
             emb = discord.Embed(title="e621")
             emb.set_image(url=image)
             await ctx.send(embed=emb)
@@ -633,14 +633,14 @@ class NSFW(commands.Cog):
     @commands.command()
     @commands.is_nsfw()
     async def rule34(self, ctx):
-        """Random Image From rule34"""#
+        """Random Image From rule34"""
         try:
             random_number = random.randint(0,100)
             if random_number < 50:
-                query = ("")
+                query = ("http://rule34.xxx/index.php?page=post&s=random")
                 page = await (await self._session.get(query)).text()
                 soup = BeautifulSoup(page, "html.parser")
-                image = soup.find(id="image").get("src")
+                image = soup.find(id="").get("src")
                 emb = discord.Embed(title="Rule34")
                 emb.set_image(url=image)
                 await ctx.send(embed=emb)
