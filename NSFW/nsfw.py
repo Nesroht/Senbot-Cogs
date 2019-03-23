@@ -430,7 +430,7 @@ class NSFW(commands.Cog):
         #
         #
         #
-        elif subreddit in oldurl:
+        elif (subreddit in oldurl) and (subreddit + ".com" not in oldurl):
             if "i.redd.it" in selftext:
                 newurl1, newurl2 = oldurl.split("https://")
                 newurl = "https://" + newurl2
@@ -453,7 +453,8 @@ class NSFW(commands.Cog):
         #
         elif oldurl.startswith("https://youtube") or oldurl.startswith(
                 "https://youtu.be") or oldurl.startswith("https://www.youtube") or oldurl.startswith(
-            "https://www.pornhub") or oldurl.startswith("https://pornhub") or ("soundcloud" in oldurl) or oldurl.startswith(
+            "https://www.pornhub") or oldurl.startswith("https://pornhub") or oldurl.startswith(
+            "https://soundcloud") or oldurl.startswith(
             "https://www.soundcloud"):
             video = 1
 
