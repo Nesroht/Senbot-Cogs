@@ -14,7 +14,7 @@ class Twitchbot(commands.Cog):
         self.helix = twitch.Helix(credentials.CLIENT_ID)
 
 
-    @commands.command(channel, message)
+    @commands.command()
     async def test(self, ctx, *, channel, message):
         await ctx.send("Testing connection to twitch")
         twitch.Chat(channel='#'+channel, nickname=self.credentials.CLIENT_USERNAME, oauth=credentials.CLIENT_OAUTH).subscribe(
