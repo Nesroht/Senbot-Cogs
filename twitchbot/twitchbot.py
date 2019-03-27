@@ -3,7 +3,7 @@ from redbot.core import checks, Config, commands
 
 import asyncio
 import twitch
-import credentials
+from twitchbot import credentials
 
 class Twitchbot(commands.Cog):
     """NSFW cog for Senbot"""
