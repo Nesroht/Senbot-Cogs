@@ -17,4 +17,4 @@ class Twitchbot(commands.Cog):
     @commands.command()
     async def test(self, ctx, channel, message):
         await ctx.send("Testing connection to twitch")
-        await twitch.Chat(channel='#'+channel, nickname=self.credentials.CLIENT_USERNAME, oauth=credentials.CLIENT_OAUTH).send(message)
+        twitch.Chat(channel='#'+channel, nickname=self.credentials.CLIENT_USERNAME, oauth=credentials.CLIENT_OAUTH).send(message)
