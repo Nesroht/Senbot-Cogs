@@ -2,28 +2,30 @@ import discord
 from redbot.core import checks, Config, commands
 
 import asyncio
-import bottom
+import socket
 from twitchbot import credentials
 
 class Twitchbot(commands.Cog):
     """NSFW cog for Senbot"""
 
-    twitchirc = bottom.Client(host=self.host, port=self.port, ssl=self.ssl)
-
     def __init__(self, bot):
         self.bot = bot
         self.credentials = credentials
         self.channels = self.credentials.CHANNELS
-
-        self.host = "irc.chat.twitch.tv"
+        self.server = "irc.chat.twitch.tv"
+        self.CHECK_DELAY = 1
         self.port = 6667
-        self.ssl = False
+
+        self.tast = self.bot.loop.create_task(self.irc_check())
+
+        self.sock = socket.socket()
+        self.socket.setblocking(0)
         if credentials.CLIENT_ID is None:
             ctx.send("Please set twitchbot client ID with [p]twitchbot botset")
         else:
             self.helix = twitch.Helix(credentials.CLIENT_ID)
             self.messageListener()
-            self.run()
+            self.irc = socket.connect(self.server,self.port)
 
 
     @commands.command()
@@ -67,53 +69,37 @@ class Twitchbot(commands.Cog):
                 print("Pong!")
         return
 
-    @twitchirc.on('CLIENT_CONNECT')
-    async def connect(self,channel):
-        self.twitchirc.send('PASS', password='oauth:'+self.credentials.CLIENT_OAUTH)
-        self.twitchirc.send('NICK', nick=self.credentials.CLIENT_USERNAME.lower())
+    async def irc_check(self):
+        while True:
+            try:
+                await self.check_chat()
+            except asyncio.CancelledError:
+                pass
+            await asyncio.sleep(self.CHECK_DELAY)
 
-        # Don't try to join channels until the server has
-        # sent the MOTD, or signaled that there's no MOTD.
-        done, pending = await asyncio.wait(
-            [self.twitchirc.wait("RPL_ENDOFMOTD"),
-             self.twitchirc.wait("ERR_NOMOTD")],
-            loop=self.twitchirc.loop,
-            return_when=asyncio.FIRST_COMPLETED
-        )
-
-        # Cancel whichever waiter's event didn't come in.
-        for future in pending:
-            future.cancel()
-
-        self.twitchirc.send('JOIN', channel=channel)
-
-    @bot.on('PING')
-    def keepalive(self, message):
-        self.twitchirc.send('PONG', message=message)
-
-    @bot.on('PRIVMSG')
-    def message(self, nick, target, message):
-        """ Echo all messages """
-
-        # Don't echo ourselves
-        if nick == NICK:
-            return
-        # Respond directly to direct messages
-        if target == NICK:
-            self.twitchirc.send("PRIVMSG", target=nick, message=message)
-        # Channel message
-        else:
-            self.twitchirc.send("PRIVMSG", target=target, message=message)
-
-    def run(self):
-        # This schedules a connection to be created when the bot's event loop
-        # is run.  Nothing will happen until the loop starts running to clear
-        # the pending coroutines.
-        for channel in self.credentials.CHANNELS:
-            self.twitchirc.loop.create_task(self.twitchirc.connect())
-            # Ctrl + C to quit
-            print(
-                "Connecting to {} on port {} as {} in channel {}".format(
-                   host, port, NICK, CHANNEL))
-            self.twitchirc.loop.run_forever()
-
+    async def check_chat(self):
+        for channel in self.channels:
+            with contextlib.suppress(Exception):
+                senderdata = irc.recv(2048)  # gets output from IRC server
+                linecount = senderdata.count('\r\n')
+                if linecount == 1:
+                    print(senderdata)
+                    print("Single message")
+                elif (senderdata.find('tmi.twitch.tv JOIN ' + channel) != -1):
+                    print linecount - 1, 'People joined'
+                elif (senderdata.find('tmi.twitch.tv PART ' + channel) != -1):
+                    print linecount - 1, 'People left'
+                elif (linecount > 1):
+                    print "Multiple messages"
+                    messagelist = []
+                    messagelist = senderdata.split('\r\n')
+                    print len(messagelist)
+                    for i in range(0, len(messagelist)):
+                        if (len(messagelist[i]) > 0):
+                            print messagelist[i]
+                            tryComment(messagelist[i])
+                            print "message number: "
+                            print i
+                        else:
+                            print "This message is empty"
+                            print i
