@@ -11,7 +11,7 @@ class Twitchbot(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.credentials = credentials
-        self.channels = credentials.CHANNELS
+        self.channels = self.credentials.CHANNELS
         if credentials.CLIENT_ID is None:
             ctx.send("Please set twitchbot client ID with [p]twitchbot botset")
         else:
@@ -47,11 +47,11 @@ class Twitchbot(commands.Cog):
         else:
             for channel in self.channels:
                 twitch.Chat(channel='#'+channel, nickname=self.credentials.CLIENT_USERNAME, oauth=self.credentials.CLIENT_OAUTH).subscribe(
-                    lambda message: self.messageHandler(channel=message.channel, sender=message.sender, text=message.text))
+                    self.messageHandler(message.channel, message.sender, message.text))
             return
 
 
-    def messageHandler(self, *, channel, sender, text):
+    def messageHandler(self, channel, sender, text):
         test = sender
         if test.upper() is not self.credentials.CLIENT_USERNAME.upper():
             print(channel +" "+ sender +" "+ text)
