@@ -15,7 +15,7 @@ class Twitchbot(commands.Cog):
             ctx.send("Please set twitchbot client ID with [p]twitchbot botset")
         else:
             self.helix = twitch.Helix(credentials.CLIENT_ID)
-            self.messageListener()
+            asyncio.run(self.messageListener())
         self.channels = credentials.CHANNELS
 
 
@@ -52,9 +52,10 @@ class Twitchbot(commands.Cog):
 
 
     async def messageHandler(self, *, channel, sender, text):
-        if sender.upper() is not self.credentials.CLIENT_USERNAME.upper():
+        test = sender
+        if test.upper() is not self.credentials.CLIENT_USERNAME.upper():
             print(channel +" "+ sender +" "+ text)
         else:
-            if (text is "Ping!") and (sender.upper() is self.credentials.CLIENT_USERNAME.upper()):
+            if (text is "Ping!") and (test.upper() is self.credentials.CLIENT_USERNAME.upper()):
                 print("Pong!")
         return
