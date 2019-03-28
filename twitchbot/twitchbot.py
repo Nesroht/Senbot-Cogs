@@ -17,6 +17,7 @@ class Twitchbot(commands.Cog):
     @commands.command()
     async def test(self, ctx, channel, message):
         await ctx.send("Testing connection to twitch")
+        i = 0
         while i<30:
             i+=1
             twitch.Chat(channel='#' + channel, nickname=self.credentials.CLIENT_USERNAME,
