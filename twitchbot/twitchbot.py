@@ -12,7 +12,7 @@ class Twitchbot(commands.Cog):
         self.bot = bot
         self.credentials = credentials
         if credentials.CLIENT_ID is None:
-            await ctx.send("Please set twitchbot client ID with [p]twitchbot botset")
+            ctx.send("Please set twitchbot client ID with [p]twitchbot botset")
         else:
             self.helix = twitch.Helix(credentials.CLIENT_ID)
             self.messageListener()
