@@ -24,13 +24,13 @@ class Twitchbot(commands.Cog):
     async def messageListener(self):
         for channel in self.channels:
             twitch.Chat(channel='#'+channel, nickname=self.credentials.CLIENT_USERNAME, oauth=self.credentials.CLIENT_OAUTH).subscribe(
-                lambda message: self.messageHandler(message))
+                lambda message: self.messageHandler(message.channel, message.sender, message.text, message.helix))
 
 
-    async def messageHandler(self, message):
-        user = message.helix.user(message.sender).display_name
-        if message.helix.user(message.sender).displayname is not self.credentials.CLIENT_USERNAME:
-            print(message.channel, user, message.text)
+    async def messageHandler(self, channel, sender, text, helix):
+        user = helix.user(message.sender).displayname
+        if user is not self.credentials.CLIENT_USERNAME:
+            print(channel, user, text)
         else:
-            if (message.text is "Ping!") and (user is self.credentials.CLIENT_USERNAME):
+            if (text is "Ping!") and (user is self.credentials.CLIENT_USERNAME):
                 print("Pong!")
