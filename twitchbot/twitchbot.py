@@ -73,8 +73,7 @@ class Twitchbot(commands.Cog):
 
         # Don't try to join channels until the server has
         # sent the MOTD, or signaled that there's no MOTD.
-        done, pending = await
-        asyncio.wait(
+        done, pending = await asyncio.wait(
             [self.twitchirc.wait("RPL_ENDOFMOTD"),
              self.twitchirc.wait("ERR_NOMOTD")],
             loop=self.twitchirc.loop,
