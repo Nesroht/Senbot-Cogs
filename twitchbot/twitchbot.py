@@ -13,7 +13,7 @@ class Twitchbot(commands.Cog):
         self.credentials = credentials
         self.helix = twitch.Helix(credentials.CLIENT_ID)
         self.channels = {"nesroht"}
-        await self.messageHandler()
+        self.messageHandler()
 
 
     @commands.command()
