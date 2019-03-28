@@ -47,7 +47,7 @@ class Twitchbot(commands.Cog):
         else:
             for channel in self.channels:
                 twitch.Chat(channel='#'+channel, nickname=self.credentials.CLIENT_USERNAME, oauth=self.credentials.CLIENT_OAUTH).subscribe(
-                    lambda message: await self.messageHandler(channel=message.channel, sender=message.sender, text=message.text))
+                    lambda message: self.messageHandler(channel=message.channel, sender=message.sender, text=message.text))
             return
 
 
