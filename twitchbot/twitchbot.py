@@ -24,11 +24,11 @@ class Twitchbot(commands.Cog):
     async def messageListener(self):
         for channel in self.channels:
             twitch.Chat(channel='#'+channel, nickname=self.credentials.CLIENT_USERNAME, oauth=self.credentials.CLIENT_OAUTH).subscribe(
-                await self.messageHandler(message.channel, message.sender, message.text, message.helix))
+                await self.messageHandler(channel=message.channel, sender=message.sender, text=message.text, helix=message.helix))
         return
 
 
-    async def messageHandler(self, channel, sender, text, helix):
+    async def messageHandler(self, *, channel, sender, text, helix):
         user = helix.user(message.sender).displayname
         if user is not self.credentials.CLIENT_USERNAME:
             print(channel, user, text)
