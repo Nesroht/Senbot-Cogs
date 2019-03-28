@@ -22,8 +22,8 @@ class Twitchbot(commands.Cog):
             twitch.Chat(channel='#' + channel, nickname=self.credentials.CLIENT_USERNAME,
                         oauth=credentials.CLIENT_OAUTH).send("Testing connection to twitch")
         except Exception as e:
-            print(e)
+            await ctx.send(e)
 
     async def messageHandler(self, channel):
         twitch.Chat(channel='#'+channel, nickname=self.credentials.CLIENT_USERNAME, oauth=self.credentials.CLIENT_OAUTH).subscribe(
-            lambda message: print(message.channel, message.user().display_name, message.text))
+            lambda message: print(message.channel, message.text))
