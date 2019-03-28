@@ -17,12 +17,9 @@ class Twitchbot(commands.Cog):
     @commands.command()
     async def test(self, ctx, channel):
         await ctx.send("Testing connection to twitch")
-        try:
-            await self.messageHandler(channel)
-            twitch.Chat(channel='#' + channel, nickname=self.credentials.CLIENT_USERNAME,
-                        oauth=credentials.CLIENT_OAUTH).send("Ping!")
-        except Exception as e:
-            await ctx.send(e)
+        await self.messageHandler(channel)
+        twitch.Chat(channel='#' + channel, nickname=self.credentials.CLIENT_USERNAME,
+                    oauth=credentials.CLIENT_OAUTH).send("Ping!")
 
     async def messageListener(self):
         for channel in self.channels:
