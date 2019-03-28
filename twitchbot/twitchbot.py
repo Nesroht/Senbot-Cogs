@@ -53,7 +53,7 @@ class Twitchbot(commands.Cog):
 
     async def messageHandler(self, *, channel, sender, text):
         if sender.upper() is not self.credentials.CLIENT_USERNAME.upper():
-            print(channel, user, text)
+            print(channel, sender.upper(), text)
         else:
             if (text is "Ping!") and (sender.upper() is self.credentials.CLIENT_USERNAME.upper()):
                 print("Pong!")
