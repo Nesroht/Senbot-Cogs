@@ -11,12 +11,12 @@ class Twitchbot(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.credentials = credentials
+        self.channels = credentials.CHANNELS
         if credentials.CLIENT_ID is None:
             ctx.send("Please set twitchbot client ID with [p]twitchbot botset")
         else:
             self.helix = twitch.Helix(credentials.CLIENT_ID)
             self.messageListener()
-        self.channels = credentials.CHANNELS
 
 
     @commands.command()
