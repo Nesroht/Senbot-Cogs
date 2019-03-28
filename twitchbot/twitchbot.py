@@ -47,14 +47,14 @@ class Twitchbot(commands.Cog):
         else:
             for channel in self.channels:
                 twitch.Chat(channel='#'+channel, nickname=self.credentials.CLIENT_USERNAME, oauth=self.credentials.CLIENT_OAUTH).subscribe(
-                    await self.messageHandler(channel=message.channel, sender=message.sender, text=message.text, helix=message.helix))
+                    await self.messageHandler(channel=message.channel, sender=message.sender, text=message.text))
             return
 
 
-    async def messageHandler(self, *, channel, sender, text, helix):
-        user = helix.user(message.sender).displayname
-        if user.upper() is not self.credentials.CLIENT_USERNAME.upper():
+    async def messageHandler(self, *, channel, sender, text):
+        if sender.upper() is not self.credentials.CLIENT_USERNAME.upper():
             print(channel, user, text)
         else:
-            if (text is "Ping!") and (user.upper() is self.credentials.CLIENT_USERNAME.upper()):
+            if (text is "Ping!") and (sender.upper() is self.credentials.CLIENT_USERNAME.upper()):
                 print("Pong!")
+        return
