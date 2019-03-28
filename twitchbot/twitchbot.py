@@ -8,6 +8,8 @@ from twitchbot import credentials
 class Twitchbot(commands.Cog):
     """NSFW cog for Senbot"""
 
+    twitchirc = bottom.Client(host=self.host, port=self.port, ssl=self.ssl)
+
     def __init__(self, bot):
         self.bot = bot
         self.credentials = credentials
@@ -16,7 +18,6 @@ class Twitchbot(commands.Cog):
         self.host = "irc.chat.twitch.tv"
         self.port = 6667
         self.ssl = False
-        self.twitchirc = bottom.Client(host=self.host, port=self.port, ssl=self.ssl)
         if credentials.CLIENT_ID is None:
             ctx.send("Please set twitchbot client ID with [p]twitchbot botset")
         else:
