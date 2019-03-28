@@ -26,4 +26,4 @@ class Twitchbot(commands.Cog):
 
     async def messageHandler(self, channel):
         twitch.Chat(channel='#'+channel, nickname=self.credentials.CLIENT_USERNAME, oauth=self.credentials.CLIENT_OAUTH).subscribe(
-            lambda message: print(message.channel, message.text))
+            lambda message: print(message.channel, message.user.display_name, message.text))
