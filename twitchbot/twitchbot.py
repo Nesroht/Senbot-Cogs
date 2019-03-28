@@ -11,21 +11,22 @@ class Twitchbot(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.credentials = credentials
-        self.channels = self.credentials.CHANNELS
+        self.channel = self.credentials.CHANNEL
+        self.token = self.credentials.CLIENT_OAUTH
+        self.nickname = self.credentials.CLIENT_USERNAME
         self.server = "irc.chat.twitch.tv"
         self.CHECK_DELAY = 1
         self.port = 6667
 
-        self.tast = self.bot.loop.create_task(self.irc_check())
-
         self.sock = socket.socket()
-        self.socket.setblocking(0)
         if credentials.CLIENT_ID is None:
             ctx.send("Please set twitchbot client ID with [p]twitchbot botset")
         else:
             self.helix = twitch.Helix(credentials.CLIENT_ID)
             self.messageListener()
             self.irc = socket.connect(self.server,self.port)
+            self.connect()
+            self.task = self.bot.loop.create_task(self.irc_check())
 
 
     @commands.command()
@@ -69,6 +70,11 @@ class Twitchbot(commands.Cog):
                 print("Pong!")
         return
 
+    async def connect(self):
+        irc.send(f"PASS {self.token}\n".encode('utf-8'))
+        irc.send(f"NICK {self.nickname}\n".encode('utf-8'))
+        irc.send(f"JOIN {self.channel}\n".encode('utf-8'))
+
     async def irc_check(self):
         while True:
             try:
@@ -78,28 +84,29 @@ class Twitchbot(commands.Cog):
             await asyncio.sleep(self.CHECK_DELAY)
 
     async def check_chat(self):
-        for channel in self.channels:
-            with contextlib.suppress(Exception):
-                senderdata = irc.recv(2048)  # gets output from IRC server
-                linecount = senderdata.count('\r\n')
-                if linecount == 1:
-                    print(senderdata)
-                    print("Single message")
-                elif (senderdata.find('tmi.twitch.tv JOIN ' + channel) != -1):
-                    print linecount - 1, 'People joined'
-                elif (senderdata.find('tmi.twitch.tv PART ' + channel) != -1):
-                    print linecount - 1, 'People left'
-                elif (linecount > 1):
-                    print "Multiple messages"
-                    messagelist = []
-                    messagelist = senderdata.split('\r\n')
-                    print len(messagelist)
-                    for i in range(0, len(messagelist)):
-                        if (len(messagelist[i]) > 0):
-                            print messagelist[i]
-                            tryComment(messagelist[i])
-                            print "message number: "
-                            print i
-                        else:
-                            print "This message is empty"
-                            print i
+        self.irc.setblocking(0)
+        with contextlib.suppress(Exception):
+            senderdata = self.irc.recv(2048)  # gets output from IRC server
+            linecount = senderdata.count('\r\n')
+            if senderdata.startsWith("PING"):
+                self.irc.send("PONG\n".encode("utf-8"))
+            elif linecount == 1:
+                print(senderdata)
+                print("Single message")
+            elif senderdata.find('tmi.twitch.tv JOIN ' + channel) != -1:
+                print(linecount - 1, 'People joined')
+            elif senderdata.find('tmi.twitch.tv PART ' + channel) != -1:
+                print(linecount - 1, 'People left')
+            elif linecount > 1:
+                print("Multiple messages")
+                messagelist = []
+                messagelist = senderdata.split('\r\n')
+                print(len(messagelist))
+                for i in range(0, len(messagelist)):
+                    if (len(messagelist[i]) > 0):
+                        print(messagelist[i])
+                        print("message number: ")
+                        print(i)
+                    else:
+                        print("This message is empty")
+                        print(i)
