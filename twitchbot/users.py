@@ -1,0 +1,1 @@
+USERS = {"user": [{"twitchname": "nesroht", "discordid": "103867563896762368"}]}
