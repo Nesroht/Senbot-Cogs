@@ -19,4 +19,4 @@ class Twitchbot(commands.Cog):
         await ctx.send("Testing connection to twitch")
         for i in range(0,30):
             twitch.Chat(channel='#' + channel, nickname=self.credentials.CLIENT_USERNAME,
-                        oauth=credentials.CLIENT_OAUTH).send(message + string(i))
+                        oauth=credentials.CLIENT_OAUTH).send(message + str(i))
