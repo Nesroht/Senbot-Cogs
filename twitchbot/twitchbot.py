@@ -32,7 +32,7 @@ class Twitchbot(commands.Cog):
         #self.userlist = self.credentials.USERS
 
         self.CHECK_DELAY = 1
-        self.port = 6670
+        self.port = 6667
         self.sock = {}
         self.task = {}
 
