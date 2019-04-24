@@ -159,7 +159,7 @@ class Twitchbot(commands.Cog):
                     r = requests.get(f"http://tmi.twitch.tv/group/user/{channel}/chatters")
                     self.channelviewers["CHANNEL"][channel].update(r.json())
                     senderdata = self.sock[channel].recv(2048).decode("utf-8")  # gets output from IRC server
-                    #print(senderdata)
+                    print(senderdata)
                     if senderdata == "PING :tmi.twitch.tv\r\n":
                         self.sock[channel].send("PONG :tmi.twitch.tv\r\n".encode("utf-8"))
                         #print(f"Sent pong response on {channel}")
