@@ -164,6 +164,22 @@ class Twitchbot(commands.Cog):
                         continue
                     sender, dump = senderdata.split("!", 1)
                     now = round(time.time())
+                    if "!join\r\n" in senderdata:
+                        if channel != "1uptaco":
+                            continue
+                        if sender[1:] in self.cooldowns["!join"]:
+                            if self.cooldowns["!join"][sender[1:]] > now:
+                                cooldowntime = self.cooldowns["!join"][sender[1:]]
+                                self.sock[channel].send(f"PRIVMSG #{channel} :That command is on cooldown for another {cooldowntime-now} seconds {finish}!\r\n".encode("utf-8"))
+                                await asyncio.sleep(self.CHECK_DELAY)
+                                continue
+                        sender, dump = senderdata.split("!", 1)
+                        if sender[1:] != self.channelviewers["CHANNEL"][channel]["chatters"]["broadcaster"][0] or sender[1:] not in self.channelviewers["CHANNEL"][channel]["chatters"]["moderators"]:
+                            self.sock[channel].send(f"PRIVMSG #{channel} :Only moderators can use this command.\r\n".encode("utf-8"))
+                            continue
+                        self.sock[channel].send(f"PRIVMSG #{channel} :If you want to join this RP Ark server you have to go apply at: http://westerosrp.net/apply/\r\n".encode("utf-8"))
+                        self.cooldowns["!join"].update({sender[1:]: now + 30})
+
                     if "!bal\r\n" in senderdata:
                         #print("Baltest")
                         sender, dump = senderdata.split("!", 1)
@@ -205,7 +221,7 @@ class Twitchbot(commands.Cog):
                         else:
                             self.cooldowns["!setcurrency"].update({sender[1:]: now})
                         print(self.channelviewers["CHANNEL"][channel]["chatters"]["broadcaster"][0])
-                        if sender[1:] != self.channelviewers["CHANNEL"][channel]["chatters"]["broadcaster"][0]:
+                        if sender[1:] != self.channelviewers["CHANNEL"][channel]["chatters"]["broadcaster"][0] or sender[1:] != self.channelviewers["CHANNEL"][channel]["chatters"]["moderator"][0]:
                             self.sock[channel].send(f"PRIVMSG #{channel} :Only the streamer can use this command.\r\n".encode("utf-8"))
                             continue
                         if re.search(r"!setcurrency +(\w|\#)+", senderdata, re.IGNORECASE) is not None:
