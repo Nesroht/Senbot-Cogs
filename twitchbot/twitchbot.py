@@ -167,7 +167,8 @@ class Twitchbot(commands.Cog):
                     sender, dump = senderdata.split("!", 1)
                     now = round(time.time())
                     if "!join\r\n" in senderdata:
-                        if "1uptaco" in str(channel):
+                        print("yep that works")
+                        if "1uptaco" in channel:
                             print("pass")
                         else:
                             continue
@@ -187,7 +188,7 @@ class Twitchbot(commands.Cog):
                         self.sock[channel].send(f"PRIVMSG #{channel} :If you want to join this RP Ark server you have to go apply at: http://westerosrp.net/apply/\r\n".encode("utf-8"))
                         self.cooldowns["!join"].update({sender[1:]: now + 30})
 
-                    if "!bal\r\n" in senderdata:
+                    elif "!bal\r\n" in senderdata:
                         #print("Baltest")
                         sender, dump = senderdata.split("!", 1)
                         finish = sender[1:].capitalize()
