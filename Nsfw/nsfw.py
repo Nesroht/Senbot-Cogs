@@ -17,6 +17,7 @@ class Nsfw(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
+        self._session = aiohttp.ClientSession(loop=self.bot.loop)
 
     @commands.command()
     @commands.is_nsfw()
