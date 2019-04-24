@@ -38,7 +38,7 @@ class Twitchbot(commands.Cog):
 
         self.currency = self.bal["CHANNEL"]
 
-        self.cooldowns = {"!bal": {"nesroht": 0}, "!discordlink": {"nesroht": 0}, "!discord": {"nesroht": 0}, "!setcurrency": {"nesroht": 0}}
+        self.cooldowns = {"!join": {"nesroht": 0},"!bal": {"nesroht": 0}, "!discordlink": {"nesroht": 0}, "!discord": {"nesroht": 0}, "!setcurrency": {"nesroht": 0}}
 
         if self.credentials["CLIENT_ID"] is None:
             ctx.send("Please set twitchbot client ID with [p]twitchbot botset")
@@ -167,13 +167,14 @@ class Twitchbot(commands.Cog):
                     if "!join\r\n" in senderdata:
                         #if channel != "1uptaco":
                             #continue
+                        sender, dump = senderdata.split("!", 1)
+                        finish = sender[1:].capitalize()
                         if sender[1:] in self.cooldowns["!join"]:
                             if self.cooldowns["!join"][sender[1:]] > now:
                                 cooldowntime = self.cooldowns["!join"][sender[1:]]
                                 self.sock[channel].send(f"PRIVMSG #{channel} :That command is on cooldown for another {cooldowntime-now} seconds {finish}!\r\n".encode("utf-8"))
                                 await asyncio.sleep(self.CHECK_DELAY)
                                 continue
-                        sender, dump = senderdata.split("!", 1)
                         if sender[1:] != self.channelviewers["CHANNEL"][channel]["chatters"]["broadcaster"][0] or sender[1:] not in self.channelviewers["CHANNEL"][channel]["chatters"]["moderators"]:
                             self.sock[channel].send(f"PRIVMSG #{channel} :Only moderators can use this command.\r\n".encode("utf-8"))
                             continue
