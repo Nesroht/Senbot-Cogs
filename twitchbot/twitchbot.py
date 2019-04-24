@@ -175,9 +175,10 @@ class Twitchbot(commands.Cog):
                                 self.sock[channel].send(f"PRIVMSG #{channel} :That command is on cooldown for another {cooldowntime-now} seconds {finish}!\r\n".encode("utf-8"))
                                 await asyncio.sleep(self.CHECK_DELAY)
                                 continue
-                        if sender[1:] != self.channelviewers["CHANNEL"][channel]["chatters"]["broadcaster"][0] or sender[1:] not in self.channelviewers["CHANNEL"][channel]["chatters"]["moderators"]:
-                            self.sock[channel].send(f"PRIVMSG #{channel} :Only moderators can use this command.\r\n".encode("utf-8"))
-                            continue
+                        if sender[1:] != self.channelviewers["CHANNEL"][channel]["chatters"]["broadcaster"][0]:
+                            if sender[1:] not in self.channelviewers["CHANNEL"][channel]["chatters"]["moderators"]:
+                                self.sock[channel].send(f"PRIVMSG #{channel} :Only moderators can use this command.\r\n".encode("utf-8"))
+                                continue
                         self.sock[channel].send(f"PRIVMSG #{channel} :If you want to join this RP Ark server you have to go apply at: http://westerosrp.net/apply/\r\n".encode("utf-8"))
                         self.cooldowns["!join"].update({sender[1:]: now + 30})
 
