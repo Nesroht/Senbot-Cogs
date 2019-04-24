@@ -1,6 +1,5 @@
-from .nsfw import NSFW
+from .reddit import Reddit
 
 def setup(bot):
-    n = NSFW(bot)
+    n = Reddit(bot)
     bot.add_cog(n)
-    bot.loop.create_task(n.boob_knowlegde())
