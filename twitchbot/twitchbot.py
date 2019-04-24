@@ -165,8 +165,8 @@ class Twitchbot(commands.Cog):
                     sender, dump = senderdata.split("!", 1)
                     now = round(time.time())
                     if "!join\r\n" in senderdata:
-                        if channel != "1uptaco":
-                            continue
+                        #if channel != "1uptaco":
+                            #continue
                         if sender[1:] in self.cooldowns["!join"]:
                             if self.cooldowns["!join"][sender[1:]] > now:
                                 cooldowntime = self.cooldowns["!join"][sender[1:]]
