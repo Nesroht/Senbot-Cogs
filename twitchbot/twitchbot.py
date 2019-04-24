@@ -176,7 +176,9 @@ class Twitchbot(commands.Cog):
                                 await asyncio.sleep(self.CHECK_DELAY)
                                 continue
                         if sender[1:] != self.channelviewers["CHANNEL"][channel]["chatters"]["broadcaster"][0]:
-                            if sender[1:] not in self.channelviewers["CHANNEL"][channel]["chatters"]["moderators"]:
+                            if sender[1:] in self.channelviewers["CHANNEL"][channel]["chatters"]["moderators"]:
+                                print("success")
+                            else:
                                 self.sock[channel].send(f"PRIVMSG #{channel} :Only moderators can use this command.\r\n".encode("utf-8"))
                                 continue
                         self.sock[channel].send(f"PRIVMSG #{channel} :If you want to join this RP Ark server you have to go apply at: http://westerosrp.net/apply/\r\n".encode("utf-8"))
