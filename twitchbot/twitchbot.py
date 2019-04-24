@@ -168,6 +168,8 @@ class Twitchbot(commands.Cog):
                     now = round(time.time())
                     if "!join\r\n" in senderdata:
                         if "1uptaco" in channel:
+                            print("pass")
+                        else:
                             continue
                         sender, dump = senderdata.split("!", 1)
                         finish = sender[1:].capitalize()
