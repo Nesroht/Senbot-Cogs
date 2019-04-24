@@ -5,6 +5,7 @@ import discord
 from redbot.core import checks, Config, commands
 # Sys
 import asyncio
+import aiohttp
 
 from urllib.request import urlopen
 import requests
