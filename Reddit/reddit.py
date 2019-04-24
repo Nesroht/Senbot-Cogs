@@ -15,7 +15,6 @@ from praw.exceptions import ClientException
 
 
 from Reddit import credentials
-from bs4 import BeautifulSoup
 from gfycat.client import GfycatClient
 
 import praw
