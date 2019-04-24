@@ -1,0 +1,9 @@
+{
+  "author" : ["Nesroht"],
+  "bot_version": [3,0,0],
+  "install_msg" : "Installed Reddit, remember to load it and do \"[p]help Reddit\" for help",
+  "short" : "Display random image of subreddit",
+  "description" : "Displays a random image from a given subreddit or random subreddit\n Supports NSFW content (Only in NSFW Channels)",
+  "tags" : ["reddit", "NSFW"],
+  "hidden" : false
+}

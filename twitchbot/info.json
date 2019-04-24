@@ -1,0 +1,9 @@
+{
+  "author" : ["Nesroht"],
+  "bot_version": [3,0,0],
+  "install_msg" : "Installed Twitchbot, remember to load it and do \"[p]help Twitchbot\" for help",
+  "short" : "Makes bot in given twitch chats",
+  "description" : "Makes redbot act like a bot in given twitch chats, and syncs various things between both discord and twitch chat",
+  "tags" : ["twitch", "bot"],
+  "hidden" : false
+}
