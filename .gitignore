@@ -1,4 +1,7 @@
 venv/
 .idea/
+credentials.json
+balance.json
 credentials.py
 users.py
+.gitignore
