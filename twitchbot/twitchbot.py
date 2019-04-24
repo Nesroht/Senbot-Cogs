@@ -26,7 +26,7 @@ class Twitchbot(commands.Cog):
         self.token = self.credentials["CLIENT_OAUTH"]
         self.nickname = self.credentials["CLIENT_USERNAME"]
         self.server = "irc.chat.twitch.tv"
-        self.channelviewers = {"CHANNEL":{"nesroht":{}, "1uptaco": {}}}
+        self.channelviewers = {"CHANNEL":{"nesroht":{}, "senrohbot": {}}}
         self.databuffer = []
 
         #self.userlist = self.credentials.USERS
