@@ -151,11 +151,11 @@ class Twitchbot(commands.Cog):
         print(resp)
         #self.sock[channel].send(f"PRIVMSG #{channel} :Successfully connected to chat! <3\r\n".encode("utf-8"))
         while True:
-            print("no")
+            #print("no")
             try:
                 ready = select.select([self.sock[channel]],[],[],1)
                 if ready[0]:
-                    print("yes")
+                    #print("yes")
                     r = requests.get(f"http://tmi.twitch.tv/group/user/{channel}/chatters")
                     self.channelviewers["CHANNEL"][channel].update(r.json())
                     senderdata = self.sock[channel].recv(2048).decode("utf-8")  # gets output from IRC server
@@ -167,8 +167,8 @@ class Twitchbot(commands.Cog):
                     sender, dump = senderdata.split("!", 1)
                     now = round(time.time())
                     if "!join\r\n" in senderdata:
-                        #if channel != "1uptaco":
-                            #continue
+                        if channel != "1uptaco":
+                            continue
                         sender, dump = senderdata.split("!", 1)
                         finish = sender[1:].capitalize()
                         if sender[1:] in self.cooldowns["!join"]:
