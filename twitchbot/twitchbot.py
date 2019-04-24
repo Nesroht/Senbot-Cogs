@@ -168,7 +168,7 @@ class Twitchbot(commands.Cog):
                     now = round(time.time())
                     if "!join\r\n" in senderdata:
                         print("yep that works")
-                        if "nesroht" in channel:
+                        if "1uptaco" in channel:
                             print("pass")
                         else:
                             continue
