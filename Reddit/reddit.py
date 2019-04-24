@@ -74,7 +74,7 @@ class Reddit(commands.Cog):
         self.headers = {"Authorization": response_data["token_type"] + " " + response_data["access_token"],
                         "User-Agent": credentials.USER_AGENT}
 
-    @commands.group()
+    @commands.group(name="reddit")
     async def _reddit(self, ctx):
         """reddit cog settings and things"""
         pass
