@@ -14,7 +14,7 @@ from imgurpython import ImgurClient
 from praw.exceptions import ClientException
 
 
-from Reddit import credentials
+from reddit import credentials
 from gfycat.client import GfycatClient
 
 import praw
@@ -22,7 +22,7 @@ import os
 import sys
 
 class Reddit(commands.Cog):
-    """Reddit cog for Senbot"""
+    """reddit cog for Senbot"""
 
     def __init__(self, bot):
         self.bot = bot
@@ -39,7 +39,7 @@ class Reddit(commands.Cog):
         self.gfyclient.client_secret = self.credentials.GFYCAT_SECRET
 
 
-        #Reddit API access token querying
+        #reddit API access token querying
         self.client_auth = requests.auth.HTTPBasicAuth(credentials.CLIENT_ID, credentials.CLIENT_SECRET)
         self.post_data = {"grant_type": "password", "username": credentials.REDDIT_USERNAME, "password": credentials.REDDIT_PASSWORD}
         self.headers = {"User-Agent": credentials.USER_AGENT}

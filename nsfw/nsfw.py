@@ -14,7 +14,7 @@ import requests.auth
 
 
 class Nsfw(commands.Cog):
-    """Nsfw cog for Senbot"""
+    """nsfw cog for Senbot"""
 
     def __init__(self, bot):
         self.bot = bot

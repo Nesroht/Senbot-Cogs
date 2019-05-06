@@ -26,7 +26,7 @@ class Twitchbot(commands.Cog):
         self.token = self.credentials["CLIENT_OAUTH"]
         self.nickname = self.credentials["CLIENT_USERNAME"]
         self.server = "irc.chat.twitch.tv"
-        self.channelviewers = {"CHANNEL":{"nesroht":{}, "senrohbot": {}}}
+        self.channelviewers = {"CHANNEL":{"nesroht":{}, "1uptaco": {}}}
         self.databuffer = []
 
         #self.userlist = self.credentials.USERS
@@ -44,8 +44,16 @@ class Twitchbot(commands.Cog):
             ctx.send("Please set twitchbot client ID with [p]twitchbot botset")
         else:
             for channel in self.credentials["CHANNEL"]:
-                #print(channel)
                 self.sock[channel] = socket.socket()
+                self.sock[channel].connect((self.server, self.port))
+                self.sock[channel].send(f"PASS {self.token}\r\n".encode('utf-8'))
+                self.sock[channel].send(f"NICK {self.nickname}\r\n".encode('utf-8'))
+                resp = self.sock[channel].recv(2048).decode("utf-8")
+                print(resp)
+                self.sock[channel].send(f"JOIN #{channel}\r\n".encode('utf-8'))
+                resp = self.sock[channel].recv(2048).decode("utf-8")
+                print(resp)
+                #self.sock[channel].send(f"PRIVMSG #{channel} :Successfully connected to chat! <3\r\n".encode("utf-8"))
                 self.task[channel] = self.bot.loop.create_task(self.irc_check(channel))
 
     def __unload(self):
@@ -106,11 +114,12 @@ class Twitchbot(commands.Cog):
     async def check_bal(self, sender, channel):
         balance = 0
         balancefound = False
+        print("test1")
         if channel in self.currency:
             currency = self.currency[channel]
         else:
             currency = self.currency["default"]
-
+        print("test2")
         for i in range(0, len(self.credentials["USERS"])):
             if self.credentials["USERS"][i][0] == sender:
                 for guild in self.bot.guilds:
@@ -122,10 +131,11 @@ class Twitchbot(commands.Cog):
                     self.credentials["USERS"][i][2] = await bank.get_balance(user_found)
                     with open('/home/senbot/.local/share/Red-DiscordBot/cogs/CogManager/cogs/twitchbot/credentials.json', 'w') as f:
                         json.dump(self.credentials, f, ensure_ascii=False, indent=4)
-                print("DONE")
+                #print("DONE")
                 balance = self.credentials["USERS"][i][2]
                 balancefound = True
                 break
+        print("test3")
         if balancefound:
             self.sock[channel].send(f"PRIVMSG #{channel} :{sender}\'s balance is {balance} {currency}\r\n".encode("utf-8"))
         else:
@@ -141,17 +151,8 @@ class Twitchbot(commands.Cog):
 
 
     async def irc_check(self, channel):
-        self.sock[channel].connect((self.server, self.port))
-        self.sock[channel].send(f"PASS {self.token}\r\n".encode('utf-8'))
-        self.sock[channel].send(f"NICK {self.nickname}\r\n".encode('utf-8'))
-        resp = self.sock[channel].recv(2048).decode("utf-8")
-        print(resp)
-        self.sock[channel].send(f"JOIN #{channel}\r\n".encode('utf-8'))
-        resp = self.sock[channel].recv(2048).decode("utf-8")
-        print(resp)
-        #self.sock[channel].send(f"PRIVMSG #{channel} :Successfully connected to chat! <3\r\n".encode("utf-8"))
         while True:
-            #print("no")
+            #print(channel)
             try:
                 ready = select.select([self.sock[channel]],[],[],1)
                 if ready[0]:
@@ -167,9 +168,9 @@ class Twitchbot(commands.Cog):
                     sender, dump = senderdata.split("!", 1)
                     now = round(time.time())
                     if "!join\r\n" in senderdata:
-                        print("yep that works")
-                        if "1uptaco" in channel:
-                            print("pass")
+                        #print("yep that works")
+                        if "1uptaco" == channel:
+                            pass
                         else:
                             continue
                         finish = sender[1:].capitalize()
@@ -181,13 +182,12 @@ class Twitchbot(commands.Cog):
                                 continue
                         if sender[1:] != self.channelviewers["CHANNEL"][channel]["chatters"]["broadcaster"][0]:
                             if sender[1:] in self.channelviewers["CHANNEL"][channel]["chatters"]["moderators"]:
-                                print("success")
+                                passa
                             else:
                                 self.sock[channel].send(f"PRIVMSG #{channel} :Only moderators can use this command.\r\n".encode("utf-8"))
                                 continue
                         self.sock[channel].send(f"PRIVMSG #{channel} :If you want to join this RP Ark server you have to go apply at: http://westerosrp.net/apply/\r\n".encode("utf-8"))
                         self.cooldowns["!join"].update({sender[1:]: now + 30})
-
                     elif "!bal\r\n" in senderdata:
                         #print("Baltest")
                         sender, dump = senderdata.split("!", 1)
@@ -233,31 +233,20 @@ class Twitchbot(commands.Cog):
                             self.sock[channel].send(f"PRIVMSG #{channel} :Only the streamer can use this command.\r\n".encode("utf-8"))
                             continue
                         if re.search(r"!setcurrency +(\w|\#)+", senderdata, re.IGNORECASE) is not None:
-                            print("test")
                             dump, arguments = senderdata.split("!setcurrency ")
                             arguments, dump = arguments.split("\r\n")
                             if channel in self.currency:
-                                print("test1")
                                 self.bal["CHANNEL"][channel] = arguments
-                                print("test2")
                                 with open('/home/senbot/.local/share/Red-DiscordBot/cogs/CogManager/cogs/twitchbot/balance.json', 'w') as f:
                                     json.dump(self.bal, f, ensure_ascii=False, indent=4)
-                                print("test3")
                                 self.currency[channel] = self.bal["CHANNEL"][channel]
-                                print("test4")
                                 self.sock[channel].send(f"PRIVMSG #{channel} :Set this channels currency name to {self.currency[channel]}\r\n".encode("utf-8"))
-                                print("done")
                             else:
-                                print("test1")
                                 self.bal["CHANNEL"].update({channel: arguments})
-                                print("test2")
                                 with open('/home/senbot/.local/share/Red-DiscordBot/cogs/CogManager/cogs/twitchbot/balance.json', 'w') as f:
                                     json.dump(self.bal, f, ensure_ascii=False, indent=4)
-                                print("test3")
                                 self.currency.update({channel: self.bal["CHANNEL"][channel]})
-                                print("test4")
                                 self.sock[channel].send(f"PRIVMSG #{channel} :Set this channels currency name to {self.currency[channel]}\r\n".encode("utf-8"))
-                                print("done")
                         else:
                             defaultcurrency = self.bal["CHANNEL"]["default"]
                             self.sock[channel].send(f"PRIVMSG #{channel} :Add the name for the currency as an argument. Default is {defaultcurrency}\r\n".encode("utf-8"))
