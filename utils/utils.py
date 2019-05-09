@@ -30,3 +30,12 @@ class Utils(commands.Cog):
 
         await message.edit(embed=emb)
 
+    @commands.command()
+    async def botstats(self,ctx):
+        """Reply with stats of bot"""
+        users = str(len(self.bot.users))
+        servers = str(len(self.bot.guilds))
+        emb = discord.Embed(title="Stats", description="Various stats regarding the bot", color=discord.Color.blurple())
+        emb.add_field(name="Users", value="```" + users + "```")
+        emb.add_field(name="Servers", value="```" + servers + "```")
+        await ctx.send(embed=emb)

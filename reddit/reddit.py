@@ -22,7 +22,7 @@ import os
 import sys
 
 class Reddit(commands.Cog):
-    """reddit cog for Senbot"""
+    """Reddit cog for Senbot"""
 
     def __init__(self, bot):
         self.bot = bot
@@ -397,16 +397,6 @@ class Reddit(commands.Cog):
 #
     #    await self.redfunc(ctx, subreddit=subreddit, oldurl=post.get("url"), stickied=post.get("stickied"), over_18=post.get("over_18"), title=post.get("title"), selftext=post.get("selftext"), origin="new")
 
-
-    #@commands.command()
-    #a#sync def randomtest(self, ctx):
-    #    """Random Gif"""
-    #    try:
-    #        emb = discord.Embed(title="Random Test")
-    #        emb.set_image(url="https://media1.tenor.com/images/e0a3715cf354232db50d6bd3476b0576/tenor.gif?itemid=10654993")
-    #        await ctx.send(embed=emb)
-    #    except Exception as e:
-    #        await ctx.send(f":x: **Error:** `{e}`")
 
     @_reddit.command()
     async def rdebug(self, ctx):
