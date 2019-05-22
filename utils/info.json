@@ -3,7 +3,7 @@
   "bot_version": [3,0,0],
   "install_msg" : "Installed Utils, remember to load it and do \"[p]help Utils\" for help",
   "short" : "Utility commands for Senbot",
-  "description" : "Gives access to various Utility commands meant for Senbot",
+  "description" : "Gives access to various Utility commands meant for Senbot :)",
   "tags" : ["utility", "utils"],
   "hidden" : false
 }
