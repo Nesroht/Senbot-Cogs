@@ -151,19 +151,20 @@ class Reddit(commands.Cog):
             oldurl = newurl + ".gifv"
 
         #
-        #   Check if url is gfycat, if it is reformat link to work in embed
+        #   Check if url is gfycat, if it is reformat link to work in embed, Embeds dont support Gfycat gifs properly, so commented out working code
         #
         elif oldurl.startswith("https://gfycat"):
-            newurl1, newurl2 = oldurl.rsplit("/", 1)
-            if "-" in newurl2:
-                newurl2 = newurl2.split("-")[0]
-            if "/" in newurl2:
-                if newurl2[2] == "/":
-                    newurl2 = newurl2[2:]
+            #newurl1, newurl2 = oldurl.rsplit("/", 1)
+            #if "-" in newurl2:
+            #    newurl2 = newurl2.split("-")[0]
+            #if "/" in newurl2:
+            #    if newurl2[2] == "/":
+            #        newurl2 = newurl2[2:]
             # print(newurl2)
-            urlList = self.gfyclient.query_gfy(newurl2)
-            gifUrl = urlList["gfyItem"]
-            emb.set_image(url=gifUrl["gifUrl"])
+            #urlList = self.gfyclient.query_gfy(newurl2)
+            #gifUrl = urlList["gfyItem"]
+            #emb.set_image(url=gifUrl["gifUrl"])
+            video = 1
 
         #
         #   Check if url is Imgur album, if it is post all images in album
@@ -342,7 +343,7 @@ class Reddit(commands.Cog):
     async def newred(self, ctx, *, subreddit):
         try:
             #
-            #   Initiate ListingGenerator for given subreddit with limit, Iterate over each post until given random number reached
+            #   Pull random post from given subreddit and pass it on to redfunc()
             #
             if self.redditdebug:
                 print("newer")
