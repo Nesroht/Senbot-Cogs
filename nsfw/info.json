@@ -4,6 +4,7 @@
   "install_msg" : "Installed Nsfw, remember to load it and do \"[p]help Nsfw\" for help",
   "short" : "Display random image of board",
   "description" : "Displays a random image from a given board\n Only works in NSFW channels",
+  "requirements": ["bs4", "requests"],
   "tags" : ["booru", "images", "gelbooru", "yandere", "konachan", "NSFW"],
   "hidden" : false
 }
