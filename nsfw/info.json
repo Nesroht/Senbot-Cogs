@@ -1,6 +1,6 @@
 {
-  "author" : ["Nesroht"],
-  "bot_version": [3,0,0],
+  "author" : ["Nesroht", "Jintaku"],
+  "bot_version": [3,1,1],
   "install_msg" : "Installed Nsfw, remember to load it and do \"[p]help Nsfw\" for help",
   "short" : "Display random image of board",
   "description" : "Displays a random image from a given board\n Only works in NSFW channels",

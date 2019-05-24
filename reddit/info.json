@@ -1,7 +1,7 @@
 {
   "author" : ["Nesroht"],
-  "bot_version": [3,0,0],
-  "install_msg" : "Installed Reddit, remember to load it and do \"[p]help Reddit\" for help",
+  "bot_version": [3,1,1],
+  "install_msg" : "Installed Reddit, CURRENTLY DOESNT LOAD WITHOUT A credentials.py NEXT TO reddit.py, SUGGEST NOT USING IT TILL CONFIGS ARE FIXED. Remember to load it and do \"[p]help Reddit\" for help",
   "short" : "Display random image of subreddit",
   "description" : "Displays a random image from a given subreddit or random subreddit\n Supports NSFW content (Only in NSFW Channels)",
   "requirements": ["praw", "requests", "imgurpython", "gfycat"],

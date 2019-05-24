@@ -1,7 +1,7 @@
 {
   "author" : ["Nesroht"],
   "bot_version": [3,0,0],
-  "install_msg" : "Installed Twitchbot, remember to load it and do \"[p]help Twitchbot\" for help",
+  "install_msg" : "Installed Twitchbot, this cog wont load without a balance.json and a credentials.json and is not meant for use by others. dm me on discord if you want it anyway.",
   "short" : "Makes bot in given twitch chats",
   "description" : "Makes redbot act like a bot in given twitch chats, and syncs various things between both discord and twitch chat",
   "requirements": ["requests"],

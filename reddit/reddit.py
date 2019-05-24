@@ -421,6 +421,10 @@ class Reddit(commands.Cog):
         """Test command"""
         await ctx.send("Nothing to test. test")
 
+    @_reddit.comand()
+    async def version(self, ctx):
+        await ctx.send(embed=discord.Embed(title="Reddit Cog Info", description="Version number: 1.0.0"))
+
     @commands.command()
     async def random(self,ctx):
         """Get Random subreddit post"""
