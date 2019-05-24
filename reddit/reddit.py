@@ -116,13 +116,14 @@ class Reddit(commands.Cog):
         #
         #   Check if post is allowed in channel
         #
-        if ctx.channel.is_nsfw() == False and over_18 == True:
-            await ctx.send("**`r/" + subreddit + " or the random post is not fit for this discord channel!`**")
-            if origin == "new":
-                return
-            else:
-                self.r_old_done = True
-                return False
+        if ctx.guild:
+            if ctx.channel.is_nsfw() == False and over_18 == True:
+                await ctx.send("**`r/" + subreddit + " or the random post is not fit for this discord channel!`**")
+                if origin == "new":
+                    return
+                else:
+                    self.r_old_done = True
+                    return False
 
         #
         #   Prepare variables for later
