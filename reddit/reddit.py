@@ -421,7 +421,7 @@ class Reddit(commands.Cog):
         """Test command"""
         await ctx.send("Nothing to test. test")
 
-    @_reddit.comand()
+    @_reddit.command()
     async def version(self, ctx):
         await ctx.send(embed=discord.Embed(title="Reddit Cog Info").add_field(name="Version", value="1.0.0")
 
