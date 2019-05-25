@@ -423,7 +423,7 @@ class Reddit(commands.Cog):
 
     @_reddit.command()
     async def info(self, ctx):
-        emb = discord.Embed(title="Reddit Cog Info", color=discord.Color.blurple())\
+        emb = discord.Embed(title="Reddit Cog Info", color=discord.Color.blurple())
         emb.add_field(name="Version", value="1.0.0")
         emb.add_field(name="Album Limit", value=self.alimit)
         emb.add_field(name="Debug Mode", value=self.redditdebug)
