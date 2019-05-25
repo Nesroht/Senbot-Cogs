@@ -426,7 +426,6 @@ class Reddit(commands.Cog):
         emb = discord.Embed(title="Reddit Cog Info", color=discord.Color.blurple())
         emb.add_field(name="Version", value="1.0.0")
         emb.add_field(name="Album Limit", value=self.alimit)
-        emb.add_field(name="", value="")
         emb.add_field(name="Debug Mode", value=self.redditdebug)
         emb.add_field(name="Reddit Username", value=self.credentials.REDDIT_USERNAME)
         await ctx.send(embed=emb)
