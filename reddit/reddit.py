@@ -422,8 +422,12 @@ class Reddit(commands.Cog):
         await ctx.send("Nothing to test. test")
 
     @_reddit.command()
-    async def version(self, ctx):
-        await ctx.send(embed=discord.Embed(title="Reddit Cog Info").add_field(name="Version", value="1.0.0"))
+    async def info(self, ctx):
+        emb = discord.Embed(title="Reddit Cog Info", color=discord.Color.blurple())\
+        emb.add_field(name="Version", value="1.0.0")
+        emb.add_field(name="Album Limit", value=self.alimit)
+        emb.add_field(name="Debug Mode", value=self.redditdebug)
+        await ctx.send(embed=emb)
 
     @commands.command()
     async def random(self,ctx):
