@@ -436,10 +436,13 @@ class Reddit(commands.Cog):
         await self.randomfunc(ctx)
 
     async def randomfunc(self, ctx):
-        if ctx.channel.is_nsfw() == True:
+        if ctx.guild:
+            if ctx.channel.is_nsfw() == True:
+                subreddit = str(self.reddit.random_subreddit(nsfw=True))
+            elif ctx.channel.is_nsfw() == False:
+                subreddit = str(self.reddit.random_subreddit())
+        else:
             subreddit = str(self.reddit.random_subreddit(nsfw=True))
-        elif ctx.channel.is_nsfw() == False:
-            subreddit = str(self.reddit.random_subreddit())
         #print(subreddit)
         self.randatt = True
         await self.redditcommand(ctx, subreddit=subreddit)
