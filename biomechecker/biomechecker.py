@@ -364,6 +364,7 @@ class Biomechecker(commands.Cog):
                         strBiomes = "```"
                 emb = discord.Embed(title=pixelmon + " spawns in the following biomes.")
                 emb.description = strBiomes + "```"
+                await ctx.send(strBiomes + "```")
                 embeds.append(emb)
                 i = 1
                 for embed in embeds:
