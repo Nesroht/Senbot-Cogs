@@ -182,6 +182,8 @@ class Biomechecker(commands.Cog):
         with open(self.pathbase + '/pixelmon/' + pixelmon.capitalize() + '.set.json') as f:
             self.setrarityDump = json.load(f)
         self.setrarityDump["spawnInfos"][index]["rarity"] = float(rarity)
+        with open(self.pathbase + '/pixelmon/' + pixelmon.capitalize() + '.set.json', 'w') as out:
+            out.write(json.dumps(self.setrarityDump, indent=4))
         with open(self.pathbase + '/' + pixelmon.capitalize() + '.set.json', 'w') as out:
             out.write(json.dumps(self.setrarityDump, indent=4))
         emb = discord.Embed(title="The new rarity of " + pixelmon)
