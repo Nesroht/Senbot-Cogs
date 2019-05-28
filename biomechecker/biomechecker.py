@@ -79,7 +79,7 @@ class Biomechecker(commands.Cog):
                                         else:
                                             # log["log"].append(biome + " - " + data["id"])
                                             self.dataout.update({biomes: [self.data["id"]]})
-                                        if data["id"] in dataoutPixelmon:
+                                        if self.data["id"] in self.dataoutPixelmon:
                                             self.dataoutPixelmon.update(id=self.dataoutPixelmon[self.data["id"]].append(biomes))
                                         else:
                                             self.dataoutPixelmon.update({self.data["id"]: [biomes]})
