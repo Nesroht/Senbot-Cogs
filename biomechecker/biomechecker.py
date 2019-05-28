@@ -138,7 +138,7 @@ class Biomechecker(commands.Cog):
 
         for id in self.dataoutPixelmonSorted:
             for pixelmon in self.dataoutPixelmonSorted[id]:
-                list = self.dataoutPixelmonSorted[pixelmon]
+                list = self.dataoutPixelmonSorted[id][pixelmon]
                 if list:
                     for bi in self.ignore:
                         if bi in list: list.remove(bi)
