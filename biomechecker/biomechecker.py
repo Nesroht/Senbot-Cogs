@@ -29,7 +29,7 @@ class Biomechecker(commands.Cog):
         # with open('config/Change.json') as f:
         # change = json.load(f)
 
-        for filename in os.listdir("pixelmon"):
+        for filename in os.listdir(self.pathbase + "/pixelmon"):
             if filename.endswith("set.json"):
                 # log["log"].append(filename)
                 with open(self.pathbase + "/pixelmon" + "/" + filename) as f:
