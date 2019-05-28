@@ -13,7 +13,8 @@ class Biomechecker(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.pathbase = str(cog_data_path(self, "Biomechecker")); self.dataout = {}
+        self.pathbase = str(cog_data_path(self, "Biomechecker"));
+        self.dataout = {}
         self.limit = 20
         self.log = {'log': []}
         self.amount = {}
@@ -22,6 +23,7 @@ class Biomechecker(commands.Cog):
         self.dataoutPixelmon = {}
         self.dataoutPixelmonSorted = {}
         self.legendaries = {"legendaries": []}
+        self.setrarityDump = {}
         self.poxedex = {}
         self.ignore = ["mushroom_island_shore", "grove", "mutated_cold_taiga", "hell", "visceral_heap", "undergarden", "sky",
                   "phantasmagoric_inferno", "origin_island", "corrupted_sands", "freezing_mountains", "arid_highland",
@@ -174,6 +176,15 @@ class Biomechecker(commands.Cog):
             strRare += "```" + str(i["rarity"]) + "\n```"
         emb.description = strRare
         await ctx.send(embed=emb)
+
+    @commands.command()
+    async def setrarity(self, ctx, pixelmon, rarity):
+        with open(self.pathbase + '/pixelmon/' + pixelmon.capitalize() + '.set.json') as f:
+            self.setrarityDump = json.load(f)
+        self.setrarityDump["spawnInfos"][0]["rarity"] = float(rarity)
+        with open(self.pathbase + '/' + pixelmon.capitalize() + '.set.json', 'w') as out:
+            out.write(json.dumps(self.setrarityDump, indent=4))
+        self.setrarityDump = {}
 
     @commands.command()
     async def legendaries(self, ctx):
