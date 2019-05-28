@@ -220,8 +220,9 @@ class Biomechecker(commands.Cog):
         emb = discord.Embed(title="These Pixelmon are considered legendary")
         strLeg = []
         strLeg.append("```\n")
-        for i in self.legendaries["legendaries"]:
-            strLeg.append(i + "\n")
+        for f in self.pokedex:
+            if f in self.legendaries:
+                strLeg.append(f + "\n")
         strLeg.append("```")
         emb.description = "".join(strLeg)
         await ctx.send(embed=emb)
