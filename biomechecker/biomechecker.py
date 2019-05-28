@@ -178,13 +178,19 @@ class Biomechecker(commands.Cog):
         await ctx.send(embed=emb)
 
     @commands.command()
-    async def setrarity(self, ctx, pixelmon, rarity):
+    async def setrarity(self, ctx, pixelmon, rarity, index):
         with open(self.pathbase + '/pixelmon/' + pixelmon.capitalize() + '.set.json') as f:
             self.setrarityDump = json.load(f)
-        self.setrarityDump["spawnInfos"][0]["rarity"] = float(rarity)
+        self.setrarityDump["spawnInfos"][index]["rarity"] = float(rarity)
         with open(self.pathbase + '/' + pixelmon.capitalize() + '.set.json', 'w') as out:
             out.write(json.dumps(self.setrarityDump, indent=4))
         self.setrarityDump = {}
+        emb = discord.Embed(title="The new rarity of " + pixelmon)
+        strRare = ""
+        for i in self.setrarityDump["spawnInfos"]:
+            strRare += "```" + str(i["rarity"]) + "\n```"
+        emb.description = strRare
+        await ctx.send(embed=emb)
 
     @commands.command()
     async def legendaries(self, ctx):
