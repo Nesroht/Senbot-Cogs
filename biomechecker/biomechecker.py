@@ -109,7 +109,7 @@ class Biomechecker(commands.Cog):
 
         i = 1
         for pokemon in self.pokedex:
-            if self.dataoutPixelmon[pokemon]:
+            if pokemon in self.dataoutPixelmon:
                 list = self.dataoutPixelmon[pokemon]
                 if list:
                     self.dataoutPixelmonSorted.update({i:{pokemon:list}})
