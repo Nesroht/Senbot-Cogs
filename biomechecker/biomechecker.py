@@ -233,8 +233,8 @@ class Biomechecker(commands.Cog):
         current = 0
         embeds = []
         noembed = True
-        if len(self.biomeamount) > 50:
-            await ctx.send(discord.Embed(title="Too many biomes", description="There are too many biomes with less than " + str(limit) + " pixelmon able to spawn in them, so sending them in a .json file instead."))
+        if len(self.biomeamount) > 30:
+            await ctx.send(embed=discord.Embed(title="Too many biomes", description="There are too many Pixelmon with less than " + str(limit) + " biomes they can spawn in, so sending a .json file instead."))
             await ctx.send(file=discord.File(self.pathbase + '/' + 'TooFewBiomes.json'))
         else:
             for pixelmon in self.biomeamount:
@@ -267,31 +267,35 @@ class Biomechecker(commands.Cog):
         current = 0
         embeds = []
         noembed = True
-        for biomes in self.amount:
-            if noembed:
-                emb = discord.Embed(title="These Biomes have too few pixelmon spawning")
-                noembed = False
-            if current <= limit:
-                strBiomes = []
-                strBiomes.append("```\n")
-                for biome in self.amount[biomes]:
-                    strBiomes.append(biome + " \n")
-                if len(self.amount[biomes]) == 0:
-                    strBiomes.append("None \n")
-                strBiomes.append("```")
-                emb.add_field(name=biomes, value="".join(strBiomes), inline=False)
-                current += 1
-            else:
+        if len(self.amount) > 30:
+            await ctx.send(embed=discord.Embed(title="Too many biomes", description="There are too many Pixelmon with less than " + str(limit) + " biomes they can spawn in, so sending a .json file instead."))
+            await ctx.send(file=discord.File(self.pathbase + '/' + 'TooFewBiomes.json'))
+        else:
+            for biomes in self.amount:
+                if noembed:
+                    emb = discord.Embed(title="These Biomes have too few pixelmon spawning")
+                    noembed = False
+                if current <= limit:
+                    strBiomes = []
+                    strBiomes.append("```\n")
+                    for biome in self.amount[biomes]:
+                        strBiomes.append(biome + " \n")
+                    if len(self.amount[biomes]) == 0:
+                        strBiomes.append("None \n")
+                    strBiomes.append("```")
+                    emb.add_field(name=biomes, value="".join(strBiomes), inline=False)
+                    current += 1
+                else:
+                    embeds.append(emb)
+                    current = 0
+                    noembed = True
+            i = 1
+            if noembed == False:
                 embeds.append(emb)
-                current = 0
-                noembed = True
-        i = 1
-        if noembed == False:
-            embeds.append(emb)
-        for embed in embeds:
-            embed.set_footer(text="Page " + str(i) + "/" + str(len(embeds)))
-            i += 1
-        await menu(ctx, pages=embeds, controls=DEFAULT_CONTROLS, page=0)
+            for embed in embeds:
+                embed.set_footer(text="Page " + str(i) + "/" + str(len(embeds)))
+                i += 1
+            await menu(ctx, pages=embeds, controls=DEFAULT_CONTROLS, page=0)
 
     @commands.command()
     async def pixelmon(self, ctx, pixelmon):
