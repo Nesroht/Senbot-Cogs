@@ -9,7 +9,7 @@ from redbot.core.data_manager import cog_data_path
 
 
 class Biomechecker(commands.Cog):
-    """Utility commands for Senbot"""
+    """Check various things in regards to Pixelmon BetterSpawner"""
 
     def __init__(self, bot):
         self.bot = bot
@@ -168,6 +168,7 @@ class Biomechecker(commands.Cog):
 
     @commands.command()
     async def rarity(self, ctx, pixelmon):
+        """Returns the rarity of given pixelmon"""
         if pixelmon.title() in self.dataoutPixelmon:
             emb = discord.Embed(title="The rarity of " + pixelmon.title())
             strRare = ""
@@ -189,6 +190,7 @@ class Biomechecker(commands.Cog):
 
     @commands.command()
     async def setrarity(self, ctx, pixelmon, rarity, index: int):
+        """Sets the rarity of given pixelmon, requires index so check rarity first"""
         if pixelmon.title() in self.dataoutPixelmon:
             with open(self.pathbase + '/pixelmon/' + pixelmon.title() + '.set.json') as f:
                 self.setrarityDump = json.load(f)
@@ -220,6 +222,7 @@ class Biomechecker(commands.Cog):
 
     @commands.command()
     async def legendaries(self, ctx):
+        """Returns list of legendaries"""
         emb = discord.Embed(title="These Pixelmon are considered legendary")
         strLeg = []
         strLeg.append("```\n")
@@ -233,6 +236,7 @@ class Biomechecker(commands.Cog):
 
     @commands.command()
     async def toofewbiomes(self, ctx):
+        """Returns a list of Pixelmon with less than 5 biomes they can spawn in"""
         limit = 5
         current = 0
         embeds = []
@@ -267,6 +271,7 @@ class Biomechecker(commands.Cog):
 
     @commands.command()
     async def toofewpixelmon(self, ctx):
+        """Returns a list of biomes with less than 8 possible pixelmon spawns"""
         limit = 5
         current = 0
         embeds = []
@@ -303,6 +308,7 @@ class Biomechecker(commands.Cog):
 
     @commands.command()
     async def pixelmon(self, ctx, pixelmon):
+        """Returns the biomes the given pixelmon can spawn in"""
         if pixelmon.title() in self.dataoutPixelmon:
             strBiomes = []
             strBiomes.append("```\n")
@@ -365,6 +371,7 @@ class Biomechecker(commands.Cog):
 
     @commands.command()
     async def pixelmonid(self, ctx, pixelmonid: int):
+        """Returns the biomes the given pixelmon can spawn in, from #id"""
         if pixelmonid in self.dataoutPixelmonSorted:
             for pixelmon in self.dataoutPixelmonSorted[pixelmonid]:
                 strBiomes = []
@@ -401,6 +408,7 @@ class Biomechecker(commands.Cog):
 
     @commands.command()
     async def biomes(self, ctx, biome):
+        """Returns the pixelmon that can spawn in a specific biome, needs properly formatted biome name, so find it with [p]pixelmon first"""
         if biome in self.dataout:
             strPixelmon = []
             strPixelmon.append("```\n")

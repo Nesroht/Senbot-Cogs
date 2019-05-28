@@ -1,0 +1,10 @@
+{
+  "author" : ["Nesroht"],
+  "bot_version": [3,1,1],
+  "install_msg" : "Installed BiomeChecker, remember to load it and do \"[p]help Biomechecker\" for help",
+  "short" : "Parse through Pixelmon BetterSpawner files",
+  "description" : "Parses the Pixelmon BetterSpawner .set.json files to make it slightly easier to deal with.\nOpening single files over and over shouldnt be required when there is 800+ files.",
+  "requirements": [],
+  "tags" : ["pixelmon", "spawner", "betterspawner", "minecraft", "pokemon"],
+  "hidden" : false
+}
