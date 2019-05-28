@@ -28,6 +28,7 @@ class Biomechecker(commands.Cog):
         self.ignore = ["mushroom_island_shore", "grove", "mutated_cold_taiga", "hell", "visceral_heap", "undergarden", "sky",
                   "phantasmagoric_inferno", "origin_island", "corrupted_sands", "freezing_mountains", "arid_highland",
                   "polar_chasm", "fungi_forest"]
+        self.legendarySpecial = ["Articuno", "Zapdos", "Moltres", "Mewtwo", "Lugia", "HoOh", "Dialga", "Palkia", "Giratina", "Arceus", "Silvally", "Cosmoem", "Solgaleo", "Lunala", "Meltan", "Melmetal"]
 
         with open(self.pathbase + '/config/BetterSpawnerConfig.json') as f:
             self.config = json.load(f)
@@ -41,6 +42,8 @@ class Biomechecker(commands.Cog):
                 with open(self.pathbase + "/legendaries" + "/" + filename) as f:
                     self.data = json.load(f)
                 self.legendaries["legendaries"].append(self.data["id"])
+        for i in self.legendarySpecial:
+            self.legendaries["legendaries"].append(i)
 
         # with open('config/Change.json') as f:
         # change = json.load(f)
