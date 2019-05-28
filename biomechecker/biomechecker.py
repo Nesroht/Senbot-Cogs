@@ -153,13 +153,12 @@ class Biomechecker(commands.Cog):
             emb = discord.Embed(title=pixelmon.capitalize() + " spawns in the following biomes.")
             emb.description = strBiomes + "```"
             embeds.append(emb)
-            ctx.send(embeds)
             i = 1
             for embed in embeds:
                 embed.set_footer(text="Page " + str(i) + "/" + str(len(embeds)))
                 i += 1
 
-            await menu(ctx, pages=embeds, controls=DEFAULT_CONTROLS, page=1)
+            await menu(ctx, pages=embeds, controls=DEFAULT_CONTROLS, page=0)
         else:
             emb = discord.Embed(title=pixelmon.capitalize() + " can't be found in the pokedex", description="Make sure you spell the name of the pokemon right, and that the pokemon exists")
             await ctx.send(embed=emb)
@@ -171,16 +170,17 @@ class Biomechecker(commands.Cog):
             limit = self.limit
             current = 0
             embeds = []
-            emb = discord.Embed(title=biome + " spawns the following Pixelmon.")
             for pixelmon in self.dataout[biome]:
                 if current <= limit:
                     strPixelmon += pixelmon + "\n"
                     current += 1
                 else:
+                    emb = discord.Embed(title=biome + " spawns the following Pixelmon.")
                     emb.description = strPixelmon + "```"
                     embeds.append(emb)
                     current = 0
                     strPixelmon = "```"
+            emb = discord.Embed(title=biome + " spawns the following Pixelmon.")
             emb.description = strPixelmon + "```"
             embeds.append(emb)
             i = 1
@@ -188,7 +188,7 @@ class Biomechecker(commands.Cog):
                 embed.set_footer(text="Page " + str(i) + "/" + str(len(embeds)))
                 i += 1
 
-            await menu(ctx, embeds, DEFAULT_CONTROLS)
+            await menu(ctx, pages=embeds, controls=DEFAULT_CONTROLS, page=0)
         else:
             emb = discord.Embed(title=biome + " can't be found in the biome lists",
                                 description="Make sure you spell the name of the biome right, and that the biome exists")
