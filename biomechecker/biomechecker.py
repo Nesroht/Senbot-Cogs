@@ -153,7 +153,7 @@ class Biomechecker(commands.Cog):
 
     @commands.command()
     async def toofewbiomes(self, ctx):
-        limit = 2
+        limit = 20
         current = 0
         embeds = []
         noembed = True
@@ -164,7 +164,7 @@ class Biomechecker(commands.Cog):
             if current <= limit:
                 strBiomes = "```"
                 for biome in self.biomeamount[pixelmon]:
-                    strBiomes += biome + "\n"
+                    strBiomes += biome + " \n"
                 strBiomes += "```"
                 emb.add_field(name=pixelmon, value=strBiomes)
                 current += 1
