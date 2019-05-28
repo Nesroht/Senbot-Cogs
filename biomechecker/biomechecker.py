@@ -165,30 +165,55 @@ class Biomechecker(commands.Cog):
 
     @commands.command()
     async def rarity(self, ctx, pixelmon):
-        emb = discord.Embed(title="The rarity of " + pixelmon)
-        strRare = ""
-        with open(self.pathbase + '/pixelmon/'+pixelmon.title()+'.set.json') as f:
-            self.data = json.load(f)
-        for i in self.data["spawnInfos"]:
-            strRare += "```" + str(i["rarity"]) + "\n```"
-        emb.description = strRare
-        await ctx.send(embed=emb)
+        if pixelmon.title() in self.dataoutPixelmon:
+            emb = discord.Embed(title="The rarity of " + pixelmon.title())
+            strRare = ""
+            with open(self.pathbase + '/pixelmon/'+pixelmon.title()+'.set.json') as f:
+                self.data = json.load(f)
+            for i in self.data["spawnInfos"]:
+                strRare += "```" + str(i["rarity"]) + "\n```"
+            emb.description = strRare
+            await ctx.send(embed=emb)
+        elif pixelmon in self.dataoutPixelmon:
+            emb = discord.Embed(title="The rarity of " + pixelmon)
+            strRare = ""
+            with open(self.pathbase + '/pixelmon/'+pixelmon+'.set.json') as f:
+                self.data = json.load(f)
+            for i in self.data["spawnInfos"]:
+                strRare += "```" + str(i["rarity"]) + "\n```"
+            emb.description = strRare
+            await ctx.send(embed=emb)
 
     @commands.command()
     async def setrarity(self, ctx, pixelmon, rarity, index: int):
-        with open(self.pathbase + '/pixelmon/' + pixelmon.title() + '.set.json') as f:
-            self.setrarityDump = json.load(f)
-        self.setrarityDump["spawnInfos"][index]["rarity"] = float(rarity)
-        with open(self.pathbase + '/pixelmon/' + pixelmon.title() + '.set.json', 'w') as out:
-            out.write(json.dumps(self.setrarityDump, indent=4))
-        emb = discord.Embed(title="The new rarity of " + pixelmon)
-        strRare = ""
-        for i in self.setrarityDump["spawnInfos"]:
-            strRare += "```" + str(i["rarity"]) + "\n```"
-        emb.description = strRare
-        await ctx.send(embed=emb)
-        await ctx.send(file=discord.File(self.pathbase + '/pixelmon/' + pixelmon.title() + '.set.json'))
-        self.setrarityDump = {}
+        if pixelmon.title() in self.dataoutPixelmon:
+            with open(self.pathbase + '/pixelmon/' + pixelmon.title() + '.set.json') as f:
+                self.setrarityDump = json.load(f)
+            self.setrarityDump["spawnInfos"][index]["rarity"] = float(rarity)
+            with open(self.pathbase + '/pixelmon/' + pixelmon.title() + '.set.json', 'w') as out:
+                out.write(json.dumps(self.setrarityDump, indent=4))
+            emb = discord.Embed(title="The new rarity of " + pixelmon)
+            strRare = ""
+            for i in self.setrarityDump["spawnInfos"]:
+                strRare += "```" + str(i["rarity"]) + "\n```"
+            emb.description = strRare
+            await ctx.send(embed=emb)
+            await ctx.send(file=discord.File(self.pathbase + '/pixelmon/' + pixelmon.title() + '.set.json'))
+            self.setrarityDump = {}
+        elif pixelmon in self.dataoutPixelmon:
+            with open(self.pathbase + '/pixelmon/' + pixelmon + '.set.json') as f:
+                self.setrarityDump = json.load(f)
+            self.setrarityDump["spawnInfos"][index]["rarity"] = float(rarity)
+            with open(self.pathbase + '/pixelmon/' + pixelmon + '.set.json', 'w') as out:
+                out.write(json.dumps(self.setrarityDump, indent=4))
+            emb = discord.Embed(title="The new rarity of " + pixelmon)
+            strRare = ""
+            for i in self.setrarityDump["spawnInfos"]:
+                strRare += "```" + str(i["rarity"]) + "\n```"
+            emb.description = strRare
+            await ctx.send(embed=emb)
+            await ctx.send(file=discord.File(self.pathbase + '/pixelmon/' + pixelmon + '.set.json'))
+            self.setrarityDump = {}
 
     @commands.command()
     async def legendaries(self, ctx):
@@ -280,6 +305,31 @@ class Biomechecker(commands.Cog):
                     current = 0
                     strBiomes = "```"
             emb = discord.Embed(title=pixelmon.title() + " spawns in the following biomes.")
+            emb.description = strBiomes + "```"
+            embeds.append(emb)
+            i = 1
+            for embed in embeds:
+                embed.set_footer(text="Page " + str(i) + "/" + str(len(embeds)))
+                i += 1
+
+            await menu(ctx, pages=embeds, controls=DEFAULT_CONTROLS, page=0)
+        elif pixelmon in self.dataoutPixelmon:
+            strBiomes = "```"
+            limit = self.limit
+            current = 0
+            embeds = []
+            for biome in self.dataoutPixelmon[pixelmon]:
+                if current <= limit:
+                    strBiomes += biome + "\n"
+                    current += 1
+                else:
+                    emb = discord.Embed(title=pixelmon + " spawns in the following biomes.")
+                    emb.description = strBiomes + "```"
+                    #await ctx.send(embed=emb)
+                    embeds.append(emb)
+                    current = 0
+                    strBiomes = "```"
+            emb = discord.Embed(title=pixelmon + " spawns in the following biomes.")
             emb.description = strBiomes + "```"
             embeds.append(emb)
             i = 1
