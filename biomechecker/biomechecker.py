@@ -134,4 +134,4 @@ class Biomechecker(commands.Cog):
 
     @commands.command()
     async def pixelmon(self, ctx, *, pixelmon):
-        ctx.send(self.pathbase)
+        await ctx.send(self.pathbase)
