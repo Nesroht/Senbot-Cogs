@@ -167,7 +167,7 @@ class Biomechecker(commands.Cog):
     async def rarity(self, ctx, pixelmon):
         emb = discord.Embed(title="The rarity of " + pixelmon)
         strRare = ""
-        with open(self.pathbase + '/pixelmon/'+pixelmon.capitalize()+'.set.json') as f:
+        with open(self.pathbase + '/pixelmon/'+pixelmon.title()+'.set.json') as f:
             self.data = json.load(f)
         for i in self.data["spawnInfos"]:
             strRare += "```" + str(i["rarity"]) + "\n```"
@@ -176,10 +176,10 @@ class Biomechecker(commands.Cog):
 
     @commands.command()
     async def setrarity(self, ctx, pixelmon, rarity, index: int):
-        with open(self.pathbase + '/pixelmon/' + pixelmon.capitalize() + '.set.json') as f:
+        with open(self.pathbase + '/pixelmon/' + pixelmon.title() + '.set.json') as f:
             self.setrarityDump = json.load(f)
         self.setrarityDump["spawnInfos"][index]["rarity"] = float(rarity)
-        with open(self.pathbase + '/pixelmon/' + pixelmon.capitalize() + '.set.json', 'w') as out:
+        with open(self.pathbase + '/pixelmon/' + pixelmon.title() + '.set.json', 'w') as out:
             out.write(json.dumps(self.setrarityDump, indent=4))
         emb = discord.Embed(title="The new rarity of " + pixelmon)
         strRare = ""
@@ -187,7 +187,7 @@ class Biomechecker(commands.Cog):
             strRare += "```" + str(i["rarity"]) + "\n```"
         emb.description = strRare
         await ctx.send(embed=emb)
-        await ctx.send(file=discord.File(self.pathbase + '/pixelmon/' + pixelmon.capitalize() + '.set.json'))
+        await ctx.send(file=discord.File(self.pathbase + '/pixelmon/' + pixelmon.title() + '.set.json'))
         self.setrarityDump = {}
 
     @commands.command()
@@ -263,23 +263,23 @@ class Biomechecker(commands.Cog):
 
     @commands.command()
     async def pixelmon(self, ctx, pixelmon):
-        if pixelmon.capitalize() in self.dataoutPixelmon:
+        if pixelmon.title() in self.dataoutPixelmon:
             strBiomes = "```"
             limit = self.limit
             current = 0
             embeds = []
-            for biome in self.dataoutPixelmon[pixelmon.capitalize()]:
+            for biome in self.dataoutPixelmon[pixelmon.title()]:
                 if current <= limit:
                     strBiomes += biome + "\n"
                     current += 1
                 else:
-                    emb = discord.Embed(title=pixelmon.capitalize() + " spawns in the following biomes.")
+                    emb = discord.Embed(title=pixelmon.title() + " spawns in the following biomes.")
                     emb.description = strBiomes + "```"
                     #await ctx.send(embed=emb)
                     embeds.append(emb)
                     current = 0
                     strBiomes = "```"
-            emb = discord.Embed(title=pixelmon.capitalize() + " spawns in the following biomes.")
+            emb = discord.Embed(title=pixelmon.title() + " spawns in the following biomes.")
             emb.description = strBiomes + "```"
             embeds.append(emb)
             i = 1
@@ -289,7 +289,7 @@ class Biomechecker(commands.Cog):
 
             await menu(ctx, pages=embeds, controls=DEFAULT_CONTROLS, page=0)
         else:
-            emb = discord.Embed(title=pixelmon.capitalize() + " can't be found in the pokedex", description="Make sure you spell the name of the pokemon right, and that the pokemon exists")
+            emb = discord.Embed(title=pixelmon.title() + " can't be found in the pokedex", description="Make sure you spell the name of the pokemon right, and that the pokemon exists")
             await ctx.send(embed=emb)
 
     @commands.command()
