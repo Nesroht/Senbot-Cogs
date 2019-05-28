@@ -182,7 +182,7 @@ class Biomechecker(commands.Cog):
             embeds.append(emb)
             i = 1
             for embed in embeds:
-                embed.footer = "Page " + i + "/" + len(embeds)
+                embed.footer = "Page " + str(i) + "/" + str(len(embeds))
                 i += 1
 
             await menu(ctx, embeds, DEFAULT_CONTROLS)
