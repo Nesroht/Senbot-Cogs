@@ -1,4 +1,4 @@
-from .biomechecker import biomechecker
+from .biomechecker import Biomechecker
 
 def setup(bot):
     n = biomechecker(bot)
