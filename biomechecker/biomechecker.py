@@ -132,5 +132,11 @@ class Biomechecker(commands.Cog):
 
 
     @commands.command()
-    async def pixelmon(self, ctx):
-        await ctx.send(self.amount)
+    async def pixelmon(self, ctx, pixelmon):
+        if pixelmon.capitalize() in self.dataoutPixelmon:
+            strBiomes = "```"
+            emb = discord.Embed(title=pixelmon.capitalize())
+            for biome in self.dataoutPixelmon[pixelmon.capitalize()]:
+                strBiomes += biome + "\n"
+            emb.description = strBiomes + "```"
+        await ctx.send(emb)
