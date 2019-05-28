@@ -147,15 +147,16 @@ class Biomechecker(commands.Cog):
         for id in self.dataoutPixelmonSorted:
             for pixelmon in self.dataoutPixelmonSorted[id]:
                 for i in self.legendaries["legendaries"]:
-                    if i in pixelmon: pixelmon.remove(i)
-                list = self.dataoutPixelmonSorted[id][pixelmon]
-                if list:
-                    for bi in self.ignore:
-                        if bi in list: list.remove(bi)
-                    if len(list) <= 5:
-                        self.biomeamount.update({pixelmon: list})
-                else:
-                    self.biomeamount.update({pixelmon: ["None"]})
+                    if i in pixelmon: pass
+                    else:
+                        list = self.dataoutPixelmonSorted[id][pixelmon]
+                        if list:
+                            for bi in self.ignore:
+                                if bi in list: list.remove(bi)
+                            if len(list) <= 5:
+                                self.biomeamount.update({pixelmon: list})
+                        else:
+                            self.biomeamount.update({pixelmon: ["None"]})
 
         with open(self.pathbase + '/TooFewPixelmon.json', 'w') as out:
             out.write(json.dumps(self.amount, indent=4, sort_keys=True))
