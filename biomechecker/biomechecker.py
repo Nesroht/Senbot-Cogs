@@ -315,11 +315,11 @@ class Biomechecker(commands.Cog):
             await menu(ctx, pages=embeds, controls=DEFAULT_CONTROLS, page=0)
         elif pixelmon in self.dataoutPixelmon:
             strBiomes = "```"
-            limit = self.limit
+            climit = self.limit
             current = 0
             embeds = []
             for biome in self.dataoutPixelmon[pixelmon]:
-                if current <= limit:
+                if current <= climit:
                     strBiomes += biome + "\n"
                     current += 1
                 else:
@@ -347,12 +347,13 @@ class Biomechecker(commands.Cog):
         if pixelmonid in self.dataoutPixelmonSorted:
             for pixelmon in self.dataoutPixelmonSorted[pixelmonid]:
                 strBiomes = "```"
-                limit = self.limit
+                climit = self.limit
                 current = 0
                 embeds = []
                 for biome in self.dataoutPixelmonSorted[pixelmonid][pixelmon]:
-                    if current <= limit:
+                    if current <= climit:
                         strBiomes += biome + "\n"
+                        ctx.send(biome)
                         current += 1
                     else:
                         emb = discord.Embed(title=pixelmon + " spawns in the following biomes.")
