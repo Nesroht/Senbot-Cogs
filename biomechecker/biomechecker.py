@@ -151,6 +151,10 @@ class Biomechecker(commands.Cog):
                     strBiomes = "```"
             emb.description = strBiomes + "```"
             embeds.append(emb)
+            i = 1
+            for embed in embeds:
+                embed.footer = "Page " + i + "/" + len(embeds)
+                i += 1
 
             await menu(ctx, embeds, DEFAULT_CONTROLS)
         else:
@@ -176,6 +180,10 @@ class Biomechecker(commands.Cog):
                     strPixelmon = "```"
             emb.description = strPixelmon + "```"
             embeds.append(emb)
+            i = 1
+            for embed in embeds:
+                embed.footer = "Page " + i + "/" + len(embeds)
+                i += 1
 
             await menu(ctx, embeds, DEFAULT_CONTROLS)
         else:
