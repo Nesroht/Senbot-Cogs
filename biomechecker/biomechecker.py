@@ -233,29 +233,33 @@ class Biomechecker(commands.Cog):
         current = 0
         embeds = []
         noembed = True
-        for pixelmon in self.biomeamount:
-            if noembed:
-                emb = discord.Embed(title="These Pixelmon spawn in too few biomes.")
-                noembed = False
-            if current <= limit:
-                strBiomes = []
-                strBiomes.append("```\n")
-                for biome in self.biomeamount[pixelmon]:
-                    strBiomes.append(biome + " \n")
-                if len(self.biomeamount[pixelmon]) == 0:
-                    strBiomes.append("None \n")
-                strBiomes.append("```")
-                emb.add_field(name=pixelmon, value="".join(strBiomes), inline=False)
-                current += 1
-            else:
-                embeds.append(emb)
-                current = 0
-                noembed = True
-        i = 1
-        for embed in embeds:
-            embed.set_footer(text="Page " + str(i) + "/" + str(len(embeds)))
-            i += 1
-        await menu(ctx, pages=embeds, controls=DEFAULT_CONTROLS, page=0)
+        if len(self.biomeamount) > 50:
+            await ctx.send(discord.Embed(title="Too many biomes", description="There are too many biomes with less than " + str(limit) + " pixelmon able to spawn in them, so sending them in a .json file instead."))
+            await ctx.send(file=discord.File(self.pathbase + '/' + 'TooFewBiomes.json'))
+        else:
+            for pixelmon in self.biomeamount:
+                if noembed:
+                    emb = discord.Embed(title="These Pixelmon spawn in too few biomes.")
+                    noembed = False
+                if current <= limit:
+                    strBiomes = []
+                    strBiomes.append("```\n")
+                    for biome in self.biomeamount[pixelmon]:
+                        strBiomes.append(biome + " \n")
+                    if len(self.biomeamount[pixelmon]) == 0:
+                        strBiomes.append("None \n")
+                    strBiomes.append("```")
+                    emb.add_field(name=pixelmon, value="".join(strBiomes), inline=False)
+                    current += 1
+                else:
+                    embeds.append(emb)
+                    current = 0
+                    noembed = True
+            i = 1
+            for embed in embeds:
+                embed.set_footer(text="Page " + str(i) + "/" + str(len(embeds)))
+                i += 1
+            await menu(ctx, pages=embeds, controls=DEFAULT_CONTROLS, page=0)
 
     @commands.command()
     async def toofewpixelmon(self, ctx):
