@@ -156,6 +156,7 @@ class Biomechecker(commands.Cog):
         limit = 2
         current = 0
         embeds = []
+        noembed = True
         for pixelmon in self.biomeamount:
             if noembed:
                 emb = discord.Embed(title="These Pixelmon spawn in too few biomes.")
