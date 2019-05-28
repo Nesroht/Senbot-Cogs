@@ -153,7 +153,6 @@ class Biomechecker(commands.Cog):
 
     @commands.command()
     async def toofewbiomes(self, ctx):
-        strBiomes = "```"
         limit = 2
         current = 0
         embeds = []
@@ -172,9 +171,6 @@ class Biomechecker(commands.Cog):
                 embeds.append(emb)
                 current = 0
                 noembed = True
-        emb = discord.Embed(title=pixelmon.capitalize() + " spawns in the following biomes.")
-        emb.description = strBiomes + "```"
-        embeds.append(emb)
         i = 1
         for embed in embeds:
             embed.set_footer(text="Page " + str(i) + "/" + str(len(embeds)))
