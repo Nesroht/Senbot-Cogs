@@ -221,7 +221,7 @@ class Biomechecker(commands.Cog):
         strLeg = []
         strLeg.append("```\n")
         for f in self.pokedex:
-            if f in self.legendaries:
+            if f in self.legendaries["legendaries"]:
                 strLeg.append(f + "\n")
         strLeg.append("```")
         emb.description = "".join(strLeg)
