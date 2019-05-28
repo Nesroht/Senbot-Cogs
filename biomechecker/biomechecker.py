@@ -178,7 +178,7 @@ class Biomechecker(commands.Cog):
         await ctx.send(embed=emb)
 
     @commands.command()
-    async def setrarity(self, ctx, pixelmon, rarity, index):
+    async def setrarity(self, ctx, pixelmon, rarity, index: int):
         with open(self.pathbase + '/pixelmon/' + pixelmon.capitalize() + '.set.json') as f:
             self.setrarityDump = json.load(f)
         self.setrarityDump["spawnInfos"][index]["rarity"] = float(rarity)
