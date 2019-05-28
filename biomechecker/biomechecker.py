@@ -22,7 +22,7 @@ class Biomechecker(commands.Cog):
                   "phantasmagoric_inferno", "origin_island", "corrupted_sands", "freezing_mountains", "arid_highland",
                   "polar_chasm", "fungi_forest"]
 
-        with open(pathbase + '/config/BetterSpawnerConfig.json') as f:
+        with open(self.pathbase + '/config/BetterSpawnerConfig.json') as f:
             self.config = json.load(f)
 
         # with open('config/Change.json') as f:
@@ -31,7 +31,7 @@ class Biomechecker(commands.Cog):
         for filename in os.listdir("pixelmon"):
             if filename.endswith("set.json"):
                 # log["log"].append(filename)
-                with open(pathbase + "/pixelmon" + "/" + filename) as f:
+                with open(self.pathbase + "/pixelmon" + "/" + filename) as f:
                     self.data = json.load(f)
                 if len(self.data["spawnInfos"]) <= 1:
                     if "stringBiomes" in self.data["spawnInfos"][0]["condition"]:
@@ -97,13 +97,13 @@ class Biomechecker(commands.Cog):
                         else:
                             pass
 
-        with open(pathbase + '/Biomes.json', 'w') as out:
+        with open(self.pathbase + '/Biomes.json', 'w') as out:
             out.write(json.dumps(self.dataout, indent=4, sort_keys=True))
 
-        with open(pathbase + '/Pixelmon.json', 'w') as out:
+        with open(self.pathbase + '/Pixelmon.json', 'w') as out:
             out.write(json.dumps(self.dataoutPixelmon, indent=4, sort_keys=True))
 
-        with open(pathbase + '/commandlog.json', 'w') as logout:
+        with open(self.pathbase + '/commandlog.json', 'w') as logout:
             logout.write(json.dumps(self.log, indent=4, sort_keys=True))
 
         for bi in ignore:
@@ -125,13 +125,13 @@ class Biomechecker(commands.Cog):
                 if len(list) <= 5:
                     self.biomeamount.update({pixelmon: list})
 
-        with open(pathbase + '/TooFewBiomes.json', 'w') as out:
+        with open(self.pathbase + '/TooFewBiomes.json', 'w') as out:
             out.write(json.dumps(self.amount, indent=4, sort_keys=True))
 
-        with open(pathbase + '/TooFewPixelmon.json', 'w') as out:
+        with open(self.pathbase + '/TooFewPixelmon.json', 'w') as out:
             out.write(json.dumps(self.biomeamount, indent=4, sort_keys=True))
 
 
     @commands.command()
     async def pixelmon(self, ctx, *, pixelmon):
-        await ctx.send(self.pathbase)
+        await ctx.send(self.self.pathbase)
