@@ -14,6 +14,7 @@ class Biomechecker(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.pathbase = str(cog_data_path(self, "Biomechecker")); self.dataout = {}
+        self.limit = 20
         self.log = {'log': []}
         self.amount = {}
         self.biomeamount = {}
@@ -135,11 +136,23 @@ class Biomechecker(commands.Cog):
     async def pixelmon(self, ctx, pixelmon):
         if pixelmon.capitalize() in self.dataoutPixelmon:
             strBiomes = "```"
+            limit = self.limit
+            current = 0
+            embeds = []
             emb = discord.Embed(title=pixelmon.capitalize() + " spawns in the following biomes.")
             for biome in self.dataoutPixelmon[pixelmon.capitalize()]:
-                strBiomes += biome + "\n"
+                if current < limit:
+                    strBiomes += biome + "\n"
+                    current += 1
+                else:
+                    emb.description = strBiomes + "```"
+                    embeds.append(emb)
+                    current = 0
+                    strBiomes = "```"
             emb.description = strBiomes + "```"
-            await ctx.send(embed=emb)
+            embeds.append(emb)
+
+            await menu(ctx, embeds, DEFAULT_CONTROLS)
         else:
             emb = discord.Embed(title=pixelmon.capitalize() + " can't be found in the pokedex", description="Make sure you spell the name of the pokemon right, and that the pokemon exists")
             await ctx.send(embed=emb)
@@ -148,11 +161,23 @@ class Biomechecker(commands.Cog):
     async def biomes(self, ctx, biome):
         if biome in self.dataout:
             strPixelmon = "```"
+            limit = self.limit
+            current = 0
+            embeds = []
             emb = discord.Embed(title=biome + " spawns the following Pixelmon.")
             for pixelmon in self.dataout[biome]:
-                strPixelmon += pixelmon + "\n"
+                if current < limit:
+                    strPixelmon += pixelmon + "\n"
+                    current += 1
+                else:
+                    emb.description = strPixelmon + "```"
+                    embeds.append(emb)
+                    current = 0
+                    strPixelmon = "```"
             emb.description = strPixelmon + "```"
-            await ctx.send(embed=emb)
+            embeds.append(emb)
+
+            await menu(ctx, embeds, DEFAULT_CONTROLS)
         else:
             emb = discord.Embed(title=biome + " can't be found in the biome lists",
                                 description="Make sure you spell the name of the biome right, and that the biome exists")
