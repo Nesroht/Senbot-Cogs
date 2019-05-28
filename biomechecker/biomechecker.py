@@ -205,14 +205,14 @@ class Biomechecker(commands.Cog):
         await menu(ctx, pages=embeds, controls=DEFAULT_CONTROLS, page=0)
 
     @commands.command()
-    async def toofewpixelmon(self, ctx, pixelmon):
+    async def toofewpixelmon(self, ctx):
         limit = 5
         current = 0
         embeds = []
         noembed = True
         for biomes in self.amount:
             if noembed:
-                emb = discord.Embed(title="These Pixelmon spawn in too few biomes.")
+                emb = discord.Embed(title="These Biomes have too few pixelmon spawning")
                 noembed = False
             if current <= limit:
                 strBiomes = "```"
@@ -228,6 +228,8 @@ class Biomechecker(commands.Cog):
                 current = 0
                 noembed = True
         i = 1
+        if noembed == False:
+            embeds.append(emb)
         for embed in embeds:
             embed.set_footer(text="Page " + str(i) + "/" + str(len(embeds)))
             i += 1
