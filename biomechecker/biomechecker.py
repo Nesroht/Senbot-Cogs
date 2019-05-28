@@ -109,10 +109,11 @@ class Biomechecker(commands.Cog):
 
         i = 1
         for pokemon in self.pokedex:
-            list = self.dataoutPixelmon[pokemon]
-            if list:
-                self.dataoutPixelmonSorted.update({i:{pokemon:list}})
-                i += 1
+            if self.dataoutPixelmon[pokemon]:
+                list = self.dataoutPixelmon[pokemon]
+                if list:
+                    self.dataoutPixelmonSorted.update({i:{pokemon:list}})
+                    i += 1
             else:
                 self.dataoutPixelmonSorted.update({i:{pokemon:[]}})
                 i += 1
@@ -174,7 +175,7 @@ class Biomechecker(commands.Cog):
             embeds.append(emb)
             i = 1
             for embed in embeds:
-                embed.set_footer(text="Page " + str(i) + "/" + str(len(embeds)))
+                await embed.set_footer(text="Page " + str(i) + "/" + str(len(embeds)))
                 i += 1
 
             await menu(ctx, pages=embeds, controls=DEFAULT_CONTROLS, page=0)
@@ -206,7 +207,7 @@ class Biomechecker(commands.Cog):
                 embeds.append(emb)
                 i = 1
                 for embed in embeds:
-                    embed.set_footer(text="Page " + str(i) + "/" + str(len(embeds)))
+                    await embed.set_footer(text="Page " + str(i) + "/" + str(len(embeds)))
                     i += 1
 
                 await menu(ctx, pages=embeds, controls=DEFAULT_CONTROLS, page=0)
@@ -237,7 +238,7 @@ class Biomechecker(commands.Cog):
             embeds.append(emb)
             i = 1
             for embed in embeds:
-                embed.set_footer(text="Page " + str(i) + "/" + str(len(embeds)))
+                await embed.set_footer(text="Page " + str(i) + "/" + str(len(embeds)))
                 i += 1
 
             await menu(ctx, pages=embeds, controls=DEFAULT_CONTROLS, page=0)
