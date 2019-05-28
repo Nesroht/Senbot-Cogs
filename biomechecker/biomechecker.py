@@ -107,7 +107,7 @@ class Biomechecker(commands.Cog):
         with open(self.pathbase + '/commandlog.json', 'w') as logout:
             logout.write(json.dumps(self.log, indent=4, sort_keys=True))
 
-        for bi in ignore:
+        for bi in self.ignore:
             if bi in self.dataout: del self.dataout[bi]
 
         for biome in self.dataout:
