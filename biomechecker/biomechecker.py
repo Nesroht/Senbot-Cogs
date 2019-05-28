@@ -169,7 +169,7 @@ class Biomechecker(commands.Cog):
         emb = discord.Embed(title="The rarity of " + pixelmon)
         strRare = ""
         for i in self.data["spawnInfos"]:
-            strRare += "```" + i["rarity"] + "\n```"
+            strRare += "```" + str(i["rarity"]) + "\n```"
         with open(self.pathbase + '/pixelmon/'+pixelmon.capitalize()+'.set.json') as f:
             self.data = json.load(f)
         emb.description = strRare
