@@ -139,7 +139,7 @@ class Biomechecker(commands.Cog):
             for biome in self.dataoutPixelmon[pixelmon.capitalize()]:
                 strBiomes += biome + "\n"
             emb.description = strBiomes + "```"
-            await ctx.send(emb)
+            await ctx.send(embed=emb)
         else:
             emb = discord.Embed(title=pixelmon.capitalize() + "can't be found in the pokedex", description="Make sure you spell the name of the pokemon right, and that the pokemon exists")
-            await ctx.send(emb)
+            await ctx.send(embed=emb)
