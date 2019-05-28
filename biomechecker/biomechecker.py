@@ -181,7 +181,7 @@ class Biomechecker(commands.Cog):
                 self.data = json.load(f)
             for i in self.data["spawnInfos"]:
                 strRare += "```\n" + str(i["rarity"]) + "\n```"
-            emb.description = strRare
+            emb.description = "".join(strRare)
             await ctx.send(embed=emb)
 
     @commands.command()
@@ -196,7 +196,7 @@ class Biomechecker(commands.Cog):
             strRare = ""
             for i in self.setrarityDump["spawnInfos"]:
                 strRare += "```\n" + str(i["rarity"]) + "\n```"
-            emb.description = strRare
+            emb.description = "".join(strRare)
             await ctx.send(embed=emb)
             await ctx.send(file=discord.File(self.pathbase + '/pixelmon/' + pixelmon.title() + '.set.json'))
             self.setrarityDump = {}
@@ -210,7 +210,7 @@ class Biomechecker(commands.Cog):
             strRare = ""
             for i in self.setrarityDump["spawnInfos"]:
                 strRare += "```\n" + str(i["rarity"]) + "\n```"
-            emb.description = strRare
+            emb.description = "".join(strRare)
             await ctx.send(embed=emb)
             await ctx.send(file=discord.File(self.pathbase + '/pixelmon/' + pixelmon + '.set.json'))
             self.setrarityDump = {}
@@ -223,7 +223,7 @@ class Biomechecker(commands.Cog):
         for i in self.legendaries["legendaries"]:
             strLeg.append(i + "\n")
         strLeg.append("```")
-        emb.description = strLeg
+        emb.description = "".join(strLeg)
         await ctx.send(embed=emb)
 
 
@@ -245,7 +245,7 @@ class Biomechecker(commands.Cog):
                 if len(self.biomeamount[pixelmon]) == 0:
                     strBiomes.append("None \n")
                 strBiomes.append("```")
-                emb.add_field(name=pixelmon, value=strBiomes, inline=False)
+                emb.add_field(name=pixelmon, value="".join(strBiomes), inline=False)
                 current += 1
             else:
                 embeds.append(emb)
@@ -275,7 +275,7 @@ class Biomechecker(commands.Cog):
                 if len(self.amount[biomes]) == 0:
                     strBiomes.append("None \n")
                 strBiomes.append("```")
-                emb.add_field(name=biomes, value=strBiomes, inline=False)
+                emb.add_field(name=biomes, value="".join(strBiomes), inline=False)
                 current += 1
             else:
                 embeds.append(emb)
