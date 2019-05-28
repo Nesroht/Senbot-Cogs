@@ -20,12 +20,17 @@ class Biomechecker(commands.Cog):
         self.biomeamount = {}
         self.config = {}
         self.dataoutPixelmon = {}
+        self.dataoutPixelmonSorted = {}
+        self.poxedex = {}
         self.ignore = ["mushroom_island_shore", "grove", "mutated_cold_taiga", "hell", "visceral_heap", "undergarden", "sky",
                   "phantasmagoric_inferno", "origin_island", "corrupted_sands", "freezing_mountains", "arid_highland",
                   "polar_chasm", "fungi_forest"]
 
         with open(self.pathbase + '/config/BetterSpawnerConfig.json') as f:
             self.config = json.load(f)
+
+        with open(self.pathbase + '/config/Pokedex.json') as f:
+            self.pokedex = json.load(f)
 
         # with open('config/Change.json') as f:
         # change = json.load(f)
@@ -102,8 +107,21 @@ class Biomechecker(commands.Cog):
         with open(self.pathbase + '/Biomes.json', 'w') as out:
             out.write(json.dumps(self.dataout, indent=4, sort_keys=True))
 
+        i = 1
+        for pokemon in self.pokedex:
+            list = self.dataoutPixelmon[pokemon]
+            if list:
+                self.dataoutPixelmonSorted.update({i:{pokemon:list}})
+                i += 1
+            else:
+                self.dataoutPixelmonSorted.update({i:{pokemon:[]}})
+                i += 1
+
         with open(self.pathbase + '/Pixelmon.json', 'w') as out:
             out.write(json.dumps(self.dataoutPixelmon, indent=4, sort_keys=True))
+
+        with open(self.pathbase + '/PixelmonSorted.json', 'w') as out:
+            out.write(json.dumps(self.dataoutPixelmonSorted, indent=4, sort_keys=True))
 
         with open(self.pathbase + '/commandlog.json', 'w') as logout:
             logout.write(json.dumps(self.log, indent=4, sort_keys=True))
@@ -117,13 +135,14 @@ class Biomechecker(commands.Cog):
                 if len(list) <= 8:
                     self.amount.update({biome: list})
 
-        for pixelmon in self.dataoutPixelmon:
-            list = self.dataoutPixelmon[pixelmon]
-            if list:
-                for bi in self.ignore:
-                    if bi in list: list.remove(bi)
-                if len(list) <= 5:
-                    self.biomeamount.update({pixelmon: list})
+        for id in self.dataoutPixelmonSorted:
+            for pixelmon in self.dataoutPixelmonSorted[id]:
+                list = self.dataoutPixelmon[pixelmon]
+                if list:
+                    for bi in self.ignore:
+                        if bi in list: list.remove(bi)
+                    if len(list) <= 5:
+                        self.biomeamount.update({pixelmon: list})
 
         with open(self.pathbase + '/TooFewBiomes.json', 'w') as out:
             out.write(json.dumps(self.amount, indent=4, sort_keys=True))
@@ -161,6 +180,39 @@ class Biomechecker(commands.Cog):
             await menu(ctx, pages=embeds, controls=DEFAULT_CONTROLS, page=0)
         else:
             emb = discord.Embed(title=pixelmon.capitalize() + " can't be found in the pokedex", description="Make sure you spell the name of the pokemon right, and that the pokemon exists")
+            await ctx.send(embed=emb)
+
+    @commands.command()
+    async def pixelmonid(self, ctx, pixelmonid):
+        if pixelmonid in self.dataoutPixelmonSorted:
+            for pixelmon in self.dataoutPixelmonSorted[pixelmonid]:
+                strBiomes = "```"
+                limit = self.limit
+                current = 0
+                embeds = []
+                for biome in self.dataoutPixelmonSorted[pixelmonid][pixelmon]:
+                    if current <= limit:
+                        strBiomes += biome + "\n"
+                        current += 1
+                    else:
+                        emb = discord.Embed(title=pixelmon + " spawns in the following biomes.")
+                        emb.description = strBiomes + "```"
+                        # await ctx.send(embed=emb)
+                        embeds.append(emb)
+                        current = 0
+                        strBiomes = "```"
+                emb = discord.Embed(title=pixelmon + " spawns in the following biomes.")
+                emb.description = strBiomes + "```"
+                embeds.append(emb)
+                i = 1
+                for embed in embeds:
+                    embed.set_footer(text="Page " + str(i) + "/" + str(len(embeds)))
+                    i += 1
+
+                await menu(ctx, pages=embeds, controls=DEFAULT_CONTROLS, page=0)
+        else:
+            emb = discord.Embed(title="Pokemon #" + pixelmonid + " can't be found in the pokedex",
+                                description="Make sure the id of the pokemon exists.")
             await ctx.send(embed=emb)
 
     @commands.command()
