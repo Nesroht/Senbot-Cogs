@@ -135,11 +135,25 @@ class Biomechecker(commands.Cog):
     async def pixelmon(self, ctx, pixelmon):
         if pixelmon.capitalize() in self.dataoutPixelmon:
             strBiomes = "```"
-            emb = discord.Embed(title=pixelmon.capitalize())
+            emb = discord.Embed(title=pixelmon.capitalize() + " spawns in the following biomes.")
             for biome in self.dataoutPixelmon[pixelmon.capitalize()]:
                 strBiomes += biome + "\n"
             emb.description = strBiomes + "```"
             await ctx.send(embed=emb)
         else:
-            emb = discord.Embed(title=pixelmon.capitalize() + "can't be found in the pokedex", description="Make sure you spell the name of the pokemon right, and that the pokemon exists")
+            emb = discord.Embed(title=pixelmon.capitalize() + " can't be found in the pokedex", description="Make sure you spell the name of the pokemon right, and that the pokemon exists")
+            await ctx.send(embed=emb)
+
+    @commands.command()
+    async def biomes(self, ctx, biome):
+        if biome in self.dataout:
+            strPixelmon = "```"
+            emb = discord.Embed(title=biome + " spawns in the following biomes.")
+            for pixelmon in self.dataout[biome]:
+                strPixelmon += pixelmon + "\n"
+            emb.description = strPixelmon + "```"
+            await ctx.send(embed=emb)
+        else:
+            emb = discord.Embed(title=biome + " can't be found in the biome lists",
+                                description="Make sure you spell the name of the biome right, and that the biome exists")
             await ctx.send(embed=emb)
