@@ -34,12 +34,6 @@ class Biomechecker(commands.Cog):
                 # log["log"].append(filename)
                 with open("pixelmon" + "/" + filename) as f:
                     self.data = json.load(f)
-                """if data["id"] in change:
-                    for cbiome in change[data["id"]]:
-                        if cbiome not in data["spawnInfos"][0]["condition"]["stringBiomes"]:
-                            data["spawnInfos"][0]["condition"]["stringBiomes"].append(cbiome)
-                    with open(filename, 'w') as out:
-                        out.write(json.dumps(data, indent=4))"""
                 if len(self.data["spawnInfos"]) <= 1:
                     if "stringBiomes" in self.data["spawnInfos"][0]["condition"]:
                         for biome in self.data["spawnInfos"][0]["condition"]["stringBiomes"]:
