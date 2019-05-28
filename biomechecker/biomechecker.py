@@ -139,19 +139,21 @@ class Biomechecker(commands.Cog):
             limit = self.limit
             current = 0
             embeds = []
-            emb = discord.Embed(title=pixelmon.capitalize() + " spawns in the following biomes.")
             for biome in self.dataoutPixelmon[pixelmon.capitalize()]:
                 if current <= limit:
                     strBiomes += biome + "\n"
                     current += 1
                 else:
+                    emb = discord.Embed(title=pixelmon.capitalize() + " spawns in the following biomes.")
                     emb.description = strBiomes + "```"
                     #await ctx.send(embed=emb)
                     embeds.append(emb)
                     current = 0
                     strBiomes = "```"
+            emb = discord.Embed(title=pixelmon.capitalize() + " spawns in the following biomes.")
             emb.description = strBiomes + "```"
             embeds.append(emb)
+            ctx.send(embeds)
             i = 1
             for embed in embeds:
                 embed.set_footer(text="Page " + str(i) + "/" + str(len(embeds)))
