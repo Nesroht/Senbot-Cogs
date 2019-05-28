@@ -347,7 +347,7 @@ class Biomechecker(commands.Cog):
         if pixelmonid in self.dataoutPixelmonSorted:
             for pixelmon in self.dataoutPixelmonSorted[pixelmonid]:
                 strBiomes = []
-                strBiomes.append("```python")
+                strBiomes.append("```python\n")
                 climit = self.limit
                 current = 0
                 embeds = []
@@ -363,7 +363,7 @@ class Biomechecker(commands.Cog):
                         embeds.append(emb)
                         current = 0
                         strBiomes = []
-                        strBiomes.append("```python")
+                        strBiomes.append("```python\n")
                 emb = discord.Embed(title=pixelmon + " spawns in the following biomes.")
                 strBiomes.append("```")
                 emb.description = "".join(strBiomes)
