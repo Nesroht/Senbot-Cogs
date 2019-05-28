@@ -171,7 +171,7 @@ class Biomechecker(commands.Cog):
             with open(self.pathbase + '/pixelmon/'+pixelmon.title()+'.set.json') as f:
                 self.data = json.load(f)
             for i in self.data["spawnInfos"]:
-                strRare += "```" + str(i["rarity"]) + "\n```"
+                strRare += "```\n" + str(i["rarity"]) + "\n```"
             emb.description = strRare
             await ctx.send(embed=emb)
         elif pixelmon in self.dataoutPixelmon:
@@ -180,7 +180,7 @@ class Biomechecker(commands.Cog):
             with open(self.pathbase + '/pixelmon/'+pixelmon+'.set.json') as f:
                 self.data = json.load(f)
             for i in self.data["spawnInfos"]:
-                strRare += "```" + str(i["rarity"]) + "\n```"
+                strRare += "```\n" + str(i["rarity"]) + "\n```"
             emb.description = strRare
             await ctx.send(embed=emb)
 
@@ -195,7 +195,7 @@ class Biomechecker(commands.Cog):
             emb = discord.Embed(title="The new rarity of " + pixelmon)
             strRare = ""
             for i in self.setrarityDump["spawnInfos"]:
-                strRare += "```" + str(i["rarity"]) + "\n```"
+                strRare += "```\n" + str(i["rarity"]) + "\n```"
             emb.description = strRare
             await ctx.send(embed=emb)
             await ctx.send(file=discord.File(self.pathbase + '/pixelmon/' + pixelmon.title() + '.set.json'))
@@ -209,7 +209,7 @@ class Biomechecker(commands.Cog):
             emb = discord.Embed(title="The new rarity of " + pixelmon)
             strRare = ""
             for i in self.setrarityDump["spawnInfos"]:
-                strRare += "```" + str(i["rarity"]) + "\n```"
+                strRare += "```\n" + str(i["rarity"]) + "\n```"
             emb.description = strRare
             await ctx.send(embed=emb)
             await ctx.send(file=discord.File(self.pathbase + '/pixelmon/' + pixelmon + '.set.json'))
@@ -218,10 +218,11 @@ class Biomechecker(commands.Cog):
     @commands.command()
     async def legendaries(self, ctx):
         emb = discord.Embed(title="These Pixelmon are considered legendary")
-        strLeg = "```"
+        strLeg = []
+        strLeg.append("```\n")
         for i in self.legendaries["legendaries"]:
-            strLeg += i + "\n"
-        strLeg += "```"
+            strLeg.append(i + "\n")
+        strLeg.append("```")
         emb.description = strLeg
         await ctx.send(embed=emb)
 
@@ -237,12 +238,13 @@ class Biomechecker(commands.Cog):
                 emb = discord.Embed(title="These Pixelmon spawn in too few biomes.")
                 noembed = False
             if current <= limit:
-                strBiomes = "```"
+                strBiomes = []
+                strBiomes.append("```\n")
                 for biome in self.biomeamount[pixelmon]:
-                    strBiomes += biome + " \n"
+                    strBiomes.append(biome + " \n")
                 if len(self.biomeamount[pixelmon]) == 0:
-                    strBiomes += "None \n"
-                strBiomes += "```"
+                    strBiomes.append("None \n")
+                strBiomes.append("```")
                 emb.add_field(name=pixelmon, value=strBiomes, inline=False)
                 current += 1
             else:
@@ -266,12 +268,13 @@ class Biomechecker(commands.Cog):
                 emb = discord.Embed(title="These Biomes have too few pixelmon spawning")
                 noembed = False
             if current <= limit:
-                strBiomes = "```"
+                strBiomes = []
+                strBiomes.append("```\n")
                 for biome in self.amount[biomes]:
-                    strBiomes += biome + " \n"
+                    strBiomes.append(biome + " \n")
                 if len(self.amount[biomes]) == 0:
-                    strBiomes += "None \n"
-                strBiomes += "```"
+                    strBiomes.append("None \n")
+                strBiomes.append("```")
                 emb.add_field(name=biomes, value=strBiomes, inline=False)
                 current += 1
             else:
