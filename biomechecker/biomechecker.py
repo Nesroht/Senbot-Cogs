@@ -111,17 +111,15 @@ class Biomechecker(commands.Cog):
             if bi in self.dataout: del self.dataout[bi]
 
         for biome in self.dataout:
-            list = []
             list = self.dataout[biome]
             if list:
                 if len(list) <= 8:
                     self.amount.update({biome: list})
 
         for pixelmon in self.dataoutPixelmon:
-            list = []
             list = self.dataoutPixelmon[pixelmon]
             if list:
-                for bi in ignore:
+                for bi in self.ignore:
                     if bi in list: list.remove(bi)
                 if len(list) <= 5:
                     self.biomeamount.update({pixelmon: list})
@@ -134,5 +132,5 @@ class Biomechecker(commands.Cog):
 
 
     @commands.command()
-    async def pixelmon(self, ctx, *, pixelmon):
-        await ctx.send(self.self.pathbase)
+    async def pixelmon(self, ctx):
+        await ctx.send(self.biomeamount)
