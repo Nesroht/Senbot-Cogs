@@ -184,7 +184,7 @@ class Biomechecker(commands.Cog):
             await ctx.send(embed=emb)
 
     @commands.command()
-    async def pixelmonid(self, ctx, pixelmonid):
+    async def pixelmonid(self, ctx, pixelmonid: int):
         if pixelmonid in self.dataoutPixelmonSorted:
             for pixelmon in self.dataoutPixelmonSorted[pixelmonid]:
                 strBiomes = "```"
