@@ -21,6 +21,7 @@ class Biomechecker(commands.Cog):
         self.config = {}
         self.dataoutPixelmon = {}
         self.dataoutPixelmonSorted = {}
+        self.legendaries = {"legendaries": []}
         self.poxedex = {}
         self.ignore = ["mushroom_island_shore", "grove", "mutated_cold_taiga", "hell", "visceral_heap", "undergarden", "sky",
                   "phantasmagoric_inferno", "origin_island", "corrupted_sands", "freezing_mountains", "arid_highland",
@@ -31,6 +32,13 @@ class Biomechecker(commands.Cog):
 
         with open(self.pathbase + '/config/Pokedex.json') as f:
             self.pokedex = json.load(f)
+
+        for filename in os.listdir(self.pathbase + "/legendaries"):
+            if filename.endswith("set.json"):
+                # log["log"].append(filename)
+                with open(self.pathbase + "/legendaries" + "/" + filename) as f:
+                    self.data = json.load(f)
+                self.legendaries["legendaries"].append(self.data["id"])
 
         # with open('config/Change.json') as f:
         # change = json.load(f)
@@ -138,6 +146,8 @@ class Biomechecker(commands.Cog):
 
         for id in self.dataoutPixelmonSorted:
             for pixelmon in self.dataoutPixelmonSorted[id]:
+                for i in self.legendaries["legendaries"]:
+                    if i in pixelmon: pixelmon.remove(i)
                 list = self.dataoutPixelmonSorted[id][pixelmon]
                 if list:
                     for bi in self.ignore:
@@ -152,6 +162,17 @@ class Biomechecker(commands.Cog):
 
         with open(self.pathbase + '/TooFewBiomes.json', 'w') as out:
             out.write(json.dumps(self.biomeamount, indent=4, sort_keys=True))
+
+    @commands.command()
+    async def legendaries(self, ctx):
+        emb = discord.Embed(title="These Pixelmon are considered legendary")
+        strLeg = "```"
+        for i in self.legendaries["legendaries"]:
+            strLeg += i + "\n"
+        strLeg += "```"
+        emb.description = strLeg
+        await ctx.send(embed=emb)
+
 
     @commands.command()
     async def toofewbiomes(self, ctx):
@@ -184,7 +205,32 @@ class Biomechecker(commands.Cog):
 
     @commands.command()
     async def toofewpixelmon(self, ctx, pixelmon):
-        await ctx.send("working on it")
+        limit = 5
+        current = 0
+        embeds = []
+        noembed = True
+        for biomes in self.amount:
+            if noembed:
+                emb = discord.Embed(title="These Pixelmon spawn in too few biomes.")
+                noembed = False
+            if current <= limit:
+                strBiomes = "```"
+                for biome in self.amount[biomes]:
+                    strBiomes += biome + " \n"
+                if len(self.amount[biomes]) == 0:
+                    strBiomes += "None \n"
+                strBiomes += "```"
+                emb.add_field(name=biomes, value=strBiomes, inline=False)
+                current += 1
+            else:
+                embeds.append(emb)
+                current = 0
+                noembed = True
+        i = 1
+        for embed in embeds:
+            embed.set_footer(text="Page " + str(i) + "/" + str(len(embeds)))
+            i += 1
+        await menu(ctx, pages=embeds, controls=DEFAULT_CONTROLS, page=0)
 
     @commands.command()
     async def pixelmon(self, ctx, pixelmon):
