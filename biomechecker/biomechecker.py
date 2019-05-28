@@ -145,12 +145,52 @@ class Biomechecker(commands.Cog):
                     if len(list) <= 5:
                         self.biomeamount.update({pixelmon: list})
 
-        with open(self.pathbase + '/TooFewBiomes.json', 'w') as out:
+        with open(self.pathbase + '/TooFewPixelmon.json', 'w') as out:
             out.write(json.dumps(self.amount, indent=4, sort_keys=True))
 
-        with open(self.pathbase + '/TooFewPixelmon.json', 'w') as out:
+        with open(self.pathbase + '/TooFewBiomes.json', 'w') as out:
             out.write(json.dumps(self.biomeamount, indent=4, sort_keys=True))
 
+    @commands.command()
+    async def toofewbiomes(self, ctx):
+            strBiomes = "```"
+            limit = 2
+            current = 0
+            embeds = []
+            for pixelmon in self.biomeamount:
+                if noembed:
+                    emb = discord.Embed(title="These Pixelmon spawn in too few biomes.")
+                    noembed = False
+                if current <= limit:
+                    strBiomes = "```"
+                    for biome in self.biomeamount[pixelmon]:
+                        strBiomes += biome + "\n"
+                    strBiomes += "```"
+                    emb.add_field(name=pixelmon, value=strBiomes)
+                    current += 1
+                else:
+                    embeds.append(emb)
+                    current = 0
+                    noembed = True
+            emb = discord.Embed(title=pixelmon.capitalize() + " spawns in the following biomes.")
+            emb.description = strBiomes + "```"
+            embeds.append(emb)
+            i = 1
+            for embed in embeds:
+                embed.set_footer(text="Page " + str(i) + "/" + str(len(embeds)))
+                i += 1
+
+            await
+            menu(ctx, pages=embeds, controls=DEFAULT_CONTROLS, page=0)
+        else:
+            emb = discord.Embed(title=pixelmon.capitalize() + " can't be found in the pokedex",
+                                description="Make sure you spell the name of the pokemon right, and that the pokemon exists")
+            await
+            ctx.send(embed=emb)
+
+    @commands.command()
+    async def toofewpixelmon(self, ctx, pixelmon):
+        await ctx.send("working on it")
 
     @commands.command()
     async def pixelmon(self, ctx, pixelmon):
