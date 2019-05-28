@@ -153,7 +153,7 @@ class Biomechecker(commands.Cog):
 
     @commands.command()
     async def toofewbiomes(self, ctx):
-        limit = 3
+        limit = 5
         current = 0
         embeds = []
         noembed = True
