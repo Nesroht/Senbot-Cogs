@@ -354,6 +354,7 @@ class Biomechecker(commands.Cog):
                 for biome in self.dataoutPixelmonSorted[pixelmonid][pixelmon]:
                     if current <= climit:
                         strBiomes.append(biome + "\n")
+                        await ctx.send("".join(strBiomes))
                         current += 1
                     else:
                         emb = discord.Embed(title=pixelmon + " spawns in the following biomes.")
