@@ -43,7 +43,7 @@ class Biomechecker(commands.Cog):
                                     if ":" in biomes:
                                         dummp, biomes = biomes.split(":")
                                     if biomes in self.dataout:
-                                        self.dataout.update(biome=dataout[biomes].append(data["id"]))
+                                        self.dataout.update(biome=self.dataout[biomes].append(self.data["id"]))
                                     else:
                                         # log["log"].append(biome + " - " + data["id"])
                                         self.dataout.update({biomes: [self.data["id"]]})
