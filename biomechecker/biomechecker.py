@@ -144,6 +144,8 @@ class Biomechecker(commands.Cog):
                         if bi in list: list.remove(bi)
                     if len(list) <= 5:
                         self.biomeamount.update({pixelmon: list})
+                else:
+                    self.biomeamount.update({pixelmon: ["None"]})
 
         with open(self.pathbase + '/TooFewPixelmon.json', 'w') as out:
             out.write(json.dumps(self.amount, indent=4, sort_keys=True))
