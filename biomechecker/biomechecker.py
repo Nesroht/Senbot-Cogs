@@ -352,7 +352,7 @@ class Biomechecker(commands.Cog):
                 embeds = []
                 for biome in self.dataoutPixelmonSorted[pixelmonid][pixelmon]:
                     if current <= climit:
-                        strBiomes = strBiomes + biome + "\n"
+                        strBiomes.append(biome + "\n")
                         await ctx.send(biome)
                         current += 1
                     else:
