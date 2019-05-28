@@ -167,7 +167,9 @@ class Biomechecker(commands.Cog):
     @commands.command()
     async def rarity(self, ctx, pixelmon):
         emb = discord.Embed(title="The rarity of " + pixelmon)
-        strRare = "```" + self.data["rarity"] + "\n```"
+        strRare = ""
+        for i in self.data["spawnInfos"]:
+            strRare += "```" + i["rarity"] + "\n```"
         with open(self.pathbase + '/pixelmon/'+pixelmon.capitalize()+'.set.json') as f:
             self.data = json.load(f)
         emb.description = strRare
