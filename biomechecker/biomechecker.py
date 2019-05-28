@@ -346,25 +346,24 @@ class Biomechecker(commands.Cog):
     async def pixelmonid(self, ctx, pixelmonid: int):
         if pixelmonid in self.dataoutPixelmonSorted:
             for pixelmon in self.dataoutPixelmonSorted[pixelmonid]:
-                strBiomes = "```"
+                strBiomes = []
+                strBiomes.append("```")
                 climit = self.limit
                 current = 0
                 embeds = []
                 for biome in self.dataoutPixelmonSorted[pixelmonid][pixelmon]:
                     if current <= climit:
                         strBiomes.append(biome + "\n")
-                        await ctx.send(biome)
                         current += 1
                     else:
                         emb = discord.Embed(title=pixelmon + " spawns in the following biomes.")
-                        emb.description = strBiomes + "```"
-                        await ctx.send(strBiomes + "```")
+                        emb.description = "".join(strBiomes.append("```"))
                         embeds.append(emb)
                         current = 0
                         strBiomes = "```"
                 emb = discord.Embed(title=pixelmon + " spawns in the following biomes.")
-                emb.description = strBiomes + "```"
-                await ctx.send(strBiomes + "```")
+                emb.description = "".join(strBiomes.append("```"))
+                await ctx.send("".join(strBiomes.append("```")))
                 embeds.append(emb)
                 i = 1
                 for embed in embeds:
