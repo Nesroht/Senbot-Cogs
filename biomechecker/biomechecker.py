@@ -148,7 +148,7 @@ class Biomechecker(commands.Cog):
     async def biomes(self, ctx, biome):
         if biome in self.dataout:
             strPixelmon = "```"
-            emb = discord.Embed(title=biome + " spawns in the following biomes.")
+            emb = discord.Embed(title=biome + " spawns the following Pixelmon.")
             for pixelmon in self.dataout[biome]:
                 strPixelmon += pixelmon + "\n"
             emb.description = strPixelmon + "```"
