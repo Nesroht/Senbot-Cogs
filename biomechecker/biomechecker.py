@@ -11,7 +11,7 @@ class Biomechecker(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.pathbase = cog_data_path(cog_instance=self, raw_name="biomechecker")
+        self.pathbase = cog_data_path(self, "Biomechecker")
         print(pathbase)
         """self.dataout = {}
         self.log = {'log': []}
