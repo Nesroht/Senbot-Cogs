@@ -146,7 +146,7 @@ class Biomechecker(commands.Cog):
                     current += 1
                 else:
                     emb.description = strBiomes + "```"
-                    await ctx.send(embed=emb)
+                    #await ctx.send(embed=emb)
                     embeds.append(emb)
                     current = 0
                     strBiomes = "```"
@@ -157,7 +157,7 @@ class Biomechecker(commands.Cog):
                 embed.set_footer(text="Page " + str(i) + "/" + str(len(embeds)))
                 i += 1
 
-            await menu(ctx, embeds, DEFAULT_CONTROLS)
+            await menu(ctx, pages=embeds, controls=DEFAULT_CONTROLS, page=1)
         else:
             emb = discord.Embed(title=pixelmon.capitalize() + " can't be found in the pokedex", description="Make sure you spell the name of the pokemon right, and that the pokemon exists")
             await ctx.send(embed=emb)
