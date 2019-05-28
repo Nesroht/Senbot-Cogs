@@ -12,7 +12,6 @@ class Biomechecker(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.pathbase = cog_data_path(self, "Biomechecker")
-        print(pathbase)
         """self.dataout = {}
         self.log = {'log': []}
         self.amount = {}
@@ -135,4 +134,4 @@ class Biomechecker(commands.Cog):
 
     @commands.command()
     async def pixelmon(self, ctx, *, pixelmon):
-        ctx.send(self.biomeamount)
+        ctx.send(self.pathbase)
