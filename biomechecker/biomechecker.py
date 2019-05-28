@@ -1,4 +1,6 @@
 import discord
+import json
+import os
 from redbot.core import checks, Config, commands
 from redbot.core.utils.chat_formatting import pagify
 from redbot.core.utils.menus import menu, DEFAULT_CONTROLS
@@ -11,8 +13,7 @@ class Biomechecker(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.pathbase = str(cog_data_path(self, "Biomechecker"))
-        self.dataout = {}
+        self.pathbase = str(cog_data_path(self, "Biomechecker")); self.dataout = {}
         self.log = {'log': []}
         self.amount = {}
         self.biomeamount = {}
