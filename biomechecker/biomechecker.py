@@ -234,7 +234,7 @@ class Biomechecker(commands.Cog):
         embeds = []
         noembed = True
         if len(self.biomeamount) > 30:
-            await ctx.send(embed=discord.Embed(title="Too many biomes", description="There are too many Pixelmon with less than " + str(limit) + " biomes they can spawn in, so sending a .json file instead."))
+            await ctx.send(embed=discord.Embed(title="Too many Pixelmon to list", description="There are too many Pixelmon with less than 5 biomes they can spawn in, so sending a .json file instead."))
             await ctx.send(file=discord.File(self.pathbase + '/' + 'TooFewBiomes.json'))
         else:
             for pixelmon in self.biomeamount:
@@ -268,7 +268,7 @@ class Biomechecker(commands.Cog):
         embeds = []
         noembed = True
         if len(self.amount) > 30:
-            await ctx.send(embed=discord.Embed(title="Too many biomes", description="There are too many Pixelmon with less than " + str(limit) + " biomes they can spawn in, so sending a .json file instead."))
+            await ctx.send(embed=discord.Embed(title="Too many Biomes to list", description="There are too many biomes with less than 8 pixelmon that can spawn in them, so sending a .json file instead."))
             await ctx.send(file=discord.File(self.pathbase + '/' + 'TooFewBiomes.json'))
         else:
             for biomes in self.amount:
