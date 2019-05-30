@@ -1,6 +1,7 @@
 import discord
 import json
 import os
+import copy
 from redbot.core import checks, Config, commands
 from redbot.core.utils.chat_formatting import pagify
 from redbot.core.utils.menus import menu, DEFAULT_CONTROLS
@@ -13,7 +14,7 @@ class Biomechecker(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.pathbase = str(cog_data_path(self, "Biomechecker"));
+        self.pathbase = str(cog_data_path(self, "Biomechecker"))
         self.dataout = {}
         self.limit = 20
         self.log = {'log': []}
@@ -149,7 +150,7 @@ class Biomechecker(commands.Cog):
                 if len(list) <= 8:
                     self.amount.update({biome: list})
 
-        for id in self.dataoutPixelmonSorted:
+        for id in copy.deepcopy(self.dataoutPixelmonSorted):
             for pixelmon in self.dataoutPixelmonSorted[id]:
                 list = self.dataoutPixelmonSorted[id][pixelmon]
                 if list:
@@ -440,3 +441,17 @@ class Biomechecker(commands.Cog):
             emb = discord.Embed(title=biome + " can't be found in the biome lists",
                                 description="Make sure you spell the name of the biome right, and that the biome exists")
             await ctx.send(embed=emb)
+
+def write_id(user_id, date, weekend):
+    with open("upvotes.json") as i:
+        datain = json.load(i)
+    datain.update({
+        str(user_id): {
+            "voted": True,
+            "expiry": date,
+            "weekend": weekend,
+        }
+    })
+    with open("upvotes.json") as f:
+        f.write(json.dumps(datain, sort_keys=False, indent=4))
+        f.close()
