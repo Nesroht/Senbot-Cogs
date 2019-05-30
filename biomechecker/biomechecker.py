@@ -150,9 +150,10 @@ class Biomechecker(commands.Cog):
                 if len(list) <= 8:
                     self.amount.update({biome: list})
 
-        for id in copy.deepcopy(self.dataoutPixelmonSorted):
-            for pixelmon in self.dataoutPixelmonSorted[id]:
-                list = self.dataoutPixelmonSorted[id][pixelmon]
+        checker = copy.deepcopy(self.dataoutPixelmonSorted)
+        for id in checker:
+            for pixelmon in checker[id]:
+                list = checker[id][pixelmon]
                 if list:
                     for bi in self.ignore:
                         if bi in list: list.remove(bi)
