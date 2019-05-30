@@ -141,11 +141,12 @@ class Biomechecker(commands.Cog):
         with open(self.pathbase + '/commandlog.json', 'w') as logout:
             logout.write(json.dumps(self.log, indent=4, sort_keys=True))
 
+        dataoutchecker = copy.deepcopy(self.dataout)
         for bi in self.ignore:
-            if bi in self.dataout: del self.dataout[bi]
+            if bi in dataoutchecker: del dataoutchecker[bi]
 
-        for biome in self.dataout:
-            list = self.dataout[biome]
+        for biome in dataoutchecker:
+            list = dataoutchecker[biome]
             if list:
                 if len(list) <= 8:
                     self.amount.update({biome: list})
