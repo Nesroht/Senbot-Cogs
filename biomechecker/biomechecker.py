@@ -185,7 +185,7 @@ class Biomechecker(commands.Cog):
                     i += 1
             else:
                 for location in self.dataoutPixelmon[pokemon]:
-                    self.dataoutPixelmonSorted.update({i:{pokemon:{location:["Nowhere"]}}})
+                    self.dataoutPixelmonSorted.update({i:{pokemon:{"Nowhere":["Nowhere"]}}})
                 i += 1
 
 
