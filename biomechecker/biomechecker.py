@@ -492,7 +492,7 @@ class Biomechecker(commands.Cog):
                         strPixelmon.append("```\n")
                         noembed = False
                     if ecurrent < elimit:
-                        if current <= limit and current < len(self.dataout[biome]):
+                        if current <= limit and current < len(self.dataout[location][biome]):
                             strPixelmon.append(pixelmon + "\n")
                             current += 1
                         else:
