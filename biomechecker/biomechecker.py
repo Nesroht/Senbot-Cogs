@@ -377,67 +377,68 @@ class Biomechecker(commands.Cog):
     @commands.command()
     async def pixelmon(self, ctx, pixelmon):
         """Returns the biomes the given pixelmon can spawn in"""
-        if pixelmon.title() in self.dataoutPixelmon:
-            strBiomes = []
-            strBiomes.append("```\n")
-            limit = self.limit
-            current = 0
-            embeds = []
-            for location in self.dataoutPixelmon[pixelmon.title()]:
-                for biome in self.dataoutPixelmon[pixelmon.title()][location]:
-                    if current <= limit:
-                        strBiomes.append(location + " in " + biome + "\n")
-                        current += 1
-                    else:
-                        emb = discord.Embed(title=pixelmon.title() + " spawns in the following locations.")
-                        strBiomes.append("```")
-                        emb.description = "".join(strBiomes)
-                        embeds.append(emb)
-                        current = 0
-                        strBiomes = []
-                        strBiomes.append("```\n")
-            emb = discord.Embed(title=pixelmon.title() + " spawns in the following locations.")
-            strBiomes.append("```")
-            emb.description = "".join(strBiomes)
-            embeds.append(emb)
-            i = 1
-            for embed in embeds:
-                embed.set_footer(text="Page " + str(i) + "/" + str(len(embeds)))
-                i += 1
+        for id in self.dataoutPixelmonSorted:
+            if pixelmon.title() in self.dataoutPixelmonSorted[id]:
+                strBiomes = []
+                strBiomes.append("```\n")
+                limit = self.limit
+                current = 0
+                embeds = []
+                for location in self.dataoutPixelmonSorted[id][pixelmon.title()]:
+                    for biome in self.dataoutPixelmonSorted[id][pixelmon.title()][location]:
+                        if current <= limit:
+                            strBiomes.append(location + " in " + biome + "\n")
+                            current += 1
+                        else:
+                            emb = discord.Embed(title=pixelmon.title() + " spawns in the following locations.")
+                            strBiomes.append("```")
+                            emb.description = "".join(strBiomes)
+                            embeds.append(emb)
+                            current = 0
+                            strBiomes = []
+                            strBiomes.append("```\n")
+                emb = discord.Embed(title=pixelmon.title() + " spawns in the following locations.")
+                strBiomes.append("```")
+                emb.description = "".join(strBiomes)
+                embeds.append(emb)
+                i = 1
+                for embed in embeds:
+                    embed.set_footer(text="Page " + str(i) + "/" + str(len(embeds)))
+                    i += 1
 
-            await menu(ctx, pages=embeds, controls=DEFAULT_CONTROLS, page=0)
-        elif pixelmon in self.dataoutPixelmon:
-            strBiomes = []
-            strBiomes.append("```\n")
-            limit = self.limit
-            current = 0
-            embeds = []
-            for location in self.dataoutPixelmon[pixelmon]:
-                for biome in self.dataoutPixelmon[pixelmon][location]:
-                    if current <= limit:
-                        strBiomes.append(location + " in " + biome + "\n")
-                        current += 1
-                    else:
-                        emb = discord.Embed(title=pixelmon + " spawns in the following locations.")
-                        strBiomes.append("```")
-                        emb.description = "".join(strBiomes)
-                        embeds.append(emb)
-                        current = 0
-                        strBiomes = []
-                        strBiomes.append("```\n")
-            emb = discord.Embed(title=pixelmon + " spawns in the following locations.")
-            strBiomes.append("```")
-            emb.description = "".join(strBiomes)
-            embeds.append(emb)
-            i = 1
-            for embed in embeds:
-                embed.set_footer(text="Page " + str(i) + "/" + str(len(embeds)))
-                i += 1
+                await menu(ctx, pages=embeds, controls=DEFAULT_CONTROLS, page=0)
+            elif pixelmon in self.dataoutPixelmonSorted[id]:
+                strBiomes = []
+                strBiomes.append("```\n")
+                limit = self.limit
+                current = 0
+                embeds = []
+                for location in self.dataoutPixelmonSorted[id][pixelmon]:
+                    for biome in self.dataoutPixelmonSorted[id][pixelmon][location]:
+                        if current <= limit:
+                            strBiomes.append(location + " in " + biome + "\n")
+                            current += 1
+                        else:
+                            emb = discord.Embed(title=pixelmon + " spawns in the following locations.")
+                            strBiomes.append("```")
+                            emb.description = "".join(strBiomes)
+                            embeds.append(emb)
+                            current = 0
+                            strBiomes = []
+                            strBiomes.append("```\n")
+                emb = discord.Embed(title=pixelmon + " spawns in the following locations.")
+                strBiomes.append("```")
+                emb.description = "".join(strBiomes)
+                embeds.append(emb)
+                i = 1
+                for embed in embeds:
+                    embed.set_footer(text="Page " + str(i) + "/" + str(len(embeds)))
+                    i += 1
 
-            await menu(ctx, pages=embeds, controls=DEFAULT_CONTROLS, page=0)
-        else:
-            emb = discord.Embed(title=pixelmon.title() + " can't be found in the pokedex", description="Make sure you spell the name of the pokemon right, and that the pokemon exists")
-            await ctx.send(embed=emb)
+                await menu(ctx, pages=embeds, controls=DEFAULT_CONTROLS, page=0)
+            else:
+                emb = discord.Embed(title=pixelmon.title() + " can't be found in the pokedex", description="Make sure you spell the name of the pokemon right, and that the pokemon exists")
+                await ctx.send(embed=emb)
 
     @commands.command()
     async def pixelmonid(self, ctx, pixelmonid: int):
