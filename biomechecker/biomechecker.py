@@ -135,7 +135,10 @@ class Biomechecker(commands.Cog):
                         elif len(test["stringLocationTypes"]) >= 1:
                             for location in test["stringLocationTypes"]:
                                 if location in self.dataout:
-                                    self.dataout[location].update(biome=self.dataout[location][location].append(self.data["id"]))
+                                    if location in self.dataout[location]:
+                                        self.dataout[location].update(biome=self.dataout[location][location].append(self.data["id"]))
+                                    else:
+                                        self.dataout[location].update({location: [self.data["id"]]})
                                 else:
                                     self.dataout.update({location: {location: [self.data["id"]]}})
                                 if self.data["id"] in self.dataoutPixelmon:
