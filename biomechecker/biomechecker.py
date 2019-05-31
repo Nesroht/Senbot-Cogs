@@ -183,10 +183,11 @@ class Biomechecker(commands.Cog):
                         if list2:
                             self.dataoutPixelmonSorted.update({i:{pokemon:{location:list2}}})
                     i += 1
-                else:
-                    for location in self.dataoutPixelmon[pokemon]:
-                        self.dataoutPixelmonSorted.update({i:{pokemon:{location:["Nowhere"]}}})
-                    i += 1
+            else:
+                for location in self.dataoutPixelmon[pokemon]:
+                    self.dataoutPixelmonSorted.update({i:{pokemon:{location:["Nowhere"]}}})
+                i += 1
+
 
         with open(self.pathbase + '/Pixelmon.json', 'w') as out:
             out.write(json.dumps(self.dataoutPixelmon, indent=4, sort_keys=True))
