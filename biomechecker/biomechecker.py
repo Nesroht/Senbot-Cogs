@@ -488,7 +488,7 @@ class Biomechecker(commands.Cog):
         #pprint(self.dataout)
         strPixelmon = []
         limit = self.limit
-        elimit = 3
+        elimit = 2
         embeds = []
         noembed = True
         ecurrent = 0
@@ -514,6 +514,8 @@ class Biomechecker(commands.Cog):
                                 acurrent += 1
                             else:
                                 strPixelmon.append(pixelmon + "\n")
+                                current += 1
+                                acurrent += 1
                                 print("added to field")
                                 strPixelmon.append("```")
                                 emb.add_field(name=location, value="".join(strPixelmon))
@@ -523,6 +525,8 @@ class Biomechecker(commands.Cog):
                                 current = 0
                         else:
                             strPixelmon.append(pixelmon + "\n")
+                            current += 1
+                            acurrent += 1
                             print("added to field")
                             strPixelmon.append("```")
                             emb.add_field(name=location, value="".join(strPixelmon))
@@ -532,6 +536,8 @@ class Biomechecker(commands.Cog):
                             current = 0
                     else:
                         strPixelmon.append(pixelmon + "\n")
+                        current += 1
+                        acurrent += 1
                         print("added to field")
                         strPixelmon.append("```")
                         emb.add_field(name=location, value="".join(strPixelmon))
