@@ -158,7 +158,7 @@ class Biomechecker(commands.Cog):
         for pokemon in self.pokedex:
             if pokemon in self.dataoutPixelmon:
                 list = self.dataoutPixelmon[pokemon]
-                print(list)
+                print(self.dataoutPixelmon)
                 if list:
                     for location in list:
                         print(self.dataoutPixelmon[pokemon][0])
