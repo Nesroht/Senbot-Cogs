@@ -484,12 +484,14 @@ class Biomechecker(commands.Cog):
         strPixelmon = []
         limit = self.limit
         elimit = 3
-        current = 0
         embeds = []
         noembed = True
         ecurrent = 0
         biomenotfound = True
         for location in self.dataout:
+            current = 0
+            strPixelmon = []
+            strPixelmon.append("```\n")
             if biome in self.dataout[location]:
                 biomenotfound = False
                 for pixelmon in self.dataout[location][biome]:
