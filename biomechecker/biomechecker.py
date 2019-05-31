@@ -477,21 +477,23 @@ class Biomechecker(commands.Cog):
     async def biomes(self, ctx, biome):
         """Returns the pixelmon that can spawn in a specific biome, needs properly formatted biome name, so find it with [p]pixelmon first"""
         #pprint(self.dataout)
+        strPixelmon = []
+        limit = self.limit
+        elimit = 3
+        current = 0
+        embeds = []
+        noembed = True
+        ecurrent = 0
+        biomenotfound = True
         for location in self.dataout:
             if biome in self.dataout[location]:
-                strPixelmon = []
-                limit = self.limit
-                elimit = 3
-                current = 0
-                embeds = []
-                noembed = True
-                ecurrent = 0
+                biomenotfound = False
                 for pixelmon in self.dataout[location][biome]:
                     if noembed:
                         emb = discord.Embed(title=biome + " spawns the following Pixelmon in the following locations.")
                         strPixelmon.append("```\n")
                         noembed = False
-                    if ecurrent < len(self.dataout[location]):
+                    if ecurrent < elimit:
                         if current <= limit and current < len(self.dataout[location][biome]):
                             #print(pixelmon)
                             strPixelmon.append(pixelmon + "\n")
@@ -501,6 +503,7 @@ class Biomechecker(commands.Cog):
                             strPixelmon.append("```")
                             emb.add_field(name=location, value="".join(strPixelmon))
                             strPixelmon = []
+                            strPixelmon.append("```\n")
                             ecurrent += 1
                             current = 0
                     else:
@@ -508,14 +511,17 @@ class Biomechecker(commands.Cog):
                         current = 0
                         ecurrent = 0
                         noembed = True
-                i = 1
                 if noembed == False:
                     embeds.append(emb)
-                for embed in embeds:
-                    embed.set_footer(text="Page " + str(i) + "/" + str(len(embeds)))
-                    i += 1
-                await menu(ctx, pages=embeds, controls=DEFAULT_CONTROLS, page=0)
             else:
-                emb = discord.Embed(title=biome + " can't be found in the biome lists",
-                                    description="Make sure you spell the name of the biome right, and that the biome exists")
-                await ctx.send(embed=emb)
+                pass
+        if biomenotfound:
+            emb = discord.Embed(title=biome + " can't be found in the biome lists",
+                                description="Make sure you spell the name of the biome right, and that the biome exists")
+            await ctx.send(embed=emb)
+        else:
+            i = 1
+            for embed in embeds:
+                embed.set_footer(text="Page " + str(i) + "/" + str(len(embeds)))
+                i += 1
+            await menu(ctx, pages=embeds, controls=DEFAULT_CONTROLS, page=0)
