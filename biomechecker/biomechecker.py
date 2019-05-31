@@ -2,7 +2,7 @@ import discord
 import json
 import os
 import copy
-import pprint
+from pprint import pprint
 from redbot.core import checks, Config, commands
 from redbot.core.utils.chat_formatting import pagify
 from redbot.core.utils.menus import menu, DEFAULT_CONTROLS
