@@ -496,6 +496,7 @@ class Biomechecker(commands.Cog):
                 strPixelmon.append("```\n")
                 biomenotfound = False
                 for pixelmon in self.dataout[location][biome]:
+                    print(pixelmon)
                     if noembed:
                         emb = discord.Embed(title=biome + " spawns the following Pixelmon in the following locations.")
                         strPixelmon.append("```\n")
