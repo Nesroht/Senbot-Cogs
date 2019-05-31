@@ -493,13 +493,14 @@ class Biomechecker(commands.Cog):
                         noembed = False
                     if ecurrent < elimit:
                         if current <= limit and current < len(self.dataout[location][biome]):
-                            print(pixelmon)
+                            #print(pixelmon)
                             strPixelmon.append(pixelmon + "\n")
                             current += 1
                         else:
                             print("added to field")
                             strPixelmon.append("```")
                             emb.add_field(name=location, value="".join(strPixelmon))
+                            strPixelmon = []
                             ecurrent += 1
                     else:
                         embeds.append(emb)
