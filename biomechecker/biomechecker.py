@@ -210,7 +210,7 @@ class Biomechecker(commands.Cog):
         checker = copy.deepcopy(self.dataoutPixelmonSorted)
         for id in checker:
             for pixelmon in checker[id]:
-                for location in checker[id]:
+                for location in checker[id][pixelmon]:
                     pprint(str(id) + " - " + pixelmon + " - " + location)
                     list = checker[id][pixelmon][location]
                     if list:
