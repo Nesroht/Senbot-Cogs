@@ -66,7 +66,8 @@ class Biomechecker(commands.Cog):
                                             dummp, biomes = biomes.split(":")
                                         if location in self.dataout:
                                             if biomes in self.dataout[location]:
-                                                self.dataout[location].update(biome=self.dataout[location][biomes].append(self.data["id"]))
+                                                if self.data["id"] not in self.dataout[location][biomes]:
+                                                    self.dataout[location].update(biome=self.dataout[location][biomes].append(self.data["id"]))
                                             else:
                                                 self.dataout[location].update({biomes: [self.data["id"]]})
                                         else:
@@ -84,7 +85,8 @@ class Biomechecker(commands.Cog):
                                         dummp, biome = biome.split(":")
                                     if location in self.dataout:
                                         if biome in self.dataout[location]:
-                                            self.dataout[location].update(biome=self.dataout[location][biome].append(self.data["id"]))
+                                            if self.data["id"] not in self.dataout[location][biome]:
+                                                self.dataout[location].update(biome=self.dataout[location][biome].append(self.data["id"]))
                                         else:
                                             self.dataout[location].update({biome: [self.data["id"]]})
                                     else:
@@ -111,7 +113,8 @@ class Biomechecker(commands.Cog):
                                                 dummp, biomes = biomes.split(":")
                                             if location in self.dataout:
                                                 if biomes in self.dataout[location]:
-                                                    self.dataout[location].update(biome=self.dataout[location][biomes].append(self.data["id"]))
+                                                    if self.data["id"] not in self.dataout[location][biomes]:
+                                                        self.dataout[location].update(biome=self.dataout[location][biomes].append(self.data["id"]))
                                                 else:
                                                     # log["log"].append(biome + " - " + data["id"])
                                                     self.dataout[location].update({biomes: [self.data["id"]]})
@@ -129,8 +132,9 @@ class Biomechecker(commands.Cog):
                                             dummp, biome = biome.split(":")
                                         if location in self.dataout:
                                             if biome in self.dataout[location]:
-                                                self.dataout[location].update(
-                                                    biome=self.dataout[location][biome].append(self.data["id"]))
+                                                if self.data["id"] not in self.dataout[location][biome]:
+                                                    self.dataout[location].update(
+                                                        biome=self.dataout[location][biome].append(self.data["id"]))
                                             else:
                                                 # log["log"].append(biome + " - " + data["id"])
                                                 self.dataout[location].update({biome: [self.data["id"]]})
