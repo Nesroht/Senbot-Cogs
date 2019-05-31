@@ -119,16 +119,16 @@ class Biomechecker(commands.Cog):
                                                     biome=self.dataout[location][biome].append(self.data["id"]))
                                             else:
                                                 # log["log"].append(biome + " - " + data["id"])
-                                                self.dataout[location].update({biomes: [self.data["id"]]})
+                                                self.dataout[location].update({biome: [self.data["id"]]})
                                         else:
-                                            self.dataout.update({location: {biomes: [self.data["id"]]}})
+                                            self.dataout.update({location: {biome: [self.data["id"]]}})
                                             if self.data["id"] in self.dataoutPixelmon:
                                                 if location in self.dataoutPixelmon[self.data["id"]]:
-                                                    self.dataoutPixelmon[self.data["id"]].update(location=self.dataoutPixelmon[self.data["id"]][location].append(biomes))
+                                                    self.dataoutPixelmon[self.data["id"]].update(location=self.dataoutPixelmon[self.data["id"]][location].append(biome))
                                                 else:
-                                                    self.dataoutPixelmon[self.data["id"]].update({location: [biomes]})
+                                                    self.dataoutPixelmon[self.data["id"]].update({location: [biome]})
                                             else:
-                                                self.dataoutPixelmon.update({self.data["id"]: {location: [biomes]}})
+                                                self.dataoutPixelmon.update({self.data["id"]: {location: [biome]}})
                         elif len(test["stringLocationTypes"]) >= 1:
                             for location in test["stringLocationTypes"]:
                                 if location in self.dataout:
