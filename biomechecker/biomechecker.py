@@ -182,17 +182,16 @@ class Biomechecker(commands.Cog):
                         pprint(self.dataoutPixelmon[pokemon][location])
                         list2 = self.dataoutPixelmon[pokemon][location]
                         if list2:
-                            for f in self.dataoutPixelmonSorted:
-                                if i in self.dataoutPixelmonSorted:
-                                    if pokemon in self.dataoutPixelmonSorted[f]:
-                                        if location in self.dataoutPixelmonSorted[f][pokemon]:
-                                            self.dataoutPixelmonSorted[f][pokemon][location].append(list2)
-                                        else:
-                                            self.dataoutPixelmonSorted[f][pokemon].update({location: list2})
+                            if i in self.dataoutPixelmonSorted:
+                                if pokemon in self.dataoutPixelmonSorted[i]:
+                                    if location in self.dataoutPixelmonSorted[i][pokemon]:
+                                        self.dataoutPixelmonSorted[i][pokemon][location].append(list2)
                                     else:
-                                        self.dataoutPixelmonSorted[i].update({pokemon: {location: list2}})
+                                        self.dataoutPixelmonSorted[i][pokemon].update({location: list2})
                                 else:
-                                    self.dataoutPixelmonSorted.update({i: {pokemon: {location: list2}}})
+                                    self.dataoutPixelmonSorted[i].update({pokemon: {location: list2}})
+                            else:
+                                self.dataoutPixelmonSorted.update({i: {pokemon: {location: list2}}})
 
 
 
