@@ -489,10 +489,11 @@ class Biomechecker(commands.Cog):
         ecurrent = 0
         biomenotfound = True
         for location in self.dataout:
-            current = 0
-            strPixelmon = []
-            strPixelmon.append("```\n")
             if biome in self.dataout[location]:
+                current = 0
+                acurrent = 0
+                strPixelmon = []
+                strPixelmon.append("```\n")
                 biomenotfound = False
                 for pixelmon in self.dataout[location][biome]:
                     if noembed:
@@ -500,10 +501,11 @@ class Biomechecker(commands.Cog):
                         strPixelmon.append("```\n")
                         noembed = False
                     if ecurrent < elimit:
-                        if (current <= limit) and (current < len(self.dataout[location][biome])):
+                        if (current <= limit) and (acurrent < len(self.dataout[location][biome])):
                             #print(pixelmon)
                             strPixelmon.append(pixelmon + "\n")
                             current += 1
+                            acurrent += 1
                         else:
                             print("added to field")
                             strPixelmon.append("```")
