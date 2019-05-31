@@ -498,7 +498,7 @@ class Biomechecker(commands.Cog):
                         strPixelmon.append("```\n")
                         noembed = False
                     if ecurrent < elimit:
-                        if current <= limit and current < len(self.dataout[location][biome]):
+                        if (current <= limit) and (current < len(self.dataout[location][biome])):
                             #print(pixelmon)
                             strPixelmon.append(pixelmon + "\n")
                             current += 1
@@ -515,10 +515,10 @@ class Biomechecker(commands.Cog):
                         current = 0
                         ecurrent = 0
                         noembed = True
-                if noembed == False:
-                    embeds.append(emb)
             else:
                 pass
+        if noembed == False:
+            embeds.append(emb)
         if biomenotfound:
             emb = discord.Embed(title=biome + " can't be found in the biome lists",
                                 description="Make sure you spell the name of the biome right, and that the biome exists")
