@@ -74,9 +74,6 @@ class Biomechecker(commands.Cog):
                                             self.dataout.update({location: {biomes: [self.data["id"]]}})
                                         if self.data["id"] in self.dataoutPixelmon:
                                             if location in self.dataoutPixelmon[self.data["id"]]:
-                                                print(self.data["id"])
-                                                print(location)
-                                                print(biomes)
                                                 self.dataoutPixelmon[self.data["id"]][location].append(biomes)
                                             else:
                                                 self.dataoutPixelmon[self.data["id"]].update({location: [biomes]})
@@ -95,7 +92,7 @@ class Biomechecker(commands.Cog):
                                         self.dataout.update({location: {biome: [self.data["id"]]}})
                                     if self.data["id"] in self.dataoutPixelmon:
                                         if location in self.dataoutPixelmon[self.data["id"]]:
-                                            self.dataoutPixelmon[self.data["id"]].update({location:self.dataoutPixelmon[self.data["id"]][location].append(biome)})
+                                            self.dataoutPixelmon[self.data["id"]][location].append(biome)
                                         else:
                                             self.dataoutPixelmon[self.data["id"]].update({location: [biome]})
                                     else:
