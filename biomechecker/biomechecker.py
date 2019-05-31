@@ -178,7 +178,7 @@ class Biomechecker(commands.Cog):
                         list2 = self.dataoutPixelmon[pokemon][location]
                         if list2:
                             self.dataoutPixelmonSorted.update({i:{pokemon:{location:list2}}})
-                        i += 1
+                    i += 1
                 else:
                     for location in list:
                         self.dataoutPixelmonSorted.update({i:{pokemon:{location:[]}}})
@@ -491,7 +491,7 @@ class Biomechecker(commands.Cog):
                 for pixelmon in self.dataout[location][biome]:
                     if noembed:
                         emb = discord.Embed(title=biome + " spawns the following Pixelmon in the following locations.")
-                        strBiomes.append("```\n")
+                        strPixelmon.append("```\n")
                         noembed = False
                     if ecurrent < elimit:
                         if current <= limit and current < len(self.dataout[biome]):
