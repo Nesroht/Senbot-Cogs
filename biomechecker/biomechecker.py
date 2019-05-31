@@ -480,12 +480,10 @@ class Biomechecker(commands.Cog):
         for location in self.dataout:
             if biome in self.dataout[location]:
                 strPixelmon = []
-                strPixelmon.append("```\n")
                 limit = self.limit
                 elimit = 3
                 current = 0
                 embeds = []
-                strPixelmon = []
                 noembed = True
                 ecurrent = 0
                 for pixelmon in self.dataout[location][biome]:
@@ -498,7 +496,7 @@ class Biomechecker(commands.Cog):
                             strPixelmon.append(pixelmon + "\n")
                             current += 1
                         else:
-                            strBiomes.append("```")
+                            strPixelmon.append("```")
                             emb.add_field(name=location, value="".join(strPixelmon))
                     else:
                         embeds.append(emb)
