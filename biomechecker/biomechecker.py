@@ -211,7 +211,7 @@ class Biomechecker(commands.Cog):
         for id in checker:
             for pixelmon in checker[id]:
                 for location in checker[id][pixelmon]:
-                    pprint(str(id) + " - " + pixelmon + " - " + location)
+                    #pprint(str(id) + " - " + pixelmon + " - " + location)
                     list = checker[id][pixelmon][location]
                     if list:
                         for bi in self.ignore:
@@ -339,7 +339,6 @@ class Biomechecker(commands.Cog):
         current = 0
         embeds = []
         noembed = True
-        strBiomes = []
         if len(self.amount) > 30:
             await ctx.send(embed=discord.Embed(title="Too many Biomes to list", description="There are too many biomes with less than 8 pixelmon that can spawn in them, so sending a .json file instead."))
             await ctx.send(file=discord.File(self.pathbase + '/' + 'TooFewBiomes.json'))
@@ -349,11 +348,11 @@ class Biomechecker(commands.Cog):
                     if noembed:
                         emb = discord.Embed(title="These Biomes have too few pixelmon spawning")
                         noembed = False
-                        strBiomes = []
                     if current <= limit:
-                        strBiomes.append("```\n")
-                        for biome in self.amount[location][biomes]:
-                            strBiomes.append(biome + " \n")
+                        strPixel = []
+                        strPixel.append("```\n")
+                        for pixelmon in self.amount[location][biomes]:
+                            strBiomes.append(pixelmon + " \n")
                         if len(self.amount[location][biomes]) == 0:
                             strBiomes.append("None \n")
                         strBiomes.append("```")
@@ -477,6 +476,7 @@ class Biomechecker(commands.Cog):
     @commands.command()
     async def biomes(self, ctx, biome):
         """Returns the pixelmon that can spawn in a specific biome, needs properly formatted biome name, so find it with [p]pixelmon first"""
+        pprint(self.dataout)
         for location in self.dataout:
             if biome in self.dataout[location]:
                 strPixelmon = []
