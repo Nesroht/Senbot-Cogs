@@ -132,22 +132,23 @@ class Biomechecker(commands.Cog):
                                                     self.dataoutPixelmon[self.data["id"]].update({location: [biomes]})
                                             else:
                                                 self.dataoutPixelmon.update({self.data["id"]: {location: [biomes]}})
-                        elif len(test["stringLocationTypes"]) >= 1:
-                            for location in test["stringLocationTypes"]:
-                                if location in self.dataout:
-                                    self.dataout[location].update(biome=self.dataout[location][location].append(self.data["id"]))
-                                else:
-                                    self.dataout[location].update({location: [self.data["id"]]})
-                                if self.data["id"] in self.dataoutPixelmon:
-                                    if location in self.dataoutPixelmon[self.data["id"]]:
-                                        self.dataoutPixelmon[self.data["id"]].update(
-                                            location=self.dataoutPixelmon[self.data["id"]][location].append(location))
-                                    else:
-                                        self.dataoutPixelmon[self.data["id"]].update({location: [location]})
-                                else:
-                                    self.dataoutPixelmon.update({self.data["id"]: {location: [location]}})
                         else:
-                            pass
+                            if len(test["stringLocationTypes"]) >= 1:
+                                for location in test["stringLocationTypes"]:
+                                    if location in self.dataout:
+                                        self.dataout[location].update(biome=self.dataout[location][location].append(self.data["id"]))
+                                    else:
+                                        self.dataout[location].update({location: [self.data["id"]]})
+                                    if self.data["id"] in self.dataoutPixelmon:
+                                        if location in self.dataoutPixelmon[self.data["id"]]:
+                                            self.dataoutPixelmon[self.data["id"]].update(
+                                                location=self.dataoutPixelmon[self.data["id"]][location].append(location))
+                                        else:
+                                            self.dataoutPixelmon[self.data["id"]].update({location: [location]})
+                                    else:
+                                        self.dataoutPixelmon.update({self.data["id"]: {location: [location]}})
+                            else:
+                                pass
 
 
 
