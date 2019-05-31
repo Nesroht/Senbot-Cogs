@@ -117,13 +117,13 @@ class Biomechecker(commands.Cog):
                                                     self.dataout[location].update({biomes: [self.data["id"]]})
                                             else:
                                                 self.dataout.update({location:{biomes: [self.data["id"]]}})
-                                                if self.data["id"] in self.dataoutPixelmon:
-                                                    if location in self.dataoutPixelmon[self.data["id"]]:
-                                                        self.dataoutPixelmon[self.data["id"]][location].update(location=self.dataoutPixelmon[self.data["id"]][location].append(biomes))
-                                                    else:
-                                                        self.dataoutPixelmon[self.data["id"]].update({location: [biomes]})
+                                            if self.data["id"] in self.dataoutPixelmon:
+                                                if location in self.dataoutPixelmon[self.data["id"]]:
+                                                    self.dataoutPixelmon[self.data["id"]][location].update(biome=self.dataoutPixelmon[self.data["id"]][location].append(biomes))
                                                 else:
-                                                    self.dataoutPixelmon.update({self.data["id"]: {location: [biomes]}})
+                                                    self.dataoutPixelmon[self.data["id"]].update({location: [biomes]})
+                                            else:
+                                                self.dataoutPixelmon.update({self.data["id"]: {location: [biomes]}})
                                     else:
                                         if ":" in biome:
                                             dummp, biome = biome.split(":")
@@ -136,13 +136,13 @@ class Biomechecker(commands.Cog):
                                                 self.dataout[location].update({biome: [self.data["id"]]})
                                         else:
                                             self.dataout.update({location: {biome: [self.data["id"]]}})
-                                            if self.data["id"] in self.dataoutPixelmon:
-                                                if location in self.dataoutPixelmon[self.data["id"]]:
-                                                    self.dataoutPixelmon[self.data["id"]][location].update(biome=self.dataoutPixelmon[self.data["id"]][location].append(biome))
-                                                else:
-                                                    self.dataoutPixelmon[self.data["id"]].update({location: [biome]})
+                                        if self.data["id"] in self.dataoutPixelmon:
+                                            if location in self.dataoutPixelmon[self.data["id"]]:
+                                                self.dataoutPixelmon[self.data["id"]][location].update(biome=self.dataoutPixelmon[self.data["id"]][location].append(biome))
                                             else:
-                                                self.dataoutPixelmon[self.data["id"]].update({self.data["id"]: {location: [biome]}})
+                                                self.dataoutPixelmon[self.data["id"]].update({location: [biome]})
+                                        else:
+                                            self.dataoutPixelmon[self.data["id"]].update({self.data["id"]: {location: [biome]}})
                         elif len(test["stringLocationTypes"]) >= 1:
                             for location in test["stringLocationTypes"]:
                                 if location in self.dataout:
@@ -175,7 +175,7 @@ class Biomechecker(commands.Cog):
                 #print(self.dataoutPixelmon)
                 if list:
                     for location in list:
-                        print(self.dataoutPixelmon[pokemon][0])
+                        #print(self.dataoutPixelmon[pokemon][0])
                         list2 = self.dataoutPixelmon[pokemon][location]
                         if list2:
                             self.dataoutPixelmonSorted.update({i:{pokemon:{location:list2}}})
