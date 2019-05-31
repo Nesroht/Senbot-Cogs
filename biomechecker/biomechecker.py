@@ -211,7 +211,7 @@ class Biomechecker(commands.Cog):
         for id in checker:
             for pixelmon in checker[id]:
                 for location in pixelmon:
-                    pprint(id + " - " +  pixelmon + " - " + location)
+                    pprint(str(id) + " - " + pixelmon + " - " + location)
                     list = checker[id][pixelmon][location]
                     if list:
                         for bi in self.ignore:
