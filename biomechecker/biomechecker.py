@@ -56,7 +56,7 @@ class Biomechecker(commands.Cog):
                     self.data = json.load(f)
                 if len(self.data["spawnInfos"]) <= 1:
                     if "stringBiomes" in self.data["spawnInfos"][0]["condition"]:
-                        for location in self.data["spawnInfos"]["stringLocationTypes"]:
+                        for location in self.data["spawnInfos"][0]["stringLocationTypes"]:
                             for biome in self.data["spawnInfos"][0]["condition"]["stringBiomes"]:
                                 if biome in self.config["biomeCategories"]:
                                     # pprint(biome)
