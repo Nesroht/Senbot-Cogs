@@ -502,6 +502,7 @@ class Biomechecker(commands.Cog):
                             emb.add_field(name=location, value="".join(strPixelmon))
                             strPixelmon = []
                             ecurrent += 1
+                            current = 0
                     else:
                         embeds.append(emb)
                         current = 0
