@@ -114,20 +114,17 @@ class Biomechecker(commands.Cog):
                                         if ":" in biome:
                                             dummp, biome = biome.split(":")
                                         if location in self.dataout:
-                                            if biomes in self.dataout[location]:
+                                            if biome in self.dataout[location]:
                                                 self.dataout[location].update(
-                                                    biome=self.dataout[location][biomes].append(self.data["id"]))
+                                                    biome=self.dataout[location][biome].append(self.data["id"]))
                                             else:
                                                 # log["log"].append(biome + " - " + data["id"])
                                                 self.dataout[location].update({biomes: [self.data["id"]]})
                                         else:
                                             self.dataout.update({location: {biomes: [self.data["id"]]}})
                                             if self.data["id"] in self.dataoutPixelmon:
-                                                if location in self.dataoutPixelmon[
-                                                    self.dataoutPixelmon[self.data["id"]]]:
-                                                    self.dataoutPixelmon[self.data["id"]].update(
-                                                        location=self.dataoutPixelmon[self.data["id"]][location].append(
-                                                            biomes))
+                                                if location in self.dataoutPixelmon[self.data["id"]]:
+                                                    self.dataoutPixelmon[self.data["id"]].update(location=self.dataoutPixelmon[self.data["id"]][location].append(biomes))
                                                 else:
                                                     self.dataoutPixelmon[self.data["id"]].update({location: [biomes]})
                                             else:
