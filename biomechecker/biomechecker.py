@@ -173,14 +173,14 @@ class Biomechecker(commands.Cog):
                 list = self.dataoutPixelmon[pokemon]
                 #print(self.dataoutPixelmon)
                 if list:
-                    for location in list:
+                    for location in self.dataoutPixelmon[pokemon]:
                         #print(self.dataoutPixelmon[pokemon][0])
                         list2 = self.dataoutPixelmon[pokemon][location]
                         if list2:
                             self.dataoutPixelmonSorted.update({i:{pokemon:{location:list2}}})
                     i += 1
                 else:
-                    for location in list:
+                    for location in self.dataoutPixelmon[pokemon]:
                         self.dataoutPixelmonSorted.update({i:{pokemon:{location:[]}}})
                     i += 1
 
@@ -352,11 +352,11 @@ class Biomechecker(commands.Cog):
                         strPixel = []
                         strPixel.append("```\n")
                         for pixelmon in self.amount[location][biomes]:
-                            strBiomes.append(pixelmon + " \n")
+                            strPixel.append(pixelmon + " \n")
                         if len(self.amount[location][biomes]) == 0:
-                            strBiomes.append("None \n")
-                        strBiomes.append("```")
-                        emb.add_field(name=location + " in " + biomes, value="".join(strBiomes), inline=False)
+                            strPixel.append("None \n")
+                        strPixel.append("```")
+                        emb.add_field(name=location + " in " + biomes, value="".join(strPixel), inline=False)
                         current += 1
                     else:
                         embeds.append(emb)
