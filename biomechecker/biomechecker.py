@@ -476,7 +476,7 @@ class Biomechecker(commands.Cog):
     @commands.command()
     async def biomes(self, ctx, biome):
         """Returns the pixelmon that can spawn in a specific biome, needs properly formatted biome name, so find it with [p]pixelmon first"""
-        pprint(self.dataout)
+        #pprint(self.dataout)
         for location in self.dataout:
             if biome in self.dataout[location]:
                 strPixelmon = []
@@ -493,9 +493,11 @@ class Biomechecker(commands.Cog):
                         noembed = False
                     if ecurrent < elimit:
                         if current <= limit and current < len(self.dataout[location][biome]):
+                            print(pixelmon)
                             strPixelmon.append(pixelmon + "\n")
                             current += 1
                         else:
+                            print("added to field")
                             strPixelmon.append("```")
                             emb.add_field(name=location, value="".join(strPixelmon))
                     else:
