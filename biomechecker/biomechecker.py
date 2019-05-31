@@ -88,35 +88,68 @@ class Biomechecker(commands.Cog):
                 else:
                     for test in self.data["spawnInfos"]:
                         if "stringBiomes" in test["condition"]:
-                            for biome in test["condition"]["stringBiomes"]:
-                                if biome in self.config["biomeCategories"]:
-                                    # pprint(biome)
-                                    for biomes in self.config["biomeCategories"][biome]:
-                                        if ":" in biomes:
-                                            dummp, biomes = biomes.split(":")
-                                        if biomes in self.dataout:
-                                            self.dataout.update(biome=self.dataout[biomes].append(self.data["id"]))
+                            for location in test["stringLocationTypes"]:
+                                for biome in test["condition"]["stringBiomes"]:
+                                    if biome in self.config["biomeCategories"]:
+                                        # pprint(biome)
+                                        for biomes in self.config["biomeCategories"][biome]:
+                                            if ":" in biomes:
+                                                dummp, biomes = biomes.split(":")
+                                            if location in self.dataout:
+                                                if biomes in self.dataout[location]:
+                                                    self.dataout[location].update(biome=self.dataout[location][biomes].append(self.data["id"]))
+                                                else:
+                                                    # log["log"].append(biome + " - " + data["id"])
+                                                    self.dataout[location].update({biomes: [self.data["id"]]})
+                                            else:
+                                                self.dataout.update({location:{biomes: [self.data["id"]]}})
+                                                if self.data["id"] in self.dataoutPixelmon:
+                                                    if location in self.dataoutPixelmon[self.data["id"]]:
+                                                        self.dataoutPixelmon[self.data["id"]].update(location=self.dataoutPixelmon[self.data["id"]][location].append(biomes))
+                                                    else:
+                                                        self.dataoutPixelmon[self.data["id"]].update({location: [biomes]})
+                                                else:
+                                                    self.dataoutPixelmon.update({self.data["id"]: {location: [biomes]}})
+                                    else:
+                                        if ":" in biome:
+                                            dummp, biome = biome.split(":")
+                                        if location in self.dataout:
+                                            if biomes in self.dataout[location]:
+                                                self.dataout[location].update(
+                                                    biome=self.dataout[location][biomes].append(self.data["id"]))
+                                            else:
+                                                # log["log"].append(biome + " - " + data["id"])
+                                                self.dataout[location].update({biomes: [self.data["id"]]})
                                         else:
-                                            # log["log"].append(biome + " - " + data["id"])
-                                            self.dataout.update({biomes: [self.data["id"]]})
-                                        if self.data["id"] in self.dataoutPixelmon:
-                                            self.dataoutPixelmon.update(id=self.dataoutPixelmon[self.data["id"]].append(biomes))
-                                        else:
-                                            self.dataoutPixelmon.update({self.data["id"]: [biomes]})
+                                            self.dataout.update({location: {biomes: [self.data["id"]]}})
+                                            if self.data["id"] in self.dataoutPixelmon:
+                                                if location in self.dataoutPixelmon[
+                                                    self.dataoutPixelmon[self.data["id"]]]:
+                                                    self.dataoutPixelmon[self.data["id"]].update(
+                                                        location=self.dataoutPixelmon[self.data["id"]][location].append(
+                                                            biomes))
+                                                else:
+                                                    self.dataoutPixelmon[self.data["id"]].update({location: [biomes]})
+                                            else:
+                                                self.dataoutPixelmon.update({self.data["id"]: {location: [biomes]}})
+                        elif len(test["stringLocationTypes"]) >= 1:
+                            for location in test["stringLocationTypes"]:
+                                if location in self.dataout:
+                                    self.dataout[location].update(biome=self.dataout[location][location].append(self.data["id"]))
                                 else:
-                                    if ":" in biome:
-                                        dummp, biome = biome.split(":")
-                                    if biome in self.dataout:
-                                        self.dataout.update(biome=self.dataout[biome].append(self.data["id"]))
+                                    self.dataout[location].update({location: [self.data["id"]]})
+                                if self.data["id"] in self.dataoutPixelmon:
+                                    if location in self.dataoutPixelmon[self.data["id"]]:
+                                        self.dataoutPixelmon[self.data["id"]].update(
+                                            location=self.dataoutPixelmon[self.data["id"]][location].append(location))
                                     else:
-                                        # log["log"].append(biome + " - " + data["id"])
-                                        self.dataout.update({biome: [self.data["id"]]})
-                                    if self.data["id"] in self.dataoutPixelmon:
-                                        self.dataoutPixelmon.update(id=self.dataoutPixelmon[self.data["id"]].append(biome))
-                                    else:
-                                        self.dataoutPixelmon.update({self.data["id"]: [biome]})
+                                        self.dataoutPixelmon[self.data["id"]].update({location: [location]})
+                                else:
+                                    self.dataoutPixelmon.update({self.data["id"]: {location: [location]}})
                         else:
                             pass
+
+
 
         with open(self.pathbase + '/Biomes.json', 'w') as out:
             out.write(json.dumps(self.dataout, indent=4, sort_keys=True))
@@ -125,12 +158,15 @@ class Biomechecker(commands.Cog):
         for pokemon in self.pokedex:
             if pokemon in self.dataoutPixelmon:
                 list = self.dataoutPixelmon[pokemon]
-                if list:
-                    self.dataoutPixelmonSorted.update({i:{pokemon:list}})
+                for location in list:
+                    list2 = list[location]
+                    if list:
+                        if list2:
+                            self.dataoutPixelmonSorted.update({i:{pokemon:{location:list2}}})
+                        i += 1
+                else:
+                    self.dataoutPixelmonSorted.update({i:{pokemon:{location:[]}}})
                     i += 1
-            else:
-                self.dataoutPixelmonSorted.update({i:{pokemon:[]}})
-                i += 1
 
         with open(self.pathbase + '/Pixelmon.json', 'w') as out:
             out.write(json.dumps(self.dataoutPixelmon, indent=4, sort_keys=True))
@@ -143,25 +179,30 @@ class Biomechecker(commands.Cog):
 
         dataoutchecker = copy.deepcopy(self.dataout)
         for bi in self.ignore:
-            if bi in dataoutchecker: del dataoutchecker[bi]
+            for location in dataoutchecker:
+                if bi in dataoutchecker[location]: del dataoutchecker[location][bi]
 
-        for biome in dataoutchecker:
-            list = dataoutchecker[biome]
-            if list:
-                if len(list) <= 8:
-                    self.amount.update({biome: list})
+        for location in dataoutchecker:
+            for biome in dataoutchecker[location]:
+                list = dataoutchecker[location][biome]
+                if list:
+                    if len(list) <= 8:
+                        self.amount.update({location:{biome: list}})
+                else:
+                    self.amount.update({location:{biome: ["None"]}})
 
         checker = copy.deepcopy(self.dataoutPixelmonSorted)
         for id in checker:
             for pixelmon in checker[id]:
-                list = checker[id][pixelmon]
-                if list:
-                    for bi in self.ignore:
-                        if bi in list: list.remove(bi)
-                    if len(list) <= 5:
-                        self.biomeamount.update({pixelmon: list})
-                else:
-                    self.biomeamount.update({pixelmon: ["None"]})
+                for location in pixelmon:
+                    list = checker[id][pixelmon][location]
+                    if list:
+                        for bi in self.ignore:
+                            if bi in list: list.remove(bi)
+                        if len(list) <= 5:
+                            self.biomeamount.update({pixelmon:{location: list}})
+                    else:
+                        self.biomeamount.update({pixelmon:{location ["None"]}})
 
         with open(self.pathbase + '/TooFewPixelmon.json', 'w') as out:
             out.write(json.dumps(self.amount, indent=4, sort_keys=True))
@@ -244,28 +285,30 @@ class Biomechecker(commands.Cog):
         current = 0
         embeds = []
         noembed = True
+        strBiomes = []
         if len(self.biomeamount) > 30:
             await ctx.send(embed=discord.Embed(title="Too many Pixelmon to list", description="There are too many Pixelmon with less than 5 biomes they can spawn in, so sending a .json file instead."))
             await ctx.send(file=discord.File(self.pathbase + '/' + 'TooFewBiomes.json'))
         else:
             for pixelmon in self.biomeamount:
-                if noembed:
-                    emb = discord.Embed(title="These Pixelmon spawn in too few biomes.")
-                    noembed = False
-                if current <= limit:
-                    strBiomes = []
-                    strBiomes.append("```\n")
-                    for biome in self.biomeamount[pixelmon]:
-                        strBiomes.append(biome + " \n")
-                    if len(self.biomeamount[pixelmon]) == 0:
-                        strBiomes.append("None \n")
-                    strBiomes.append("```")
-                    emb.add_field(name=pixelmon, value="".join(strBiomes), inline=False)
-                    current += 1
-                else:
-                    embeds.append(emb)
-                    current = 0
-                    noembed = True
+                for location in self.biomeamount[pixelmon]:
+                    if noembed:
+                        emb = discord.Embed(title="These Pixelmon spawn in too few biomes.")
+                        noembed = False
+                        strBiomes = []
+                    if current <= limit:
+                        strBiomes.append("```\n")
+                        for biome in self.biomeamount[pixelmon][location]:
+                            strBiomes.append(location + " in " + biome + " \n")
+                        if len(self.biomeamount[pixelmon]) == 0:
+                            strBiomes.append("Nowhere \n")
+                        strBiomes.append("```")
+                        emb.add_field(name=pixelmon, value="".join(strBiomes), inline=False)
+                        current += 1
+                    else:
+                        embeds.append(emb)
+                        current = 0
+                        noembed = True
             i = 1
             for embed in embeds:
                 embed.set_footer(text="Page " + str(i) + "/" + str(len(embeds)))
@@ -279,28 +322,30 @@ class Biomechecker(commands.Cog):
         current = 0
         embeds = []
         noembed = True
+        strBiomes = []
         if len(self.amount) > 30:
             await ctx.send(embed=discord.Embed(title="Too many Biomes to list", description="There are too many biomes with less than 8 pixelmon that can spawn in them, so sending a .json file instead."))
             await ctx.send(file=discord.File(self.pathbase + '/' + 'TooFewBiomes.json'))
         else:
-            for biomes in self.amount:
-                if noembed:
-                    emb = discord.Embed(title="These Biomes have too few pixelmon spawning")
-                    noembed = False
-                if current <= limit:
-                    strBiomes = []
-                    strBiomes.append("```\n")
-                    for biome in self.amount[biomes]:
-                        strBiomes.append(biome + " \n")
-                    if len(self.amount[biomes]) == 0:
-                        strBiomes.append("None \n")
-                    strBiomes.append("```")
-                    emb.add_field(name=biomes, value="".join(strBiomes), inline=False)
-                    current += 1
-                else:
-                    embeds.append(emb)
-                    current = 0
-                    noembed = True
+            for location in self.amount:
+                for biomes in self.amount[location]:
+                    if noembed:
+                        emb = discord.Embed(title="These Biomes have too few pixelmon spawning")
+                        noembed = False
+                        strBiomes = []
+                    if current <= limit:
+                        strBiomes.append("```\n")
+                        for biome in self.amount[location][biomes]:
+                            strBiomes.append(biome + " \n")
+                        if len(self.amount[location][biomes]) == 0:
+                            strBiomes.append("None \n")
+                        strBiomes.append("```")
+                        emb.add_field(name=location + " in " + biomes, value="".join(strBiomes), inline=False)
+                        current += 1
+                    else:
+                        embeds.append(emb)
+                        current = 0
+                        noembed = True
             i = 1
             if noembed == False:
                 embeds.append(emb)
@@ -318,19 +363,20 @@ class Biomechecker(commands.Cog):
             limit = self.limit
             current = 0
             embeds = []
-            for biome in self.dataoutPixelmon[pixelmon.title()]:
-                if current <= limit:
-                    strBiomes.append(biome + "\n")
-                    current += 1
-                else:
-                    emb = discord.Embed(title=pixelmon.title() + " spawns in the following biomes.")
-                    strBiomes.append("```")
-                    emb.description = "".join(strBiomes)
-                    embeds.append(emb)
-                    current = 0
-                    strBiomes = []
-                    strBiomes.append("```\n")
-            emb = discord.Embed(title=pixelmon.title() + " spawns in the following biomes.")
+            for location in self.dataoutPixelmon[pixelmon.title()]:
+                for biome in self.dataoutPixelmon[pixelmon.title()][location]:
+                    if current <= limit:
+                        strBiomes.append(location + " in " + biome + "\n")
+                        current += 1
+                    else:
+                        emb = discord.Embed(title=pixelmon.title() + " spawns in the following locations.")
+                        strBiomes.append("```")
+                        emb.description = "".join(strBiomes)
+                        embeds.append(emb)
+                        current = 0
+                        strBiomes = []
+                        strBiomes.append("```\n")
+            emb = discord.Embed(title=pixelmon.title() + " spawns in the following locations.")
             strBiomes.append("```")
             emb.description = "".join(strBiomes)
             embeds.append(emb)
@@ -343,22 +389,23 @@ class Biomechecker(commands.Cog):
         elif pixelmon in self.dataoutPixelmon:
             strBiomes = []
             strBiomes.append("```\n")
-            climit = self.limit
+            limit = self.limit
             current = 0
             embeds = []
-            for biome in self.dataoutPixelmon[pixelmon]:
-                if current <= climit:
-                    strBiomes.append(biome + "\n")
-                    current += 1
-                else:
-                    emb = discord.Embed(title=pixelmon + " spawns in the following biomes.")
-                    strBiomes.append("```")
-                    emb.description = "".join(strBiomes)
-                    embeds.append(emb)
-                    current = 0
-                    strBiomes = []
-                    strBiomes.append("```\n")
-            emb = discord.Embed(title=pixelmon + " spawns in the following biomes.")
+            for location in self.dataoutPixelmon[pixelmon]:
+                for biome in self.dataoutPixelmon[pixelmon][location]:
+                    if current <= limit:
+                        strBiomes.append(location + " in " + biome + "\n")
+                        current += 1
+                    else:
+                        emb = discord.Embed(title=pixelmon + " spawns in the following locations.")
+                        strBiomes.append("```")
+                        emb.description = "".join(strBiomes)
+                        embeds.append(emb)
+                        current = 0
+                        strBiomes = []
+                        strBiomes.append("```\n")
+            emb = discord.Embed(title=pixelmon + " spawns in the following locations.")
             strBiomes.append("```")
             emb.description = "".join(strBiomes)
             embeds.append(emb)
@@ -382,19 +429,20 @@ class Biomechecker(commands.Cog):
                 climit = self.limit
                 current = 0
                 embeds = []
-                for biome in self.dataoutPixelmonSorted[pixelmonid][pixelmon]:
-                    if current <= climit:
-                        strBiomes.append(biome + "\n")
-                        current += 1
-                    else:
-                        emb = discord.Embed(title=pixelmon + " spawns in the following biomes.")
-                        strBiomes.append("```")
-                        emb.description = "".join(strBiomes)
-                        embeds.append(emb)
-                        current = 0
-                        strBiomes = []
-                        strBiomes.append("```\n")
-                emb = discord.Embed(title=pixelmon + " spawns in the following biomes.")
+                for location in self.dataoutPixelmonSorted[pixelmonid][pixelmon]:
+                    for biome in self.dataoutPixelmonSorted[pixelmonid][pixelmon][location]:
+                        if current <= climit:
+                            strBiomes.append(location + " in " + biome + "\n")
+                            current += 1
+                        else:
+                            emb = discord.Embed(title=pixelmon + " spawns in the following locations.")
+                            strBiomes.append("```")
+                            emb.description = "".join(strBiomes)
+                            embeds.append(emb)
+                            current = 0
+                            strBiomes = []
+                            strBiomes.append("```\n")
+                emb = discord.Embed(title=pixelmon + " spawns in the following locations.")
                 strBiomes.append("```")
                 emb.description = "".join(strBiomes)
                 embeds.append(emb)
@@ -412,48 +460,42 @@ class Biomechecker(commands.Cog):
     @commands.command()
     async def biomes(self, ctx, biome):
         """Returns the pixelmon that can spawn in a specific biome, needs properly formatted biome name, so find it with [p]pixelmon first"""
-        if biome in self.dataout:
-            strPixelmon = []
-            strPixelmon.append("```\n")
-            limit = self.limit
-            current = 0
-            embeds = []
-            for pixelmon in self.dataout[biome]:
-                if current <= limit:
-                    strPixelmon.append(pixelmon + "\n")
-                    current += 1
-                else:
-                    emb = discord.Embed(title=biome + " spawns the following Pixelmon.")
-                    strPixelmon.append("```")
-                    emb.description = "".join(strPixelmon)
+        for location in self.dataout:
+            if biome in self.dataout[location]:
+                strPixelmon = []
+                strPixelmon.append("```\n")
+                limit = self.limit
+                elimit = 3
+                current = 0
+                embeds = []
+                strPixelmon = []
+                noembed = True
+                ecurrent = 0
+                for pixelmon in self.dataout[location][biome]:
+                    if noembed:
+                        emb = discord.Embed(title=biome + " spawns the following Pixelmon in the following locations.")
+                        strBiomes.append("```\n")
+                        noembed = False
+                    if ecurrent < elimit:
+                        if current <= limit and current < len(self.dataout[biome]):
+                            strPixelmon.append(pixelmon + "\n")
+                            current += 1
+                        else:
+                            strBiomes.append("```")
+                            emb.add_field(name=location, value="".join(strPixelmon))
+                    else:
+                        embeds.append(emb)
+                        current = 0
+                        ecurrent = 0
+                        noembed = True
+                i = 1
+                if noembed == False:
                     embeds.append(emb)
-                    current = 0
-                    strPixelmon = []
-            emb = discord.Embed(title=biome + " spawns the following Pixelmon.")
-            strPixelmon.append("```")
-            emb.description = "".join(strPixelmon)
-            embeds.append(emb)
-            i = 1
-            for embed in embeds:
-                embed.set_footer(text="Page " + str(i) + "/" + str(len(embeds)))
-                i += 1
-
-            await menu(ctx, pages=embeds, controls=DEFAULT_CONTROLS, page=0)
-        else:
-            emb = discord.Embed(title=biome + " can't be found in the biome lists",
-                                description="Make sure you spell the name of the biome right, and that the biome exists")
-            await ctx.send(embed=emb)
-
-def write_id(user_id, date, weekend):
-    with open("upvotes.json") as i:
-        datain = json.load(i)
-    datain.update({
-        str(user_id): {
-            "voted": True,
-            "expiry": date,
-            "weekend": weekend,
-        }
-    })
-    with open("upvotes.json") as f:
-        f.write(json.dumps(datain, sort_keys=False, indent=4))
-        f.close()
+                for embed in embeds:
+                    embed.set_footer(text="Page " + str(i) + "/" + str(len(embeds)))
+                    i += 1
+                await menu(ctx, pages=embeds, controls=DEFAULT_CONTROLS, page=0)
+            else:
+                emb = discord.Embed(title=biome + " can't be found in the biome lists",
+                                    description="Make sure you spell the name of the biome right, and that the biome exists")
+                await ctx.send(embed=emb)
