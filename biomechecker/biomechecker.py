@@ -498,7 +498,6 @@ class Biomechecker(commands.Cog):
                 current = 0
                 acurrent = 1
                 strPixelmon = []
-                strPixelmon.append("```\n")
                 biomenotfound = False
                 for pixelmon in self.dataout[location][biome]:
                     print(pixelmon)
