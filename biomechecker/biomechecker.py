@@ -377,9 +377,11 @@ class Biomechecker(commands.Cog):
     @commands.command()
     async def pixelmon(self, ctx, pixelmon):
         """Returns the biomes the given pixelmon can spawn in"""
+        notfound = True
         for id in self.dataoutPixelmonSorted:
             if pixelmon.title() in self.dataoutPixelmonSorted[id]:
                 strBiomes = []
+                notfound = False
                 strBiomes.append("```\n")
                 limit = self.limit
                 current = 0
@@ -409,6 +411,7 @@ class Biomechecker(commands.Cog):
                 await menu(ctx, pages=embeds, controls=DEFAULT_CONTROLS, page=0)
             elif pixelmon in self.dataoutPixelmonSorted[id]:
                 strBiomes = []
+                notfound = False
                 strBiomes.append("```\n")
                 limit = self.limit
                 current = 0
@@ -436,9 +439,10 @@ class Biomechecker(commands.Cog):
                     i += 1
 
                 await menu(ctx, pages=embeds, controls=DEFAULT_CONTROLS, page=0)
-            else:
-                emb = discord.Embed(title=pixelmon.title() + " can't be found in the pokedex", description="Make sure you spell the name of the pokemon right, and that the pokemon exists")
-                await ctx.send(embed=emb)
+        if notfound:
+            emb = discord.Embed(title=pixelmon.title() + " can't be found in the pokedex",
+                                description="Make sure you spell the name of the pokemon right, and that the pokemon exists")
+            await ctx.send(embed=emb)
 
     @commands.command()
     async def pixelmonid(self, ctx, pixelmonid: int):
