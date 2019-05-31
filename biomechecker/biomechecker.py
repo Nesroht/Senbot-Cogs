@@ -161,15 +161,15 @@ class Biomechecker(commands.Cog):
         for pokemon in self.pokedex:
             if pokemon in self.dataoutPixelmon:
                 list = self.dataoutPixelmon[pokemon]
-                for location in list:
-                    list2 = list[location]
-                    if list:
+                if list:
+                    for location in list:
+                        list2 = self.dataoutPixelmon[pokemon][location]
                         if list2:
                             self.dataoutPixelmonSorted.update({i:{pokemon:{location:list2}}})
                         i += 1
-                else:
-                    self.dataoutPixelmonSorted.update({i:{pokemon:{location:[]}}})
-                    i += 1
+                    else:
+                        self.dataoutPixelmonSorted.update({i:{pokemon:{location:[]}}})
+                        i += 1
 
         with open(self.pathbase + '/Pixelmon.json', 'w') as out:
             out.write(json.dumps(self.dataoutPixelmon, indent=4, sort_keys=True))
