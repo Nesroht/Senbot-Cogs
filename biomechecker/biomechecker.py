@@ -124,11 +124,11 @@ class Biomechecker(commands.Cog):
                                             self.dataout.update({location: {biome: [self.data["id"]]}})
                                             if self.data["id"] in self.dataoutPixelmon:
                                                 if location in self.dataoutPixelmon[self.data["id"]]:
-                                                    self.dataoutPixelmon[self.data["id"]].update(location=self.dataoutPixelmon[self.data["id"]][location].append(biome))
+                                                    self.dataoutPixelmon[self.data["id"]][location].update(biome=self.dataoutPixelmon[self.data["id"]][location].append(biome))
                                                 else:
                                                     self.dataoutPixelmon[self.data["id"]].update({location: [biome]})
                                             else:
-                                                self.dataoutPixelmon.update({self.data["id"]: {location: [biome]}})
+                                                self.dataoutPixelmon[self.data["id"]].update({self.data["id"]: {location: [biome]}})
                         elif len(test["stringLocationTypes"]) >= 1:
                             for location in test["stringLocationTypes"]:
                                 if location in self.dataout:
@@ -140,7 +140,7 @@ class Biomechecker(commands.Cog):
                                     self.dataout.update({location: {location: [self.data["id"]]}})
                                 if self.data["id"] in self.dataoutPixelmon:
                                     if location in self.dataoutPixelmon[self.data["id"]]:
-                                        self.dataoutPixelmon[self.data["id"]].update(
+                                        self.dataoutPixelmon[self.data["id"]][location].update(
                                             location=self.dataoutPixelmon[self.data["id"]][location].append(location))
                                     else:
                                         self.dataoutPixelmon[self.data["id"]].update({location: [location]})
@@ -166,9 +166,10 @@ class Biomechecker(commands.Cog):
                         if list2:
                             self.dataoutPixelmonSorted.update({i:{pokemon:{location:list2}}})
                         i += 1
-                    else:
+                else:
+                    for location in list:
                         self.dataoutPixelmonSorted.update({i:{pokemon:{location:[]}}})
-                        i += 1
+                    i += 1
 
         with open(self.pathbase + '/Pixelmon.json', 'w') as out:
             out.write(json.dumps(self.dataoutPixelmon, indent=4, sort_keys=True))
