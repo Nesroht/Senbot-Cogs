@@ -505,7 +505,7 @@ class Biomechecker(commands.Cog):
                     if noembed:
                         emb = discord.Embed(title=biome + " spawns the following Pixelmon in the following locations.")
                         noembed = False
-                    if ecurrent < elimit:
+                    if ecurrent <= elimit:
                         if (current < limit):
                             if (acurrent < len(self.dataout[location][biome])):
                                 #print(pixelmon)
@@ -535,9 +535,6 @@ class Biomechecker(commands.Cog):
                             ecurrent += 1
                             current = 0
                     else:
-                        print("added to field")
-                        strPixelmon.append("```")
-                        emb.add_field(name=location, value="".join(strPixelmon))
                         strPixelmon = []
                         strPixelmon.append("```\n")
                         strPixelmon.append(pixelmon + "\n")
