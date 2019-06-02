@@ -75,7 +75,8 @@ class Biomechecker(commands.Cog):
                                             self.dataout.update({location: {biomes: [self.data["id"]]}})
                                         if self.data["id"] in self.dataoutPixelmon:
                                             if location in self.dataoutPixelmon[self.data["id"]]:
-                                                self.dataoutPixelmon[self.data["id"]][location].append(biomes)
+                                                if biomes not in self.dataoutPixelmon[self.data["id"]][location]:
+                                                    self.dataoutPixelmon[self.data["id"]][location].append(biomes)
                                             else:
                                                 self.dataoutPixelmon[self.data["id"]].update({location: [biomes]})
                                         else:
@@ -94,7 +95,8 @@ class Biomechecker(commands.Cog):
                                         self.dataout.update({location: {biome: [self.data["id"]]}})
                                     if self.data["id"] in self.dataoutPixelmon:
                                         if location in self.dataoutPixelmon[self.data["id"]]:
-                                            self.dataoutPixelmon[self.data["id"]][location].append(biome)
+                                            if biome not in self.dataoutPixelmon[self.data["id"]][location]:
+                                                self.dataoutPixelmon[self.data["id"]][location].append(biome)
                                         else:
                                             self.dataoutPixelmon[self.data["id"]].update({location: [biome]})
                                     else:
@@ -122,7 +124,8 @@ class Biomechecker(commands.Cog):
                                                 self.dataout.update({location:{biomes: [self.data["id"]]}})
                                             if self.data["id"] in self.dataoutPixelmon:
                                                 if location in self.dataoutPixelmon[self.data["id"]]:
-                                                    self.dataoutPixelmon[self.data["id"]][location].append(biomes)
+                                                    if biomes not in self.dataoutPixelmon[self.data["id"]][location]:
+                                                        self.dataoutPixelmon[self.data["id"]][location].append(biomes)
                                                 else:
                                                     self.dataoutPixelmon[self.data["id"]].update({location: [biomes]})
                                             else:
@@ -142,7 +145,8 @@ class Biomechecker(commands.Cog):
                                             self.dataout.update({location: {biome: [self.data["id"]]}})
                                         if self.data["id"] in self.dataoutPixelmon:
                                             if location in self.dataoutPixelmon[self.data["id"]]:
-                                                self.dataoutPixelmon[self.data["id"]][location].append(biome)
+                                                if biome not in self.dataoutPixelmon[self.data["id"]][location]:
+                                                    self.dataoutPixelmon[self.data["id"]][location].append(biome)
                                             else:
                                                 self.dataoutPixelmon[self.data["id"]].update({location: [biome]})
                                         else:
@@ -158,15 +162,14 @@ class Biomechecker(commands.Cog):
                                     self.dataout.update({location: {location: [self.data["id"]]}})
                                 if self.data["id"] in self.dataoutPixelmon:
                                     if location in self.dataoutPixelmon[self.data["id"]]:
-                                        self.dataoutPixelmon[self.data["id"]][location].append(location)
+                                        if location not in self.dataoutPixelmon[self.data["id"]][location]:
+                                            self.dataoutPixelmon[self.data["id"]][location].append(location)
                                     else:
                                         self.dataoutPixelmon[self.data["id"]].update({location: [location]})
                                 else:
                                     self.dataoutPixelmon.update({self.data["id"]: {location: [location]}})
                         else:
                             pass
-
-
 
         with open(self.pathbase + '/Biomes.json', 'w') as out:
             out.write(json.dumps(self.dataout, indent=4, sort_keys=True))
@@ -190,11 +193,6 @@ class Biomechecker(commands.Cog):
                                     self.dataoutPixelmonSorted[i].update({pokemon: {location: list2}})
                             else:
                                 self.dataoutPixelmonSorted.update({i: {pokemon: {location: list2}}})
-
-
-
-
-
                     i += 1
             else:
                 self.dataoutPixelmonSorted.update({i:{pokemon:{"Nowhere":["Nowhere"]}}})
@@ -514,7 +512,7 @@ class Biomechecker(commands.Cog):
                 strPixelmon.append("```\n")
                 biomenotfound = False
                 for pixelmon in self.dataout[location][biome]:
-                    print(pixelmon)
+                    #print(pixelmon)
                     if noembed:
                         emb = discord.Embed(title=biome + " spawns the following Pixelmon in the following locations.")
                         noembed = False
@@ -529,7 +527,7 @@ class Biomechecker(commands.Cog):
                                 strPixelmon.append(pixelmon + "\n")
                                 current += 1
                                 acurrent += 1
-                                print("added to field")
+                                #'print("added to field")
                                 strPixelmon.append("```")
                                 emb.add_field(name=location, value="".join(strPixelmon))
                                 strPixelmon = []
@@ -540,7 +538,7 @@ class Biomechecker(commands.Cog):
                             strPixelmon.append(pixelmon + "\n")
                             current += 1
                             acurrent += 1
-                            print("added to field")
+                            #print("added to field")
                             strPixelmon.append("```")
                             emb.add_field(name=location, value="".join(strPixelmon))
                             strPixelmon = []
