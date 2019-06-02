@@ -352,6 +352,7 @@ class Reddit(commands.Cog):
         if self.redditdebug:
             print("newer")
         post = self.reddit.subreddit(subreddit).random()
+        print(post)
         await self.redfunc(ctx, subreddit=subreddit, oldurl=post.url, stickied=post.stickied, over_18=post.over_18, title=post.title, selftext=post.selftext, origin="new")
         #except Exception as e:
 
