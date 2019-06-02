@@ -32,6 +32,8 @@ class Reddit(commands.Cog):
         self.redditdebug = False
         self.r_old_done = False
         self.alimit = 5
+        self.attemptlimit = 10
+        self.attempt = 0
         self.randatt = False
 
         self.gfyclient = GfycatClient()
@@ -105,6 +107,8 @@ class Reddit(commands.Cog):
         #
         #   Check if post url exists or is stickied, if it is find a new post
         #
+        if (self.attempt == self.attemptlimit) and (self.randatt == False):
+            await ctx.send("Can't find any pictures in " + subreddit + " in " + self.attemptlimit + " attempts")
         if (oldurl is "") or (oldurl is stickied):
             if origin == "new":
                 await self.newred(ctx, subreddit=subreddit)
@@ -294,7 +298,7 @@ class Reddit(commands.Cog):
                 self.r_old_done = False
                 return False
         await ctx.send(embed=emb)
-
+        self.attempt += 1
         #
         #   Variable check for if url should be passed outside of embed
         #
