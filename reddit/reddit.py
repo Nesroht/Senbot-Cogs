@@ -56,8 +56,6 @@ class Reddit(commands.Cog):
         self.iclient_id = self.credentials.ICLIENT_ID
         self.iclient_secret = self.credentials.ICLIENT_SECRET
         self.iclient = ImgurClient(self.iclient_id, self.iclient_secret)
-        #self.icredentials = self.iclient.authorize("PIN OBTAINED FROM AUTHORIZATION", "pin")
-        #self.iclient.set_user_auth(self.icredentials["access_token"], self.icredentials["refresh_token"])
 
     async def get(self, url):
         async with self._session.get(url) as response:
@@ -347,27 +345,27 @@ class Reddit(commands.Cog):
                 print(e)
 
     async def newred(self, ctx, *, subreddit):
-        try:
-            #
-            #   Pull random post from given subreddit and pass it on to redfunc()
-            #
-            if self.redditdebug:
-                print("newer")
-            post = self.reddit.subreddit(subreddit).random()
-            await self.redfunc(ctx, subreddit=subreddit, oldurl=post.url, stickied=post.stickied, over_18=post.over_18, title=post.title, selftext=post.selftext, origin="new")
-        except Exception as e:
+        #try:
+        #
+        #   Pull random post from given subreddit and pass it on to redfunc()
+        #
+        if self.redditdebug:
+            print("newer")
+        post = self.reddit.subreddit(subreddit).random()
+        await self.redfunc(ctx, subreddit=subreddit, oldurl=post.url, stickied=post.stickied, over_18=post.over_18, title=post.title, selftext=post.selftext, origin="new")
+        #except Exception as e:
 
             #
             #   Is redditdebug false? Consider all errors as reddit not existing
             #
-            if self.redditdebug is False:
-                await ctx.send("**`Can't find subreddit " + subreddit + "`**")
+            #if self.redditdebug is False:
+                #await ctx.send("**`Can't find subreddit " + subreddit + "`**")
 
             #
             #   Is redditdebug true? print error to console
             #
-            else:
-                print(e)
+            #else:
+                #print(e)
 
     @_reddit.command()
     async def rdebug(self, ctx):
