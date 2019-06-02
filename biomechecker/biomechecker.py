@@ -409,7 +409,7 @@ class Biomechecker(commands.Cog):
                             current = 0
                             strBiomes = []
                 emb = discord.Embed(title=pixelmon.title() + " spawns in the following locations.")
-                emb.description = "".join(strBiomes)
+                emb.description = box("".join(strBiomes))
                 embeds.append(emb)
                 i = 1
                 for embed in embeds:
@@ -420,7 +420,6 @@ class Biomechecker(commands.Cog):
             elif pixelmon in self.dataoutPixelmonSorted[id]:
                 strBiomes = []
                 notfound = False
-                strBiomes.append("```\n")
                 limit = self.limit
                 current = 0
                 embeds = []
@@ -431,15 +430,12 @@ class Biomechecker(commands.Cog):
                             current += 1
                         else:
                             emb = discord.Embed(title=pixelmon + " spawns in the following locations.")
-                            strBiomes.append("```")
-                            emb.description = "".join(strBiomes)
+                            emb.description = box("".join(strBiomes))
                             embeds.append(emb)
                             current = 0
                             strBiomes = []
-                            strBiomes.append("```\n")
                 emb = discord.Embed(title=pixelmon + " spawns in the following locations.")
-                strBiomes.append("```")
-                emb.description = "".join(strBiomes)
+                emb.description = box("".join(strBiomes))
                 embeds.append(emb)
                 i = 1
                 for embed in embeds:
