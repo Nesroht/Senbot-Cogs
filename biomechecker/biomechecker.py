@@ -7,6 +7,7 @@ from redbot.core import checks, Config, commands
 from redbot.core.utils.chat_formatting import pagify
 from redbot.core.utils.menus import menu, DEFAULT_CONTROLS
 from redbot.core.data_manager import cog_data_path
+from redbot.core.utils.chat_formatting import box
 
 
 
@@ -393,7 +394,6 @@ class Biomechecker(commands.Cog):
             if pixelmon.title() in self.dataoutPixelmonSorted[id]:
                 strBiomes = []
                 notfound = False
-                strBiomes.append("```\n")
                 limit = self.limit
                 current = 0
                 embeds = []
@@ -404,14 +404,11 @@ class Biomechecker(commands.Cog):
                             current += 1
                         else:
                             emb = discord.Embed(title=pixelmon.title() + " spawns in the following locations.")
-                            strBiomes.append("```")
-                            emb.description = "".join(strBiomes)
+                            emb.description = box("".join(strBiomes))
                             embeds.append(emb)
                             current = 0
                             strBiomes = []
-                            strBiomes.append("```\n")
                 emb = discord.Embed(title=pixelmon.title() + " spawns in the following locations.")
-                strBiomes.append("```")
                 emb.description = "".join(strBiomes)
                 embeds.append(emb)
                 i = 1
