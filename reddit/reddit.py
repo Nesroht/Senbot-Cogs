@@ -103,7 +103,7 @@ class Reddit(commands.Cog):
         #
         if self.redditdebug:
             print(oldurl)
-
+        self.attempt += 1
         #
         #   Check if post url exists or is stickied, if it is find a new post
         #
@@ -298,7 +298,7 @@ class Reddit(commands.Cog):
                 self.r_old_done = False
                 return False
         await ctx.send(embed=emb)
-        self.attempt += 1
+
         #
         #   Variable check for if url should be passed outside of embed
         #
