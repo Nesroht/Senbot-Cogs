@@ -252,7 +252,7 @@ class Biomechecker(commands.Cog):
             with open(self.pathbase + '/pixelmon/'+pixelmon.title()+'.set.json') as f:
                 self.data = json.load(f)
             for i in self.data["spawnInfos"]:
-                strRare += "```\n" + str(i["rarity"]) + "\n```"
+                strRare += box(str(i["rarity"]))
             emb.description = strRare
             await ctx.send(embed=emb)
         elif pixelmon in self.dataoutPixelmon:
@@ -261,7 +261,7 @@ class Biomechecker(commands.Cog):
             with open(self.pathbase + '/pixelmon/'+pixelmon+'.set.json') as f:
                 self.data = json.load(f)
             for i in self.data["spawnInfos"]:
-                strRare += "```\n" + str(i["rarity"]) + "\n```"
+                strRare += box(str(i["rarity"]))
             emb.description = "".join(strRare)
             await ctx.send(embed=emb)
 
@@ -277,7 +277,7 @@ class Biomechecker(commands.Cog):
             emb = discord.Embed(title="The new rarity of " + pixelmon)
             strRare = ""
             for i in self.setrarityDump["spawnInfos"]:
-                strRare += "```\n" + str(i["rarity"]) + "\n```"
+                strRare += box(str(i["rarity"]))
             emb.description = "".join(strRare)
             await ctx.send(embed=emb)
             await ctx.send(file=discord.File(self.pathbase + '/pixelmon/' + pixelmon.title() + '.set.json'))
@@ -291,7 +291,7 @@ class Biomechecker(commands.Cog):
             emb = discord.Embed(title="The new rarity of " + pixelmon)
             strRare = ""
             for i in self.setrarityDump["spawnInfos"]:
-                strRare += "```\n" + str(i["rarity"]) + "\n```"
+                strRare += box(str(i["rarity"]))
             emb.description = "".join(strRare)
             await ctx.send(embed=emb)
             await ctx.send(file=discord.File(self.pathbase + '/pixelmon/' + pixelmon + '.set.json'))
@@ -302,12 +302,10 @@ class Biomechecker(commands.Cog):
         """Returns list of legendaries"""
         emb = discord.Embed(title="These Pixelmon are considered legendary")
         strLeg = []
-        strLeg.append("```\n")
         for f in self.pokedex:
             if f in self.legendaries["legendaries"]:
                 strLeg.append(f + "\n")
-        strLeg.append("```")
-        emb.description = "".join(strLeg)
+        emb.description = box("".join(strLeg))
         await ctx.send(embed=emb)
 
 
@@ -330,13 +328,11 @@ class Biomechecker(commands.Cog):
                         noembed = False
                         strBiomes = []
                     if current <= limit:
-                        strBiomes.append("```\n")
                         for biome in self.biomeamount[pixelmon][location]:
                             strBiomes.append(location + " in " + biome + " \n")
                         if len(self.biomeamount[pixelmon]) == 0:
                             strBiomes.append("Nowhere \n")
-                        strBiomes.append("```")
-                        emb.add_field(name=pixelmon, value="".join(strBiomes), inline=False)
+                        emb.add_field(name=pixelmon, value=box("".join(strBiomes)), inline=False)
                         current += 1
                     else:
                         embeds.append(emb)
@@ -366,13 +362,11 @@ class Biomechecker(commands.Cog):
                         noembed = False
                     if current <= limit:
                         strPixel = []
-                        strPixel.append("```\n")
                         for pixelmon in self.amount[location][biomes]:
                             strPixel.append(pixelmon + " \n")
                         if len(self.amount[location][biomes]) == 0:
                             strPixel.append("None \n")
-                        strPixel.append("```")
-                        emb.add_field(name=location + " in " + biomes, value="".join(strPixel), inline=False)
+                        emb.add_field(name=location + " in " + biomes, value=box("".join(strPixel)), inline=False)
                         current += 1
                     else:
                         embeds.append(emb)
@@ -454,7 +448,6 @@ class Biomechecker(commands.Cog):
         if pixelmonid in self.dataoutPixelmonSorted:
             for pixelmon in self.dataoutPixelmonSorted[pixelmonid]:
                 strBiomes = []
-                strBiomes.append("```\n")
                 climit = self.limit
                 current = 0
                 embeds = []
@@ -465,15 +458,12 @@ class Biomechecker(commands.Cog):
                             current += 1
                         else:
                             emb = discord.Embed(title=pixelmon + " spawns in the following locations.")
-                            strBiomes.append("```")
-                            emb.description = "".join(strBiomes)
+                            emb.description = box("".join(strBiomes))
                             embeds.append(emb)
                             current = 0
                             strBiomes = []
-                            strBiomes.append("```\n")
                 emb = discord.Embed(title=pixelmon + " spawns in the following locations.")
-                strBiomes.append("```")
-                emb.description = "".join(strBiomes)
+                emb.description = box("".join(strBiomes))
                 embeds.append(emb)
                 i = 1
                 for embed in embeds:
@@ -502,7 +492,6 @@ class Biomechecker(commands.Cog):
                 current = 0
                 acurrent = 1
                 strPixelmon = []
-                strPixelmon.append("```\n")
                 biomenotfound = False
                 for pixelmon in self.dataout[location][biome]:
                     #print(pixelmon)
@@ -521,10 +510,8 @@ class Biomechecker(commands.Cog):
                                 current += 1
                                 acurrent += 1
                                 #'print("added to field")
-                                strPixelmon.append("```")
-                                emb.add_field(name=location, value="".join(strPixelmon))
+                                emb.add_field(name=location, value=box("".join(strPixelmon)))
                                 strPixelmon = []
-                                strPixelmon.append("```\n")
                                 ecurrent += 1
                                 current = 0
                         else:
@@ -532,15 +519,12 @@ class Biomechecker(commands.Cog):
                             current += 1
                             acurrent += 1
                             #print("added to field")
-                            strPixelmon.append("```")
-                            emb.add_field(name=location, value="".join(strPixelmon))
+                            emb.add_field(name=location, value=box("".join(strPixelmon)))
                             strPixelmon = []
-                            strPixelmon.append("```\n")
                             ecurrent += 1
                             current = 0
                     else:
                         strPixelmon = []
-                        strPixelmon.append("```\n")
                         strPixelmon.append(pixelmon + "\n")
                         acurrent += 1
                         embeds.append(emb)
