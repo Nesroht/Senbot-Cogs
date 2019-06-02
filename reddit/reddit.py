@@ -109,6 +109,7 @@ class Reddit(commands.Cog):
         #
         if (self.attempt == self.attemptlimit) and (self.randatt == False):
             await ctx.send("Can't find any pictures in " + subreddit + " in " + self.attemptlimit + " attempts")
+            return
         if (oldurl is "") or (oldurl is stickied):
             if origin == "new":
                 await self.newred(ctx, subreddit=subreddit)
