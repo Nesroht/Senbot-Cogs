@@ -5,6 +5,7 @@ import inspect
 from redbot.core import checks, Config, commands
 from redbot.core.utils.chat_formatting import pagify
 from redbot.core.utils.menus import menu, DEFAULT_CONTROLS
+from redbot.core.utils.chat_formatting import box
 
 
 
@@ -20,16 +21,16 @@ class Utils(commands.Cog):
         """Reply with latency of bot"""
         latency = self.bot.latency * 1000
         emb = discord.Embed(title="Pong!", color=discord.Color.red())
-        emb.add_field(name="Discord", value="```" + str(round(latency)) + " ms```")
-        emb.add_field(name="Typing", value="```" + "calculating" + " ms```")
+        emb.add_field(name="Discord", value=box(str(round(latency)) + " ms"))
+        emb.add_field(name="Typing", value=box("calculating" + " ms"))
 
         before = time.monotonic()
         message = await ctx.send(embed=emb)
         ping = (time.monotonic() - before) * 1000
 
         emb = discord.Embed(title="Pong!", color=discord.Color.green())
-        emb.add_field(name="Discord", value="```" + str(round(latency)) + " ms```")
-        emb.add_field(name="Typing", value="```" + str(round(ping)) + " ms```")
+        emb.add_field(name="Discord", value=box(str(round(latency)) + " ms"))
+        emb.add_field(name="Typing", value=box(str(round(ping)) + " ms"))
 
         await message.edit(embed=emb)
 
@@ -39,8 +40,8 @@ class Utils(commands.Cog):
         users = str(len(self.bot.users))
         servers = str(len(self.bot.guilds))
         emb = discord.Embed(title="Stats", description="Various stats regarding the bot", color=discord.Color.blurple())
-        emb.add_field(name="Users", value="```" + users + "```")
-        emb.add_field(name="Servers", value="```" + servers + "```")
+        emb.add_field(name="Users", value=box(users))
+        emb.add_field(name="Servers", value=box(servers))
         await ctx.send(embed=emb)
 
     @commands.command()
