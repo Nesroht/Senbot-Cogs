@@ -36,8 +36,6 @@ class Reddit(commands.Cog):
         self.attempt = 0
         self.randatt = False
 
-        self.gfyclient = GfycatClient(cliend_id=self.credentials.GFYCAT_ID, client_secret=self.credentials.GFYCAT_SECRET)
-
 
         #reddit API access token querying
         self.client_auth = requests.auth.HTTPBasicAuth(credentials.CLIENT_ID, credentials.CLIENT_SECRET)
