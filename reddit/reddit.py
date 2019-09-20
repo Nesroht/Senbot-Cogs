@@ -79,38 +79,38 @@ class Reddit(commands.Cog):
     async def r(self, ctx, *, subreddit):
         """Random Post from subreddit"""
         self.randatt = False
-        await self.redditcommand(ctx, subreddit=subreddit)
+        await self.redditcommand(ctx, subreddit=subreddit, attempt=0)
 
 
-    async def redditcommand(self, ctx, *, subreddit):
+    async def redditcommand(self, ctx, *, subreddit, attempt):
         try:
             test = self.reddit.subreddit(subreddit).random()
             if test:
-                await self.newred(ctx, subreddit=subreddit)
+                await self.newred(ctx, subreddit=subreddit, attempt=attempt)
             else:
-                await self.oldred(ctx, subreddit=subreddit)
+                await self.oldred(ctx, subreddit=subreddit, attempt=attempt)
                 return
         except ClientException as e:
             if e:
-                await self.oldred(ctx, subreddit=subreddit)
+                await self.oldred(ctx, subreddit=subreddit, attempt=attempt)
                 return
 
-    async def redfunc(self, ctx, *, subreddit, oldurl, stickied, over_18, title, selftext, origin):
+    async def redfunc(self, ctx, *, subreddit, oldurl, stickied, over_18, title, selftext, origin, attempt):
         #
         #   If redditdebug is active print post url in console
         #
         if self.redditdebug:
             print(oldurl)
-        self.attempt += 1
+        attempt += 1
         #
         #   Check if post url exists or is stickied, if it is find a new post
         #
-        if (self.attempt == self.attemptlimit) and (self.randatt == False):
+        if (attempt == self.attemptlimit) and (self.randatt == False):
             await ctx.send("Can't find any pictures in " + subreddit + " in " + self.attemptlimit + " attempts")
             return
         if (oldurl is "") or (oldurl is stickied):
             if origin == "new":
-                await self.newred(ctx, subreddit=subreddit)
+                await self.newred(ctx, subreddit=subreddit, attempt=attempt)
                 return
             else:
                 self.r_old_done = True
@@ -155,22 +155,6 @@ class Reddit(commands.Cog):
             oldurl = newurl + ".gifv"
 
         #
-        #   Check if url is gfycat, if it is reformat link to work in embed, Embeds dont support Gfycat gifs properly, so commented out working code
-        #
-        elif oldurl.startswith("https://gfycat"):
-            #newurl1, newurl2 = oldurl.rsplit("/", 1)
-            #if "-" in newurl2:
-            #    newurl2 = newurl2.split("-")[0]
-            #if "/" in newurl2:
-            #    if newurl2[2] == "/":
-            #        newurl2 = newurl2[2:]
-            # print(newurl2)
-            #urlList = self.gfyclient.query_gfy(newurl2)
-            #gifUrl = urlList["gfyItem"]
-            #emb.set_image(url=gifUrl["gifUrl"])
-            video = 1
-
-        #
         #   Check if url is Imgur album, if it is post all images in album
         #
         elif ("imgur.com/a/" in oldurl) or ("imgur.com/album/" in oldurl):
@@ -209,11 +193,11 @@ class Reddit(commands.Cog):
         elif ("imgur.com/gallery/" in oldurl) or ("imgur.com/g/" in oldurl):
             randcheck = self.randatt
             if randcheck is True:
-                await self.randomfunc(ctx)
+                await self.randomfunc(ctx,attempt=attempt)
                 self.r_old_done = True
                 return False
             elif origin == "new":
-                await self.newred(ctx, subreddit=subreddit)
+                await self.newred(ctx, subreddit=subreddit, attempt=attempt)
                 return
             else:
                 self.r_old_done = False
@@ -255,11 +239,11 @@ class Reddit(commands.Cog):
             else:
                 randcheck = self.randatt
                 if randcheck is True:
-                    await self.randomfunc(ctx)
+                    await self.randomfunc(ctx,attempt=attempt)
                     self.r_old_done = True
                     return False
                 elif origin == "new":
-                    await self.newred(ctx, subreddit=subreddit)
+                    await self.newred(ctx, subreddit=subreddit, attempt=attempt)
                     return
                 else:
                     self.r_old_done = False
@@ -287,11 +271,11 @@ class Reddit(commands.Cog):
         else:
             randcheck = self.randatt
             if randcheck is True:
-                await self.randomfunc(ctx)
+                await self.randomfunc(ctx, attempt=attempt)
                 self.r_old_done = True
                 return False
             elif origin == "new":
-                await self.newred(ctx, subreddit=subreddit)
+                await self.newred(ctx, subreddit=subreddit, attempt=attempt)
                 return
             else:
                 self.r_old_done = False
@@ -308,7 +292,7 @@ class Reddit(commands.Cog):
             return False
         return
 
-    async def oldred(self,ctx,*,subreddit):
+    async def oldred(self,ctx,*,subreddit,attempt):
         try:
             #
             #   Initiate ListingGenerator for given subreddit with limit, Iterate over each post until given random number reached
@@ -322,7 +306,7 @@ class Reddit(commands.Cog):
                 if i == random_post_number:
                     check_if_done = True
                     while check_if_done:
-                        check_if_done = await self.redfunc(ctx, subreddit=subreddit, oldurl=post.url, stickied=post.stickied, over_18=post.over_18, title=post.title, selftext=post.selftext, origin="old")
+                        check_if_done = await self.redfunc(ctx, subreddit=subreddit, oldurl=post.url, stickied=post.stickied, over_18=post.over_18, title=post.title, selftext=post.selftext, origin="old", attempt=attempt)
                         if check_if_done is False:
                             break
                     if self.r_old_done is False:
@@ -336,7 +320,7 @@ class Reddit(commands.Cog):
             #   Is redditdebug false? Consider all errors as reddit not existing
             #
             if self.redditdebug is False:
-                await ctx.send("**`Can't find subreddit " + subreddit + "`**")
+                await ctx.send("**`Nope`**")
 
             #
             #   Is redditdebug true? print error to console
@@ -344,7 +328,7 @@ class Reddit(commands.Cog):
             else:
                 print(e)
 
-    async def newred(self, ctx, *, subreddit):
+    async def newred(self, ctx, *, subreddit,attempt):
         try:
             #
             #   Pull random post from given subreddit and pass it on to redfunc()
@@ -352,14 +336,14 @@ class Reddit(commands.Cog):
             if self.redditdebug:
                 print("newer")
             post = self.reddit.subreddit(subreddit).random()
-            await self.redfunc(ctx, subreddit=subreddit, oldurl=post.url, stickied=post.stickied, over_18=post.over_18, title=post.title, selftext=post.selftext, origin="new")
+            await self.redfunc(ctx, subreddit=subreddit, oldurl=post.url, stickied=post.stickied, over_18=post.over_18, title=post.title, selftext=post.selftext, origin="new", attempt=attempt)
         except Exception as e:
 
             #
             #   Is redditdebug false? Consider all errors as reddit not existing
             #
             if self.redditdebug is False:
-                await ctx.send("**`Can't find subreddit " + subreddit + "`**")
+                await ctx.send("**`Nope`**")
 
             #
             #   Is redditdebug true? print error to console
@@ -400,9 +384,9 @@ class Reddit(commands.Cog):
     @commands.command()
     async def random(self,ctx):
         """Get Random subreddit post"""
-        await self.randomfunc(ctx)
+        await self.randomfunc(ctx, attempt=self.attempt)
 
-    async def randomfunc(self, ctx):
+    async def randomfunc(self, ctx, attempt):
         if ctx.guild:
             if ctx.channel.is_nsfw() == True:
                 subreddit = str(self.reddit.random_subreddit(nsfw=True))
@@ -412,4 +396,4 @@ class Reddit(commands.Cog):
             subreddit = str(self.reddit.random_subreddit(nsfw=True))
         #print(subreddit)
         self.randatt = True
-        await self.redditcommand(ctx, subreddit=subreddit)
+        await self.redditcommand(ctx, subreddit=subreddit, attempt=attempt)

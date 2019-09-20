@@ -76,7 +76,7 @@ class Nsfw(commands.Cog):
                 query = ("http://rule34.xxx/index.php?page=post&s=random")
                 page = await (await self._session.get(query)).text()
                 soup = BeautifulSoup(page, "html.parser")
-                image = soup.find(id="").get("src")
+                image = soup.find(id="highres").get("src")
                 emb = discord.Embed(title="Rule34")
                 emb.set_image(url=image)
                 await ctx.send(embed=emb)
