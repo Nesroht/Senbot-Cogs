@@ -20,6 +20,14 @@ class Neko(commands.Cog):
         self.bot = bot
         self._session = aiohttp.ClientSession(loop=self.bot.loop)
 
+
+    def noOptionMsg(self,ctx):
+        emb = discord.Embed(title=str + "is not available", color=discord.Color.red())
+        emb.add_field(name="NSFW", value=", ".join(NSFW))
+        emb.add_field(name="SFW", value=", ".join(SFW))
+        emb.add_field(name="RANDOM", value=", ".join(RANDOM))
+        await ctx.send(embed=emb)
+
     @commands.command()
     async def neko(self, ctx, *, str):
         """Ask the Neko api for picture"""
@@ -31,11 +39,7 @@ class Neko(commands.Cog):
                         emb.set_image(url=nekos.img(str))
                         await ctx.send(embed=emb)
                     else:
-                        emb2 = discord.Embed(title=str + "is not available", color=discord.Color.red())
-                        emb2.add_field(name="NSFW", value=", ".join(NSFW))
-                        emb2.add_field(name="SFW", value=", ".join(SFW))
-                        emb2.add_field(name="RANDOM", value=", ".join(RANDOM))
-                        await ctx.send(embed=emb2)
+                        noOptionMsg(ctx)
                 else:
                     if str in SFW or str in RANDOM:
                         emb = discord.Embed(title="Have some " + str, color=discord.Color.red())
@@ -44,21 +48,24 @@ class Neko(commands.Cog):
                     elif str in (NSFW):
                         await ctx.send(box("Only allowed in NSFW channels or DM's"))
                     else:
-                        emb2 = discord.Embed(title=str + "is not available", color=discord.Color.red())
-                        emb2.add_field(name="NSFW", value=", ".join(NSFW))
-                        emb2.add_field(name="SFW", value=", ".join(SFW))
-                        emb2.add_field(name="RANDOM", value=", ".join(RANDOM))
-                        await ctx.send(embed=emb2)
+                        noOptionMsg(ctx)
             else:
                 if str in NSFW or str in SFW or str in RANDOM:
                     emb = discord.Embed(title="Have some " + str.capitalize(), color=discord.Color.red())
                     emb.set_image(url=nekos.img(str))
                     await ctx.send(embed=emb)
                 else:
-                    emb2 = discord.Embed(title=str + "is not available", color=discord.Color.red())
-                    emb2.add_field(name="NSFW", value=", ".join(NSFW))
-                    emb2.add_field(name="SFW", value=", ".join(SFW))
-                    emb2.add_field(name="RANDOM", value=", ".join(RANDOM))
-                    await ctx.send(embed=emb2)
+                    noOptionMsg(ctx)
+        except Exception as e:
+            await ctx.send(f":x: **Error:** `{e}`")
+
+
+    @commands.command()
+    async def slap(self, ctx, user):
+        try:
+            if ctx.guild:
+                emb = discord.Embed(title=ctx.author + " slaps " + user, color=discord.Color.blurple())
+                emb.set_image(url=nekos.img('slap'))
+                await ctx.send(embed=emb)
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
