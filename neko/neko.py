@@ -31,20 +31,20 @@ class Neko(commands.Cog):
                         emb.set_image(url=nekos.img(str))
                         await ctx.send(embed=emb)
                     else:
-                        await ctx.send(ctx.box("Nope"))
+                        await ctx.send(box("Nope"))
                 else:
                     if str in (SFW or RANDOM):
                         emb = discord.Embed(title="Have some " + str, color=discord.Color.red())
                         emb.set_image(url=nekos.img(str))
                         await ctx.send(embed=emb)
                     else:
-                        await ctx.send(ctx.box("Nope"))
+                        await ctx.send(box("Nope"))
             else:
                 if str in (NSFW or SFW or RANDOM):
                     emb = discord.Embed(title="Have some " + str.capitalize(), color=discord.Color.red())
                     emb.set_image(url=nekos.img(str))
                     await ctx.send(embed=emb)
                 else:
-                    await ctx.send(ctx.box("Nope"))
+                    await ctx.send(box("Nope"))
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
