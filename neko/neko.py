@@ -28,14 +28,14 @@ class Neko(commands.Cog):
             if ctx.guild:
                 if ctx.channel.is_nsfw() == True:
                     if str in NSFW or str in SFW or str in RANDOM:
-                        emb = discord.Embed(title="Have some " + str.capitalize(), color=discord.Color.red())
+                        emb = discord.Embed(title="Random " + str.capitalize(), color=discord.Color.red())
                         emb.set_image(url=nekos.img(str))
                         await ctx.send(embed=emb)
                     else:
                         await self.noOptionMsg(ctx,str)
                 else:
                     if str in SFW or str in RANDOM:
-                        emb = discord.Embed(title="Have some " + str, color=discord.Color.red())
+                        emb = discord.Embed(title="Random " + str, color=discord.Color.red())
                         emb.set_image(url=nekos.img(str))
                         await ctx.send(embed=emb)
                     elif str in (NSFW):
@@ -44,7 +44,7 @@ class Neko(commands.Cog):
                         await self.noOptionMsg(ctx, str)
             else:
                 if str in NSFW or str in SFW or str in RANDOM:
-                    emb = discord.Embed(title="Have some " + str.capitalize(), color=discord.Color.red())
+                    emb = discord.Embed(title="Random " + str.capitalize(), color=discord.Color.red())
                     emb.set_image(url=nekos.img(str))
                     await ctx.send(embed=emb)
                 else:
@@ -94,7 +94,7 @@ class Neko(commands.Cog):
 
 
     async def noOptionMsg(self,ctx, str):
-        emb = discord.Embed(title=str + "is not available", color=discord.Color.red())
+        emb = discord.Embed(title=str + " is not available", color=discord.Color.red())
         emb.add_field(name="NSFW", value=", ".join(NSFW))
         emb.add_field(name="SFW", value=", ".join(SFW))
         emb.add_field(name="RANDOM", value=", ".join(RANDOM))
