@@ -64,7 +64,7 @@ class Neko(commands.Cog):
     async def slap(self, ctx, user):
         try:
             if ctx.guild:
-                emb = discord.Embed(title=ctx.author.nick + " slaps " + user.mention, color=discord.Color.blurple())
+                emb = discord.Embed(title=ctx.author.nick + " slaps " + user, color=discord.Color.blurple())
                 emb.set_image(url=nekos.img('slap'))
                 await ctx.send(embed=emb)
         except Exception as e:
