@@ -26,7 +26,7 @@ class Neko(commands.Cog):
         try:
             if ctx.guild:
                 if ctx.channel.is_nsfw() == True:
-                    if str in (NSFW or SFW or RANDOM):
+                    if str in NSFW or str in SFW or str in RANDOM:
                         emb = discord.Embed(title="Have some " + str.capitalize(), color=discord.Color.red())
                         emb.set_image(url=nekos.img(str))
                         await ctx.send(embed=emb)
@@ -37,7 +37,7 @@ class Neko(commands.Cog):
                         emb2.add_field(name="RANDOM", value=", ".join(RANDOM))
                         await ctx.send(embed=emb2)
                 else:
-                    if str in (SFW or RANDOM):
+                    if str in SFW or str in RANDOM:
                         emb = discord.Embed(title="Have some " + str, color=discord.Color.red())
                         emb.set_image(url=nekos.img(str))
                         await ctx.send(embed=emb)
