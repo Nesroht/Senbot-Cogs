@@ -1,4 +1,4 @@
-from .neko import Utils
+from .neko import Neko
 
 def setup(bot):
     n = Neko(bot)
