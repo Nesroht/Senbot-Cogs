@@ -25,7 +25,7 @@ class Neko(commands.Cog):
         """Ask the Neko api for picture"""
         try:
             if ctx.guild:
-                if ctx.channel.isnsfw() == True:
+                if ctx.channel.is_nsfw() == True:
                     if str in (NSFW or SFW or RANDOM):
                         emb = discord.Embed(title="Have some " + str.capitalize(), color=discord.Color.red())
                         emb.set_image(url=nekos.img(str))
