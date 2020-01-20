@@ -25,16 +25,24 @@ class Neko(commands.Cog):
     async def neko(self, ctx, *, str):
         """Ask the Neko api for picture"""
         try:
-            if ctx.channel.isnsfw() == True:
+            if ctx.guild:
+                if ctx.channel.isnsfw() == True:
+                    if str in (NSFW or SFW or RANDOM):
+                        emb = discord.Embed(title="Have some " + str.capitalize(), color=discord.Color.pink())
+                        emb.set_image(url=nekos.img(str))
+                        await ctx.send(embed=emb)
+                    else:
+                        await ctx.send(ctx.box("Nope"))
+                else:
+                    if str in (SFW or RANDOM):
+                        emb = discord.Embed(title="Have some " + str, color=discord.Color.pink())
+                        emb.set_image(url=nekos.img(str))
+                        await ctx.send(embed=emb)
+                    else:
+                        await ctx.send(ctx.box("Nope"))
+            else:
                 if str in (NSFW or SFW or RANDOM):
                     emb = discord.Embed(title="Have some " + str.capitalize(), color=discord.Color.pink())
-                    emb.set_image(url=nekos.img(str))
-                    await ctx.send(embed=emb)
-                else:
-                    await ctx.send(ctx.box("Nope"))
-            else:
-                if str in (SFW or RANDOM):
-                    emb = discord.Embed(title="Have some " + str, color=discord.Color.pink())
                     emb.set_image(url=nekos.img(str))
                     await ctx.send(embed=emb)
                 else:
