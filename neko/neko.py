@@ -21,13 +21,6 @@ class Neko(commands.Cog):
         self._session = aiohttp.ClientSession(loop=self.bot.loop)
 
 
-    async def noOptionMsg(self,ctx):
-        emb = discord.Embed(title=str + "is not available", color=discord.Color.red())
-        emb.add_field(name="NSFW", value=", ".join(NSFW))
-        emb.add_field(name="SFW", value=", ".join(SFW))
-        emb.add_field(name="RANDOM", value=", ".join(RANDOM))
-        await ctx.send(embed=emb)
-
     @commands.command()
     async def neko(self, ctx, *, str):
         """Ask the Neko api for picture"""
@@ -98,3 +91,11 @@ class Neko(commands.Cog):
                                 color=discord.Color.blurple())
             emb.set_image(url=nekos.img('pat'))
             await ctx.send(embed=emb)
+
+
+    async def noOptionMsg(self,ctx):
+        emb = discord.Embed(title=str + "is not available", color=discord.Color.red())
+        emb.add_field(name="NSFW", value=", ".join(NSFW))
+        emb.add_field(name="SFW", value=", ".join(SFW))
+        emb.add_field(name="RANDOM", value=", ".join(RANDOM))
+        await ctx.send(embed=emb)
