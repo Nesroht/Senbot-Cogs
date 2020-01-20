@@ -32,9 +32,9 @@ class Neko(commands.Cog):
                         await ctx.send(embed=emb)
                     else:
                         emb = discord.Embed(title=str + "is not available", color=discord.Color.red())
-                        emb.add_field(name="NSFW", value=NSFW.join(", "))
-                        emb.add_field(name="SFW", value=SFW.join(", "))
-                        emb.add_field(name="RANDOM", value=RANDOM.join(", "))
+                        emb.add_field(name="NSFW", value=", ".join(NSFW))
+                        emb.add_field(name="SFW", value=", ".join(SFW))
+                        emb.add_field(name="RANDOM", value=", ".join(RANDOM))
                         await ctx.send(embed=emb)
                 else:
                     if str in (SFW or RANDOM):
@@ -45,9 +45,9 @@ class Neko(commands.Cog):
                         await ctx.send(box("Only allowed in NSFW channels or DM's"))
                     else:
                         emb = discord.Embed(title=str + "is not available", color=discord.Color.red())
-                        emb.add_field(name="NSFW", value=NSFW.join(", "))
-                        emb.add_field(name="SFW", value=SFW.join(", "))
-                        emb.add_field(name="RANDOM", value=RANDOM.join(", "))
+                        emb.add_field(name="NSFW", value=", ".join(NSFW))
+                        emb.add_field(name="SFW", value=", ".join(SFW))
+                        emb.add_field(name="RANDOM", value=", ".join(RANDOM))
                         await ctx.send(embed=emb)
             else:
                 if str in (NSFW or SFW or RANDOM):
@@ -56,9 +56,9 @@ class Neko(commands.Cog):
                     await ctx.send(embed=emb)
                 else:
                     emb = discord.Embed(title=str + "is not available", color=discord.Color.red())
-                    emb.add_field(name="NSFW", value=NSFW.join(", "))
-                    emb.add_field(name="SFW", value=SFW.join(", "))
-                    emb.add_field(name="RANDOM", value=RANDOM.join(", "))
+                    emb.add_field(name="NSFW", value=", ".join(NSFW))
+                    emb.add_field(name="SFW", value=", ".join(SFW))
+                    emb.add_field(name="RANDOM", value=", ".join(RANDOM))
                     await ctx.send(embed=emb)
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
