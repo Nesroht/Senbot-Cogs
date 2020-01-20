@@ -31,20 +31,34 @@ class Neko(commands.Cog):
                         emb.set_image(url=nekos.img(str))
                         await ctx.send(embed=emb)
                     else:
-                        await ctx.send(box("Nope"))
+                        emb = discord.Embed(title=str + "is not available", color=discord.Color.red())
+                        emb.add_field(name="NSFW", value=NSFW.join(", "))
+                        emb.add_field(name="SFW", value=SFW.join(", "))
+                        emb.add_field(name="RANDOM", value=RANDOM.join(", "))
+                        await ctx.send(embed=emb)
                 else:
                     if str in (SFW or RANDOM):
                         emb = discord.Embed(title="Have some " + str, color=discord.Color.red())
                         emb.set_image(url=nekos.img(str))
                         await ctx.send(embed=emb)
+                    elif str in (NSFW):
+                        await ctx.send(box("Only allowed in NSFW channels or DM's"))
                     else:
-                        await ctx.send(box("Nope"))
+                        emb = discord.Embed(title=str + "is not available", color=discord.Color.red())
+                        emb.add_field(name="NSFW", value=NSFW.join(", "))
+                        emb.add_field(name="SFW", value=SFW.join(", "))
+                        emb.add_field(name="RANDOM", value=RANDOM.join(", "))
+                        await ctx.send(embed=emb)
             else:
                 if str in (NSFW or SFW or RANDOM):
                     emb = discord.Embed(title="Have some " + str.capitalize(), color=discord.Color.red())
                     emb.set_image(url=nekos.img(str))
                     await ctx.send(embed=emb)
                 else:
-                    await ctx.send(box("Nope"))
+                    emb = discord.Embed(title=str + "is not available", color=discord.Color.red())
+                    emb.add_field(name="NSFW", value=NSFW.join(", "))
+                    emb.add_field(name="SFW", value=SFW.join(", "))
+                    emb.add_field(name="RANDOM", value=RANDOM.join(", "))
+                    await ctx.send(embed=emb)
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
