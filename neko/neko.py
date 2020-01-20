@@ -41,8 +41,8 @@ class Neko(commands.Cog):
                         emb = discord.Embed(title="Have some " + str, color=discord.Color.red())
                         emb.set_image(url=nekos.img(str))
                         await ctx.send(embed=emb)
-                    #elif str in (NSFW):
-                        #await ctx.send(box("Only allowed in NSFW channels or DM's"))
+                    elif str in (NSFW):
+                        await ctx.send(box("Only allowed in NSFW channels or DM's"))
                     else:
                         emb2 = discord.Embed(title=str + "is not available", color=discord.Color.red())
                         emb2.add_field(name="NSFW", value=", ".join(NSFW))
