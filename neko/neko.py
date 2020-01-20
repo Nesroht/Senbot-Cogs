@@ -31,11 +31,11 @@ class Neko(commands.Cog):
                         emb.set_image(url=nekos.img(str))
                         await ctx.send(embed=emb)
                     else:
-                        emb = discord.Embed(title=str + "is not available", color=discord.Color.red())
-                        emb.add_field(name="NSFW", value=", ".join(NSFW))
-                        emb.add_field(name="SFW", value=", ".join(SFW))
-                        emb.add_field(name="RANDOM", value=", ".join(RANDOM))
-                        await ctx.send(embed=emb)
+                        emb2 = discord.Embed(title=str + "is not available", color=discord.Color.red())
+                        emb2.add_field(name="NSFW", value=", ".join(NSFW))
+                        emb2.add_field(name="SFW", value=", ".join(SFW))
+                        emb2.add_field(name="RANDOM", value=", ".join(RANDOM))
+                        await ctx.send(embed=emb2)
                 else:
                     if str in (SFW or RANDOM):
                         emb = discord.Embed(title="Have some " + str, color=discord.Color.red())
@@ -44,21 +44,21 @@ class Neko(commands.Cog):
                     elif str in (NSFW):
                         await ctx.send(box("Only allowed in NSFW channels or DM's"))
                     else:
-                        emb = discord.Embed(title=str + "is not available", color=discord.Color.red())
-                        emb.add_field(name="NSFW", value=", ".join(NSFW))
-                        emb.add_field(name="SFW", value=", ".join(SFW))
-                        emb.add_field(name="RANDOM", value=", ".join(RANDOM))
-                        await ctx.send(embed=emb)
+                        emb2 = discord.Embed(title=str + "is not available", color=discord.Color.red())
+                        emb2.add_field(name="NSFW", value=", ".join(NSFW))
+                        emb2.add_field(name="SFW", value=", ".join(SFW))
+                        emb2.add_field(name="RANDOM", value=", ".join(RANDOM))
+                        await ctx.send(embed=emb2)
             else:
                 if str in (NSFW or SFW or RANDOM):
                     emb = discord.Embed(title="Have some " + str.capitalize(), color=discord.Color.red())
                     emb.set_image(url=nekos.img(str))
                     await ctx.send(embed=emb)
                 else:
-                    emb = discord.Embed(title=str + "is not available", color=discord.Color.red())
-                    emb.add_field(name="NSFW", value=", ".join(NSFW))
-                    emb.add_field(name="SFW", value=", ".join(SFW))
-                    emb.add_field(name="RANDOM", value=", ".join(RANDOM))
-                    await ctx.send(embed=emb)
+                    emb2 = discord.Embed(title=str + "is not available", color=discord.Color.red())
+                    emb2.add_field(name="NSFW", value=", ".join(NSFW))
+                    emb2.add_field(name="SFW", value=", ".join(SFW))
+                    emb2.add_field(name="RANDOM", value=", ".join(RANDOM))
+                    await ctx.send(embed=emb2)
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
