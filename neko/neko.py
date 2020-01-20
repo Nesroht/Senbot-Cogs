@@ -62,10 +62,39 @@ class Neko(commands.Cog):
 
     @commands.command()
     async def slap(self, ctx, user : discord.Member):
-        #try:
         if ctx.guild:
             emb = discord.Embed(title=ctx.author.display_name + " slaps " + user.display_name, color=discord.Color.blurple())
             emb.set_image(url=nekos.img('slap'))
             await ctx.send(embed=emb)
-        #except Exception as e:
-            #await ctx.send(f":x: **Error:** `{e}`")
+
+    @commands.command()
+    async def hug(self, ctx, user: discord.Member):
+        if ctx.guild:
+            emb = discord.Embed(title=ctx.author.display_name + " hugs " + user.display_name,
+                                color=discord.Color.blurple())
+            emb.set_image(url=nekos.img('hug'))
+            await ctx.send(embed=emb)
+
+    @commands.command()
+    async def cuddle(self, ctx, user: discord.Member):
+        if ctx.guild:
+            emb = discord.Embed(title=ctx.author.display_name + " cuddles with " + user.display_name,
+                                color=discord.Color.blurple())
+            emb.set_image(url=nekos.img('cuddle'))
+            await ctx.send(embed=emb)
+
+    @commands.command()
+    async def kiss(self, ctx, user: discord.Member):
+        if ctx.guild:
+            emb = discord.Embed(title=ctx.author.display_name + " kisses " + user.display_name,
+                                color=discord.Color.blurple())
+            emb.set_image(url=nekos.img('kiss'))
+            await ctx.send(embed=emb)
+
+    @commands.command()
+    async def pat(self, ctx, user: discord.Member):
+        if ctx.guild:
+            emb = discord.Embed(title=ctx.author.display_name + " apts " + user.display_name,
+                                color=discord.Color.blurple())
+            emb.set_image(url=nekos.img('pat'))
+            await ctx.send(embed=emb)
