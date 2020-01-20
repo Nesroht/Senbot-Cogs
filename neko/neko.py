@@ -6,7 +6,6 @@ from redbot.core import checks, Config, commands
 from redbot.core.utils.chat_formatting import pagify
 from redbot.core.utils.menus import menu, DEFAULT_CONTROLS
 from redbot.core.utils.chat_formatting import box
-from . import constants as sub
 from .constants import NSFW, SFW, RANDOM
 import nekos
 
