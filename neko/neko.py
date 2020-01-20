@@ -39,7 +39,7 @@ class Neko(commands.Cog):
                         emb.set_image(url=nekos.img(str))
                         await ctx.send(embed=emb)
                     else:
-                        await noOptionMsg(ctx)
+                        noOptionMsg(ctx)
                 else:
                     if str in SFW or str in RANDOM:
                         emb = discord.Embed(title="Have some " + str, color=discord.Color.red())
@@ -48,14 +48,14 @@ class Neko(commands.Cog):
                     elif str in (NSFW):
                         await ctx.send(box("Only allowed in NSFW channels or DM's"))
                     else:
-                        await noOptionMsg(ctx)
+                        noOptionMsg(ctx)
             else:
                 if str in NSFW or str in SFW or str in RANDOM:
                     emb = discord.Embed(title="Have some " + str.capitalize(), color=discord.Color.red())
                     emb.set_image(url=nekos.img(str))
                     await ctx.send(embed=emb)
                 else:
-                    await noOptionMsg(ctx)
+                    noOptionMsg(ctx)
         except Exception as e:
             await ctx.send(f":x: **Error:** `{e}`")
 
