@@ -87,7 +87,7 @@ class Neko(commands.Cog):
     @commands.command()
     async def pat(self, ctx, user: discord.Member):
         if ctx.guild:
-            emb = discord.Embed(title=ctx.author.display_name + " apts " + user.display_name,
+            emb = discord.Embed(title=ctx.author.display_name + " pats " + user.display_name,
                                 color=discord.Color.blurple())
             emb.set_image(url=nekos.img('pat'))
             await ctx.send(embed=emb)
