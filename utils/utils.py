@@ -15,6 +15,7 @@ class Utils(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self._session = aiohttp.ClientSession(loop=self.bot.loop)
+		self.bot.remove_command("ping")
 
     @commands.command()
     async def ping(self, ctx,):
