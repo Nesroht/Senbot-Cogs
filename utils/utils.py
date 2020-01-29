@@ -66,6 +66,6 @@ class Utils(commands.Cog):
             i += 1
         await menu(ctx, pages, controls=DEFAULT_CONTROLS)
 		
-	@commands.command()
-	async def uguu(self,ctx):
-		await ctx.send("uguu")
+    @commands.command()
+    async def uguu(self,ctx):
+       await ctx.send("uguu")
