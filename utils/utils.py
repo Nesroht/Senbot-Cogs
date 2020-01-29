@@ -65,3 +65,7 @@ class Utils(commands.Cog):
             pages.append(f"Page {i}/{max_i}\n" + page)
             i += 1
         await menu(ctx, pages, controls=DEFAULT_CONTROLS)
+		
+	@commands.command()
+	async def uguu(self,ctx):
+		await ctx.send("uguu")
