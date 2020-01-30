@@ -103,7 +103,7 @@ class Neko(commands.Cog):
             await ctx.send(embed=emb)
 
     async def nekobot(self, imgtype: str):
-        async with self.session.get("https://nekobot.xyz/api/image?type=%s" % imgtype) as res:
+        async with self._session.get("https://nekobot.xyz/api/image?type=%s" % imgtype) as res:
             res = await res.json()
         image = res.get("message")
         return image
