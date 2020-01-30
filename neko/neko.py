@@ -99,13 +99,14 @@ class Neko(commands.Cog):
             await ctx.send(image)
             emb = discord.Embed(title=ctx.author.display_name + " hands " + user.display_name + " some coffee.",
                                 color=discord.Color.blurple())
-            emb.set_image(url=image)
+            #emb.set_image(url=image)
             await ctx.send(embed=emb)
 
     async def nekobot(self, imgtype: str):
         async with self.session.get("https://nekobot.xyz/api/image?type=%s" % imgtype) as res:
             res = await res.json()
-        return res.get("message")
+        image = res.get("message")
+        return image
 
 
     async def noOptionMsg(self,ctx, str):
