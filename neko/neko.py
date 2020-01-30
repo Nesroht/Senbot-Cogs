@@ -95,7 +95,7 @@ class Neko(commands.Cog):
     @commands.command()
     async def coffee(self, ctx, user: discord.Member):
         if ctx.guild:
-            image = self.nekobot("coffee")
+            image = await self.nekobot("coffee")
             await ctx.send(image)
             emb = discord.Embed(title=ctx.author.display_name + " hands " + user.display_name + " some coffee.",
                                 color=discord.Color.blurple())
