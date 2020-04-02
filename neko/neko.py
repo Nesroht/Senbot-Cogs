@@ -92,6 +92,22 @@ class Neko(commands.Cog):
             emb.set_image(url=nekos.img('pat'))
             await ctx.send(embed=emb)
 
+    @commands.command()
+    async def coffee(self, ctx, user: discord.Member):
+        if ctx.guild:
+            image = await self.nekobot("coffee")
+            #await ctx.send(image)
+            emb = discord.Embed(title=ctx.author.display_name + " hands " + user.display_name + " some coffee.",
+                                color=discord.Color.blurple())
+            emb.set_image(url=image)
+            await ctx.send(embed=emb)
+
+    async def nekobot(self, imgtype: str):
+        async with self._session.get("https://nekobot.xyz/api/image?type=%s" % imgtype) as res:
+            res = await res.json()
+        image = res.get("message")
+        return image
+
 
     async def noOptionMsg(self,ctx, str):
         emb = discord.Embed(title=str + " is not available", color=discord.Color.red())
