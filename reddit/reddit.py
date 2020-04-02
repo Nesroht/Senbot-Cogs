@@ -382,9 +382,13 @@ class Reddit(commands.Cog):
         await ctx.send(embed=emb)
 
     @commands.command()
-    async def random(self,ctx):
+    async def random(self,ctx,*,amount):
         """Get Random subreddit post"""
-        await self.randomfunc(ctx, attempt=self.attempt)
+        if (amount):
+            for i in range(amount):
+                await self.randomfunc(ctx, attempt=self.attempt)
+        else:
+            await self.randomfunc(ctx, attempt=self.attempt)
 
     async def randomfunc(self, ctx, attempt):
         if ctx.guild:
