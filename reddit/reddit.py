@@ -387,7 +387,7 @@ class Reddit(commands.Cog):
         await self.randomfunc(ctx, attempt=self.attempt)
 
     @commands.command()
-    async def random(self, ctx, amount):
+    async def randoms(self, ctx, amount: Int):
         """Get Random subreddit post"""
         for i in range(amount):
             await self.randomfunc(ctx, attempt=self.attempt)
