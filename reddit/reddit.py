@@ -393,6 +393,7 @@ class Reddit(commands.Cog):
             for i in range(int(amount)):
                 await self.randomfunc(ctx, attempt=self.attempt)
                 i+=1
+            await ctx.send("Done. Sent " + amount + " random posts.")
         else:
             ctx.send("No can do.")
 
